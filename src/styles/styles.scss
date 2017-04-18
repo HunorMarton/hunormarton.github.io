@@ -39,7 +39,8 @@ section {
 
 
 article {
-  margin: 50px 0 80px 0;
+  margin: 50px 80px 80px 0;
+  display: inline-block;
 }
 .date {
   color: gray;
@@ -49,8 +50,39 @@ article {
 }
 .preview {
   display: inline-block;
+  position: relative;
+  isolation: isolate;
   img {
     border: 1px solid rgba(gray, 0.4);
+    box-sizing: border-box;
+    width: 500px;
+    height: 500px;
+  }
+  .run {
+    // Positioning
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 0;
+    left: 0;
+
+    // Text
+    font-size: 8em;
+    user-select: none;
+    text-align: center;
+    line-height: 500px;
+
+    // Misc
+    cursor: pointer;
+    background-color: white;
+
+    mix-blend-mode: luminosity;
+
+    // Hover
+    opacity: 0;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 .info {
