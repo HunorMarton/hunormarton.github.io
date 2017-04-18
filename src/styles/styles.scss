@@ -24,17 +24,26 @@ section {
 
 .skill {
   padding-bottom: 10px;
+  cursor: pointer;
 }
 
 .skillName {
   display: inline-block;
   width: 100px;
   text-align: right;
-  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.selectedSkill {
+  background-color: yellow;
 }
 
 .skillScore {
   font-size: 1.4em;
+  vertical-align: middle;
+  .skillDeficit {
+    color: lightgray;
+  }
 }
 
 
@@ -49,20 +58,21 @@ article {
   }
 }
 .preview {
+  $imgSize: 500px;
   display: inline-block;
   position: relative;
   isolation: isolate;
   img {
     border: 1px solid rgba(gray, 0.4);
     box-sizing: border-box;
-    width: 500px;
-    height: 500px;
+    width: $imgSize;
+    height: $imgSize;
   }
   .run {
     // Positioning
     position: absolute;
-    width: 500px;
-    height: 500px;
+    width: $imgSize;
+    height: $imgSize;
     top: 0;
     left: 0;
 
@@ -70,7 +80,7 @@ article {
     font-size: 8em;
     user-select: none;
     text-align: center;
-    line-height: 500px;
+    line-height: $imgSize;
 
     // Misc
     cursor: pointer;

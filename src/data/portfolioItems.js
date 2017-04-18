@@ -18,7 +18,7 @@ export default [
     title: 'SVG Curves', type: types.GITHUB, id: 'SVGCurves',
     link: 'http://hunor.online/SVGCurves/',
     img: 'SVGCurves', date: 'April 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REACT_ROUTER, techs.REDUX, techs.SVG]
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REACT_ROUTER, techs.REDUX, techs.RXJS, techs.SVG]
   },
   {
     title: 'Square', type: types.CODEPEN, id: 'bqWxgp',

@@ -19,7 +19,12 @@ class Portfolio extends React.Component {
     return (
       <section id="portfolio">
         <h1>Portfolio</h1>
-        {portfolioItems.map(item => <PortfolioItem key={item.title} data={item}/>)}
+        <div>filter: {this.props.filter === '' ? 'none' : this.props.filter}</div>
+        {
+          portfolioItems
+          .filter(item => this.props.filter === '' || item.techs.filter(tech => tech === this.props.filter).length === 1)
+          .map(item => <PortfolioItem key={item.title} data={item}/>)
+        }
       </section>
     );
   }
