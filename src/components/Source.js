@@ -6,12 +6,12 @@ const Source = ({type, id}) => {
   let icon;
   switch (type) {
     case types.CODEPEN:
-      icon = '../img/Codepen.png';
       source = `http://codepen.io/HunorMarton/pen/${id}/`;
+      icon = require('../img/Codepen.png');
       break;
     case types.GITHUB:
-      icon = '../img/Github.png';
       source = `https://github.com/HunorMarton/${id}/`;
+      icon = require('../img/Github.png');
       break;
   }
 

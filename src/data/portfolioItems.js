@@ -4,12 +4,12 @@ import * as techs from '../constants/techTypes';
 export default [
   {
     title: 'Maze', type: types.GITHUB, id: 'maze',
-    img: 'maze.jpg', date: "April 2017",
+    img: 'Maze.jpg', date: "April 2017",
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG, 'devicemotion']
   },
   {
     title: 'Compass', type: types.GITHUB, id: 'compass',
-    img: 'compass.jpg', date: 'April 2017',
+    img: 'Compass.jpg', date: 'April 2017',
     techs: [techs.JAVASCRIPT, techs.REACT, 'deviceorientation']
   },
   {
