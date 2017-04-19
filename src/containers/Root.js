@@ -3,6 +3,8 @@ import {Provider} from 'react-redux';
 import Intro from '../components/Intro';
 import Skills from '../components/Skills';
 import Portfolio from '../components/Portfolio';
+import Resume from '../components/Resume';
+import Contact from '../components/Contact';
 
 class Root extends React.Component {
   render() {
@@ -12,6 +14,8 @@ class Root extends React.Component {
           <Intro />
           <Skills />
           <Portfolio />
+          <Resume />
+          <Contact />
         </div>
       </Provider>
     );

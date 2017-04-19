@@ -6,19 +6,19 @@ const SkillScore = ({score}) => {
   switch (score) {
     case 1:
       scoreIndicator = '■'; // ●○ ■□
-      skillDeficit = '□□□□';
+      skillDeficit = '■■■■';
       break;
     case 2:
       scoreIndicator = '■■';
-      skillDeficit = '□□□';
+      skillDeficit = '■■■';
       break;
     case 3:
       scoreIndicator = '■■■';
-      skillDeficit = '□□';
+      skillDeficit = '■■';
       break;
     case 4:
       scoreIndicator = '■■■■';
-      skillDeficit = '□';
+      skillDeficit = '■';
       break;
     case 5:
       scoreIndicator = '■■■■■';

@@ -6,6 +6,11 @@ const Skills = () => (
   <section id="skills">
     <h1>Skills</h1>
     <div className="skillSection">
+      <Skill name="All" id={''} score={0} />
+      <Skill name="CodePen" id={techs.CODEPEN} score={0} />
+      <Skill name="Github" id={techs.GITHUB} score={0} />
+    </div>
+    <div className="skillSection">
       <Skill name="HTML" id={techs.HTML} score={3} />
       <Skill name="Pug" id={techs.PUG} score={3} />
       <Skill name="SVG" id={techs.SVG} score={4} />

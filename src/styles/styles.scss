@@ -18,6 +18,7 @@ section {
 #skills {
   .skillSection {
     display: inline-block;
+    vertical-align: top;
     margin: 20px 80px 20px 0;
   }
 }
@@ -47,7 +48,7 @@ section {
 }
 
 
-article {
+#portfolio article {
   margin: 50px 80px 80px 0;
   display: inline-block;
 }
@@ -120,4 +121,23 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+#resume, #contact {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#resume article {
+  margin: 40px 60px 50px 0;
+  h2 {
+    text-transform: uppercase;
+  }
+}
+
+#contact ul {
+  margin-bottom: 20px;
+  &:nth-of-type(1) {
+    background-color: lightgreen;
+  }
 }

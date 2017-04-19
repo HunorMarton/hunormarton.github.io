@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/filterActions';
+import * as techs from '../constants/techTypes';
 import PortfolioItem from '../components/PortfolioItem';
 import portfolioItems from '../data/portfolioItems';
 
@@ -22,7 +23,12 @@ class Portfolio extends React.Component {
         <div>filter: {this.props.filter === '' ? 'none' : this.props.filter}</div>
         {
           portfolioItems
-          .filter(item => this.props.filter === '' || item.techs.filter(tech => tech === this.props.filter).length === 1)
+          .filter(item =>
+            this.props.filter === '' ||
+            this.props.filter === techs.HTML ||
+            item.type === this.props.filter ||
+            item.techs.filter(tech => tech === this.props.filter).length === 1
+          )
           .map(item => <PortfolioItem key={item.title} data={item}/>)
         }
       </section>
