@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Provider} from 'react-redux';
-import Intro from '../components/Intro';
+import Navigation from '../components/Navigation';
 import Skills from '../components/Skills';
 import Portfolio from '../components/Portfolio';
 import Resume from '../components/Resume';
@@ -11,7 +11,8 @@ class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <div id="container">
-          <Intro />
+          <Navigation />
+
           <Skills />
           <Portfolio />
           <Resume />

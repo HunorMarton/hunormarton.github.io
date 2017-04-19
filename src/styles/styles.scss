@@ -8,8 +8,29 @@ html {
   font-family: 'Cutive Mono', monospace;
 }
 
+nav {
+  position: fixed;
+  background-color: lightgray;
+  right:30px;
+  top: 20px;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  a {
+    display: inline-block;
+    margin: 15px 10px 15px 10px;
+    transform: rotate(180deg);
+    color: gray;
+    font-size: 1.3em;
+    text-decoration: none;
+    &::after {
+      content: "_";
+    }
+  }
+}
+
 section {
-  margin: 50px;
+  margin: 40px 40px 40px 40px;
+  padding: 10px;
   & > h1::after {
     content: "_";
   }
