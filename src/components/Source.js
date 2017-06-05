@@ -7,18 +7,18 @@ const Source = ({type, id}) => {
   switch (type) {
     case types.CODEPEN:
       source = `http://codepen.io/HunorMarton/pen/${id}/`;
-      icon = require('../img/Codepen.png');
+      icon = "CodePen";
       break;
     case types.GITHUB:
       source = `https://github.com/HunorMarton/${id}/`;
-      icon = require('../img/Github.png');
+      icon = "GitHub";
       break;
   }
 
   return (
     <div className="source">
-      <a href={source}>
-        <img src={icon} alt="source icon" />
+      <a href={source} target="_blank">
+        <i className={`sprite sprite-${icon}`}/>
         Source
       </a>
     </div>

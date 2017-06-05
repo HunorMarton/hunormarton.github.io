@@ -119,13 +119,28 @@ section {
 }
 .source {
   margin: 10px 0 10px 0;
-  img {
-    vertical-align: middle;
-    margin-right: 5px;
-  }
+
   a {
     text-decoration: none;
     color: black;
+  }
+
+  .sprite {
+    background-image: url(spritesheet.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  .sprite-CodePen {
+    width: 32px;
+    height: 32px;
+    background-position: -5px -5px;
+  }
+  .sprite-GitHub {
+    width: 32px;
+    height: 32px;
+    background-position: -47px -5px;
   }
 }
 .techs {
