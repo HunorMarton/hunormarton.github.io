@@ -2,6 +2,13 @@ import * as types from '../constants/portfolioTypes';
 import * as techs from '../constants/techTypes';
 
 export default [
+  /*
+  {
+    title: 'Image Test', type: types.CODEPEN, id: 'qmJvvY',
+    link: 'http://codepen.io/HunorMarton/full/qmJvvY/',
+    img: 'Test', date: "May 2017",
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS]
+  },*/
   {
     title: 'Task Manager', type: types.CODEPEN, id: 'qmJvvY',
     link: 'http://codepen.io/HunorMarton/full/qmJvvY/',
@@ -98,6 +105,4 @@ export default [
     img: 'SVGBasics', date: 'October 2016',
     techs: [techs.JAVASCRIPT, techs.ANGULARJS, techs.SVG,techs.BOOTSTRAP]
   }
-
-
 ];

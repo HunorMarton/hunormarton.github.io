@@ -76,29 +76,31 @@ section {
   }
 }
 .preview {
-  $imgSize: 500px;
+  $previewSize: 500px;
   display: inline-block;
   position: relative;
   isolation: isolate;
+  border: 1px solid rgba(gray, 0.4);
+  font-size: 0;
+
   img {
-    border: 1px solid rgba(gray, 0.4);
-    box-sizing: border-box;
-    width: $imgSize;
-    height: $imgSize;
+    width: $previewSize;
+    height: $previewSize;
   }
+
   .run {
     // Positioning
     position: absolute;
-    width: $imgSize;
-    height: $imgSize;
+    width: $previewSize;
+    height: $previewSize;
     top: 0;
     left: 0;
 
     // Text
-    font-size: 8em;
+    font-size: 128px;
     user-select: none;
     text-align: center;
-    line-height: $imgSize;
+    line-height: $previewSize;
 
     // Misc
     cursor: pointer;
