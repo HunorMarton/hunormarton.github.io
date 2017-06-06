@@ -4,9 +4,9 @@ const Preview = ({img, link}) => (
   <div className="preview">
     <a href={link} target="_blank">
       <picture>
-        <source srcSet={`${require(`../data/img/${img}@0.5x.png`)} 1x, ${require(`../data/img/${img}.png`)} 2x`} media="(max-width: 768px)" />
-        <source srcSet={`${require(`../data/img/${img}.png`)} 1x, ${require(`../data/img/${img}@2x.png`)} 2x`} />
-        <img src={require(`../data/img/${img}.png`)} alt="Portfolio item preview" />  
+        <source srcSet={`${require(`../data/img/${img}@0.5x-min.png`)} 1x, ${require(`../data/img/${img}-min.png`)} 2x`} media="(max-width: 768px)" />
+        <source srcSet={`${require(`../data/img/${img}-min.png`)} 1x, ${require(`../data/img/${img}@2x-min.png`)} 2x`} />
+        <img src={require(`../data/img/${img}-min.png`)} alt="Portfolio item preview" />
       </picture>
       <div className="run">►</div>
     </a>
