@@ -10,6 +10,12 @@ export default [
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS]
   },*/
   {
+    title: 'Solitaire', type: types.CODEPEN, id: 'rwpGXj',
+    link: 'http://codepen.io/HunorMarton/full/rwpGXj/',
+    img: 'Solitaire', date: "June 2017",
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
+  },
+  {
     title: 'Task Manager', type: types.CODEPEN, id: 'qmJvvY',
     link: 'http://codepen.io/HunorMarton/full/qmJvvY/',
     img: 'TaskManager', date: "May 2017",
