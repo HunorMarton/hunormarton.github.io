@@ -1,19 +1,12 @@
-// Set up your application entry point here.../* eslint-disable import/default */
-
 import React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
-import configureStore from './store/configureStore';
+import ReactDOM from 'react-dom';
+import './styles/styles.scss';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-require('./favicon.ico'); // Tell webpack to load favicon.ico
-import './styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
+ReactDOM.render(<App />, document.getElementById('root'));
 
-const store = configureStore();
-
-render(
-  <AppContainer>
-    <Root store={store} />
-  </AppContainer>,
-  document.getElementById('app')
-);
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();

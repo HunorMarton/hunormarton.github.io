@@ -1,21 +1,24 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Preview from './Preview';
 import Source from './Source';
 import Techs from './Techs';
 
-const PortfolioItem = ({data}) => (
-  <article>
-    <h1>{data.title} <span className="date">{data.date}</span></h1>
-    <Preview img={data.img} link={data.link} />
-    <div className="info">
-      <Source type={data.type} id={data.id} />
-      <Techs techs={data.techs} />
-    </div>
-  </article>
-);
+export default function PortfolioItem({ data }) {
+  return (
+    <article>
+      <h1>
+        {data.title} <span className="date">{data.date}</span>
+      </h1>
+      <Preview img={data.img} data={data} link={data.link} />
+      <div className="info">
+        <Source type={data.type} id={data.id} />
+        <Techs techs={data.techs} />
+      </div>
+    </article>
+  );
+}
 
 PortfolioItem.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
 };
-
-export default PortfolioItem;

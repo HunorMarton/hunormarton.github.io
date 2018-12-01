@@ -1,15 +1,18 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Techs = ({techs}) => (
-  <div className="techs">
-    <ul>
-      {techs.map(tech => <li key={tech}>{tech}</li>)}
-    </ul>
-  </div>
-);
+export default function Techs({ techs }) {
+  return (
+    <div className="techs">
+      <ul>
+        {techs.map(tech => (
+          <li key={tech}>{tech}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 Techs.propTypes = {
-  techs: PropTypes.array.isRequired
+  techs: PropTypes.array.isRequired,
 };
-
-export default Techs;

@@ -1,8 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const SkillScore = ({score}) => {
+export default function SkillScore({ score }) {
   let scoreIndicator;
   let skillDeficit;
+  // TODO: Replace switch case
   switch (score) {
     case 1:
       scoreIndicator = '■'; // ●○ ■□
@@ -24,6 +26,8 @@ const SkillScore = ({score}) => {
       scoreIndicator = '■■■■■';
       skillDeficit = '';
       break;
+    default:
+      throw Error('Invalid score');
   }
   return (
     <span className="skillScore">
@@ -31,10 +35,8 @@ const SkillScore = ({score}) => {
       <span className="skillDeficit">{skillDeficit}</span>
     </span>
   );
-};
+}
 
 SkillScore.propTypes = {
-  score: PropTypes.number.isRequired
+  score: PropTypes.number.isRequired,
 };
-
-export default SkillScore;

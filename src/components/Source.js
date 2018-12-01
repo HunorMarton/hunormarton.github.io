@@ -1,33 +1,35 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as types from '../constants/portfolioTypes';
 
-const Source = ({type, id}) => {
+export default function Source({ type, id }) {
   let source;
   let icon;
+  // TODO: Replace switch case
   switch (type) {
     case types.CODEPEN:
       source = `http://codepen.io/HunorMarton/pen/${id}/`;
-      icon = "CodePen";
+      icon = 'CodePen';
       break;
     case types.GITHUB:
       source = `https://github.com/HunorMarton/${id}/`;
-      icon = "GitHub";
+      icon = 'GitHub';
       break;
+    default:
+      throw Error('Invalid source type');
   }
 
   return (
     <div className="source">
-      <a href={source} target="_blank">
-        <i className={`sprite sprite-${icon}`}/>
+      <a href={source} target="_blank" rel="noopener noreferrer">
+        <i className={`sprite sprite-${icon}`} />
         Source
       </a>
     </div>
   );
-};
+}
 
 Source.propTypes = {
   type: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
 };
-
-export default Source;

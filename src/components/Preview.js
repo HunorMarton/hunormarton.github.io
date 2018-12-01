@@ -1,21 +1,26 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Preview = ({img, link}) => (
-  <div className="preview">
-    <a href={link} target="_blank">
-      <picture>
-        <source srcSet={`${require(`../data/img/${img}@0.5x-min.png`)} 1x, ${require(`../data/img/${img}-min.png`)} 2x`} media="(max-width: 768px)" />
-        <source srcSet={`${require(`../data/img/${img}-min.png`)} 1x, ${require(`../data/img/${img}@2x-min.png`)} 2x`} />
-        <img src={require(`../data/img/${img}-min.png`)} alt="Portfolio item preview" />
-      </picture>
-      <div className="run">►</div>
-    </a>
-  </div>
-);
+export default function Preview({ link, data }) {
+  return (
+    <div className="preview">
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source
+            srcSet={`${data['img@0.5x']} 1x, ${data['img@1x']} 2x`}
+            media="(max-width: 768px)"
+          />
+          <source srcSet={`${data['img@1x']} 1x, ${data['img@2x']} 2x`} />
+
+          <img src={data['img@1x']} alt="Portfolio item preview" />
+        </picture>
+        <div className="run">►</div>
+      </a>
+    </div>
+  );
+}
 
 Preview.propTypes = {
-  img: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired
+  link: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
 };
-
-export default Preview;

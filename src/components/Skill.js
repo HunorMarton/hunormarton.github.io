@@ -1,39 +1,24 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../actions/filterActions';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SkillScore from './SkillScore';
 
-const Skill = ({name, id, score, filter, actions}) => (
-  <div className="skill" onClick={() => {actions.filter(id);}}>
-    <a>
-      <span className={id === filter ? "selectedSkill skillName" : "skillName"}>{name}</span>
-      <SkillScore score={score} />
-    </a>
-  </div>
-);
+export default function Skill({ name, id, score, filter, setFilter }) {
+  const handleClick = () => setFilter(id);
+  const handlePress = () => setFilter(id);
+  return (
+    <div className="skill" onClick={handleClick} onKeyPress={handlePress}>
+      <span className={id === filter ? 'selectedSkill skillName' : 'skillName'}>
+        {name}
+      </span>
+      {score > 0 && <SkillScore score={score} />}
+    </div>
+  );
+}
 
 Skill.propTypes = {
-  actions: PropTypes.object.isRequired,
-  filter: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired
+  score: PropTypes.number.isRequired,
+  filter: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired,
 };
-
-function mapStateToProps(state) {
-  return {
-    filter: state.filter
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Skill);

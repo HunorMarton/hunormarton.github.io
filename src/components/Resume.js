@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Resume = () => {
+export default function Resume() {
   return (
     <section id="resume">
       <h1>Hunor Márton Borbély</h1>
@@ -12,7 +12,7 @@ const Resume = () => {
       <article>
         <h2>Education</h2>
         <h3>Budapest University of Technology and Economics</h3>
-        <p>Bachelor's Degree in Computer Engineering - 2012</p>
+        <p>Bachelor&#39;s Degree in Computer Engineering - 2012</p>
       </article>
       <article>
         <h2>Volunteer</h2>
@@ -27,6 +27,4 @@ const Resume = () => {
       </article>
     </section>
   );
-};
-
-export default Resume;
+}

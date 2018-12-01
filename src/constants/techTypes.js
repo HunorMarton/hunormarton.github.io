@@ -1,3 +1,5 @@
+export const ALL = 'all';
+
 export const HTML = 'html';
 export const JAVASCRIPT = 'javascript';
 export const REACT = 'react';
