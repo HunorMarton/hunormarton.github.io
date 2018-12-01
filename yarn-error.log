@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/11.1.0/bin/node /Users/hunorborbely/.yarn/bin/yarn.js start
+  /usr/local/Cellar/node/11.2.0/bin/node /Users/hunorborbely/.yarn/bin/yarn.js run deploy
 
 PATH: 
   /Users/hunorborbely/bin:/Users/hunorborbely/.yarn/bin:/usr/local/bin:/usr/local/Cellar/node/7.4.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/hunorborbely/.yarn/bin:/Users/hunorborbely/.config/yarn/global/node_modules/.bin
@@ -8,7 +8,7 @@ Yarn version:
   1.5.1
 
 Node version: 
-  11.1.0
+  11.2.0
 
 Platform: 
   darwin x64
@@ -28,6 +28,8 @@ npm manifest:
     "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build",
+      "predeploy": "yarn run build",
+      "deploy": "git subtree push --prefix=build origin master",
       "test": "react-scripts test",
       "eject": "react-scripts eject",
       "lint": "eslint --fix . && prettier --parser=postcss --write src/**/*.css"
@@ -8993,7 +8995,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c react-scripts start
+  Arguments: -c git subtree push --prefix=build origin master
   Directory: /Users/hunorborbely/Project/hunormarton.github.io
   Output:
   
@@ -9001,5 +9003,5 @@ Trace:
       at new ProcessTermError (/Users/hunorborbely/.yarn/lib/cli.js:226:113)
       at ChildProcess.<anonymous> (/Users/hunorborbely/.yarn/lib/cli.js:30281:17)
       at ChildProcess.emit (events.js:182:13)
-      at maybeClose (internal/child_process.js:970:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:257:5)
+      at maybeClose (internal/child_process.js:978:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:265:5)
