@@ -67,6 +67,24 @@ import ClockLarge from './img/Clock@2x-min.png';
 
 export default [
   {
+    title: 'SVG Curves',
+    type: types.GITHUB,
+    id: 'SVGCurves',
+    link: 'https://hunormarton.github.io/svg-curves/',
+    'img@0.5x': SVGCurvesSmall,
+    'img@1x': SVGCurvesMedium,
+    'img@2x': SVGCurvesLarge,
+    date: 'November 2018',
+    techs: [
+      techs.JAVASCRIPT,
+      techs.TYPESCRIPT,
+      techs.REACT,
+      techs.REDUX,
+      techs.RXJS,
+      techs.SVG,
+    ],
+  },
+  {
     title: 'Solitaire',
     type: types.CODEPEN,
     id: 'rwpGXj',
@@ -122,24 +140,6 @@ export default [
     techs: [techs.JAVASCRIPT, techs.REACT, 'deviceorientation'],
   },
   {
-    title: 'SVG Curves',
-    type: types.GITHUB,
-    id: 'SVGCurves',
-    link: 'http://hunor.online/SVGCurves/',
-    'img@0.5x': SVGCurvesSmall,
-    'img@1x': SVGCurvesMedium,
-    'img@2x': SVGCurvesLarge,
-    date: 'April 2017',
-    techs: [
-      techs.JAVASCRIPT,
-      techs.REACT,
-      techs.REACT_ROUTER,
-      techs.REDUX,
-      techs.RXJS,
-      techs.SVG,
-    ],
-  },
-  {
     title: 'Square',
     type: types.CODEPEN,
     id: 'bqWxgp',
@@ -181,7 +181,7 @@ export default [
     'img@1x': RGBMedium,
     'img@2x': RGBLarge,
     date: 'February 2017',
-    techs: [techs.JAVASCRIPT, techs.JQUERY, 'mix-blend-mode', techs.PUG],
+    techs: [techs.JAVASCRIPT, 'mix-blend-mode', techs.PUG],
   },
   {
     title: 'Transpose of a matrix',

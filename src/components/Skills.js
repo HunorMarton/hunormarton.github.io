@@ -22,10 +22,10 @@ export default function Skills({ filter, setFilter }) {
       </div>
       <div className="skillSection">
         <Skill name="JavaScript" id={techs.JAVASCRIPT} score={4} {...props} />
+        <Skill name="TypeScript" id={techs.TYPESCRIPT} score={4} {...props} />
         <Skill name="React" id={techs.REACT} score={3} {...props} />
         <Skill name="Redux" id={techs.REDUX} score={3} {...props} />
         <Skill name="RxJS" id={techs.RXJS} score={2} {...props} />
-        <Skill name="jQuery" id={techs.JQUERY} score={3} {...props} />
       </div>
     </section>
   );
