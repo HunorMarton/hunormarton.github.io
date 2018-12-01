@@ -65,10 +65,6 @@ import ClockSmall from './img/Clock@0.5x-min.png';
 import ClockMedium from './img/Clock-min.png';
 import ClockLarge from './img/Clock@2x-min.png';
 
-import SVGBasicsSmall from './img/SVGBasics@0.5x-min.png';
-import SVGBasicsMedium from './img/SVGBasics-min.png';
-import SVGBasicsLarge from './img/SVGBasics@2x-min.png';
-
 export default [
   {
     title: 'Solitaire',
@@ -252,16 +248,5 @@ export default [
     'img@2x': ClockLarge,
     date: 'November 2016',
     techs: [techs.JAVASCRIPT, techs.REACT],
-  },
-  {
-    title: 'SVG Basics',
-    type: types.GITHUB,
-    id: 'SVGBasics',
-    link: 'http://hunor.online/SVGbasics/#/line',
-    'img@0.5x': SVGBasicsSmall,
-    'img@1x': SVGBasicsMedium,
-    'img@2x': SVGBasicsLarge,
-    date: 'October 2016',
-    techs: [techs.JAVASCRIPT, techs.ANGULARJS, techs.SVG, techs.BOOTSTRAP],
   },
 ];

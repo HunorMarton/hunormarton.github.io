@@ -11,8 +11,6 @@ export const SCSS = 'scss';
 export const CSS3 = 'css3';
 export const RXJS = 'rxjs';
 export const JQUERY = 'jquery';
-export const BOOTSTRAP = 'bootstrap';
-export const ANGULARJS = 'angularjs';
 
 export const CODEPEN = 'codepen';
 export const GITHUB = 'github';

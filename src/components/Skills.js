@@ -19,14 +19,12 @@ export default function Skills({ filter, setFilter }) {
         <Skill name="SVG" id={techs.SVG} score={4} {...props} />
         <Skill name="CSS3" id={techs.CSS3} score={4} {...props} />
         <Skill name="SCSS" id={techs.SCSS} score={3} {...props} />
-        <Skill name="Bootstrap" id={techs.BOOTSTRAP} score={3} {...props} />
       </div>
       <div className="skillSection">
         <Skill name="JavaScript" id={techs.JAVASCRIPT} score={4} {...props} />
         <Skill name="React" id={techs.REACT} score={3} {...props} />
         <Skill name="Redux" id={techs.REDUX} score={3} {...props} />
         <Skill name="RxJS" id={techs.RXJS} score={2} {...props} />
-        <Skill name="AngularJS" id={techs.ANGULARJS} score={3} {...props} />
         <Skill name="jQuery" id={techs.JQUERY} score={3} {...props} />
       </div>
     </section>
