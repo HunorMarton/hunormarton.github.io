@@ -29,7 +29,7 @@ npm manifest:
       "start": "react-scripts start",
       "build": "react-scripts build",
       "predeploy": "yarn run build",
-      "deploy": "git add . && git commit -m 'New Build' && git subtree push --force --prefix=build origin master",
+      "deploy": "git add build && git commit -m 'New Build' && git push origin `git subtree split --prefix build source`:master --force",
       "test": "react-scripts test",
       "eject": "react-scripts eject",
       "lint": "eslint --fix . && prettier --parser=postcss --write src/**/*.css"
@@ -8993,9 +8993,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 129
+  Exit code: 1
   Command: sh
-  Arguments: -c git add . && git commit -m 'New Build' && git subtree push --force --prefix=build origin master
+  Arguments: -c git add build && git commit -m 'New Build' && git push origin `git subtree split --prefix build source`:master --force
   Directory: /Users/hunorborbely/Project/hunormarton.github.io
   Output:
   
