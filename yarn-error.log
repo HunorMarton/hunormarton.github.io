@@ -29,7 +29,7 @@ npm manifest:
       "start": "react-scripts start",
       "build": "react-scripts build",
       "predeploy": "yarn run build",
-      "deploy": "git subtree push --prefix=build origin master",
+      "deploy": "git add . && git commit -m 'New Build' && git subtree push --prefix=build origin master",
       "test": "react-scripts test",
       "eject": "react-scripts eject",
       "lint": "eslint --fix . && prettier --parser=postcss --write src/**/*.css"
@@ -8995,7 +8995,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c git subtree push --prefix=build origin master
+  Arguments: -c git add . && git commit -m 'New Build' && git subtree push --prefix=build origin master
   Directory: /Users/hunorborbely/Project/hunormarton.github.io
   Output:
   
