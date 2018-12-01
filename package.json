@@ -13,7 +13,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "yarn run build",
-    "deploy": "git add . && git commit -m 'New Build' && git subtree push -f --prefix=build origin master",
+    "deploy": "git add . && git commit -m 'New Build' && git subtree push --force --prefix=build origin master",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --fix . && prettier --parser=postcss --write src/**/*.css"
