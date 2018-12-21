@@ -1,6 +1,9 @@
 import * as types from '../constants/portfolioTypes';
 import * as techs from '../constants/techTypes';
 
+import CrossyRoadSmall from './img/CrossyRoad@0.5x-min.png';
+import CrossyRoadMedium from './img/CrossyRoad-min.png';
+
 import SolitaireSmall from './img/Solitaire@0.5x-min.png';
 import SolitaireMedium from './img/Solitaire-min.png';
 import SolitaireLarge from './img/Solitaire@2x-min.png';
@@ -66,6 +69,20 @@ import ClockMedium from './img/Clock-min.png';
 import ClockLarge from './img/Clock@2x-min.png';
 
 export default [
+  {
+    title: 'Crossy Road',
+    type: types.CODEPEN,
+    id: 'CrossyRoad',
+    link: 'https://codepen.io/HunorMarton/pen/JwWLJo',
+    'img@0.5x': CrossyRoadSmall,
+    'img@1x': CrossyRoadMedium,
+    'img@2x': CrossyRoadMedium,
+    date: 'December 2018',
+    techs: [
+      techs.JAVASCRIPT,
+      'three.js'
+    ],
+  },
   {
     title: 'SVG Curves',
     type: types.GITHUB,
