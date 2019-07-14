@@ -87,8 +87,8 @@ export default [
   {
     title: 'Crossy Road',
     type: types.CODEPEN,
-    id: 'CrossyRoad',
-    link: 'https://codepen.io/HunorMarton/pen/JwWLJo',
+    id: 'JwWLJo',
+    link: 'https://codepen.io/HunorMarton/full/JwWLJo',
     'img@0.5x': CrossyRoadSmall,
     'img@1x': CrossyRoadMedium,
     'img@2x': CrossyRoadMedium,
@@ -98,7 +98,7 @@ export default [
   {
     title: 'SVG Curves',
     type: types.GITHUB,
-    id: 'SVGCurves',
+    id: 'svg-curves',
     link: 'https://hunormarton.github.io/svg-curves/',
     'img@0.5x': SVGCurvesSmall,
     'img@1x': SVGCurvesMedium,
