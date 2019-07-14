@@ -1,4 +1,10 @@
 import React from 'react';
+import unuLogo from '../data/logos/unu.png';
+import leoLogo from '../data/logos/leo.png';
+import sapLogo from '../data/logos/sap.png';
+import universityLogo from '../data/logos/university.png';
+import upLogo from '../data/logos/up.png';
+import ResumeBlock from './ResumeBlock';
 
 export default function Resume() {
   return (
@@ -6,25 +12,52 @@ export default function Resume() {
       <h1>Hunor Márton Borbély</h1>
       <article>
         <h2>Experience</h2>
-        <h3>LEO Innovation Lab • 2017 - Present</h3>
-        <p>Full Stack Developer</p>
-        <h3>SAP Labs Hungary • 2012 - 2017</h3>
-        <p>Full Stack Developer, User Experience Designer</p>
+        <ResumeBlock
+          header="unu"
+          subheader="Full stack developer"
+          pic={unuLogo}
+          link="https://unumotors.com"
+          sub1="Berlin, Germany"
+          sub2="2019 - present"
+        />
+        <ResumeBlock
+          header="LEO Innovation Lab"
+          subheader="Full stack developer"
+          pic={leoLogo}
+          link="https://leoinnovationlab.com/"
+          sub1="Copenhagen, Denmark"
+          sub2="2017 - 2018"
+        />
+        <ResumeBlock
+          header="SAP"
+          subheader="Full stack developer, UX Designer"
+          pic={sapLogo}
+          link="https://www.sap.com/hungary/"
+          sub1="Budapest, Hungary"
+          sub2="2012 - 2017"
+        />
       </article>
       <article>
         <h2>Education</h2>
-        <h3>Budapest University of Technology and Economics</h3>
-        <p>Bachelor&#39;s Degree in Computer Science - 2012</p>
+        <ResumeBlock
+          header="Budapest University of Technology and Economics"
+          subheader="Bachelor&#39;s Degree"
+          pic={universityLogo}
+          link="https://www.bme.hu/"
+          sub1="Computer Science"
+          sub2="2007 - 2012"
+        />
       </article>
       <article>
         <h2>Volunteer</h2>
-        <h3>Budapest UP! • 2011- 2016</h3>
-        <p>Founder. Organizing urban playground events</p>
-      </article>
-      <article>
-        <h2>Languages</h2>
-        <p>Hungarian: native</p>
-        <p>English: fluent</p>
+        <ResumeBlock
+          header="Budapest UP!"
+          subheader="Founder"
+          pic={upLogo}
+          link="https://www.facebook.com/budapest.up"
+          sub1="Organizing urban playground events"
+          sub2="2011 - 2016"
+        />
       </article>
     </section>
   );
