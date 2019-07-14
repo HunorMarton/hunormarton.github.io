@@ -1,6 +1,10 @@
 import * as types from '../constants/portfolioTypes';
 import * as techs from '../constants/techTypes';
 
+import TicTacToeSmall from './img/TicTacToe@0.5x.png';
+import TicTacToeMedium from './img/TicTacToe.png';
+import TicTacToeLarge from './img/TicTacToe@2x.png';
+
 import CrossyRoadSmall from './img/CrossyRoad@0.5x-min.png';
 import CrossyRoadMedium from './img/CrossyRoad-min.png';
 
@@ -70,6 +74,17 @@ import ClockLarge from './img/Clock@2x-min.png';
 
 export default [
   {
+    title: 'A Playful Intro to React',
+    type: types.SKILLSHARE,
+    id: 'TicTacToe',
+    link: 'https://skl.sh/2Lw526T',
+    'img@0.5x': TicTacToeSmall,
+    'img@1x': TicTacToeMedium,
+    'img@2x': TicTacToeLarge,
+    date: 'June 2019',
+    techs: [techs.JAVASCRIPT, techs.REACT],
+  },
+  {
     title: 'Crossy Road',
     type: types.CODEPEN,
     id: 'CrossyRoad',
@@ -78,10 +93,7 @@ export default [
     'img@1x': CrossyRoadMedium,
     'img@2x': CrossyRoadMedium,
     date: 'December 2018',
-    techs: [
-      techs.JAVASCRIPT,
-      'three.js'
-    ],
+    techs: [techs.JAVASCRIPT, 'three.js'],
   },
   {
     title: 'SVG Curves',

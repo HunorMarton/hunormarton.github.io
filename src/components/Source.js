@@ -5,7 +5,7 @@ import * as types from '../constants/portfolioTypes';
 export default function Source({ type, id }) {
   let source;
   let icon;
-  // TODO: Replace switch case
+
   switch (type) {
     case types.CODEPEN:
       source = `http://codepen.io/HunorMarton/pen/${id}/`;
@@ -15,16 +15,21 @@ export default function Source({ type, id }) {
       source = `https://github.com/HunorMarton/${id}/`;
       icon = 'GitHub';
       break;
+    case types.SKILLSHARE:
+      icon = 'Skillshare';
+      break;
     default:
       throw Error('Invalid source type');
   }
 
   return (
     <div className="source">
-      <a href={source} target="_blank" rel="noopener noreferrer">
-        <i className={`sprite sprite-${icon}`} />
-        Source
-      </a>
+      {source && (
+        <a href={source} target="_blank" rel="noopener noreferrer">
+          <i className={`sprite sprite-${icon}`} />
+          Source
+        </a>
+      )}
     </div>
   );
 }

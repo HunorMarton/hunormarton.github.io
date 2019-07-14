@@ -12,6 +12,7 @@ export default function Skills({ filter, setFilter }) {
         <Skill name="All" id={techs.ALL} score={0} {...props} />
         <Skill name="CodePen" id={techs.CODEPEN} score={0} {...props} />
         <Skill name="Github" id={techs.GITHUB} score={0} {...props} />
+        <Skill name="Skillshare" id={techs.SKILLSHARE} score={0} {...props} />
       </div>
       <div className="skillSection">
         <Skill name="HTML" id={techs.HTML} score={3} {...props} />
@@ -23,8 +24,8 @@ export default function Skills({ filter, setFilter }) {
       <div className="skillSection">
         <Skill name="JavaScript" id={techs.JAVASCRIPT} score={4} {...props} />
         <Skill name="TypeScript" id={techs.TYPESCRIPT} score={4} {...props} />
-        <Skill name="React" id={techs.REACT} score={3} {...props} />
-        <Skill name="Redux" id={techs.REDUX} score={3} {...props} />
+        <Skill name="React" id={techs.REACT} score={4} {...props} />
+        <Skill name="Vue" id={techs.VUE} score={3} {...props} />
         <Skill name="RxJS" id={techs.RXJS} score={2} {...props} />
       </div>
     </section>
