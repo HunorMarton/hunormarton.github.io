@@ -1,6 +1,7 @@
 import React from 'react';
 import * as techs from './constants/techTypes';
 import Navigation from './components/Navigation';
+import Header from './components/Header';
 import Skills from './components/Skills';
 import Portfolio from './components/Portfolio';
 import Resume from './components/Resume';
@@ -18,6 +19,7 @@ export default class Root extends React.Component {
       <div id="container">
         <Navigation />
 
+        <Header />
         <Skills filter={this.state.filter} setFilter={this.setFilter} />
         <Portfolio filter={this.state.filter} />
         <Resume />

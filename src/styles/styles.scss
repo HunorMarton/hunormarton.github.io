@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Montserrat:400,900&display=swap');
 
 html {
   font-family: 'Cutive Mono', monospace;
@@ -157,23 +157,11 @@ ul {
   padding: 0;
 }
 
-#resume, #contact {
-  display: inline-block;
-  vertical-align: top;
-}
-
 #resume article {
   display: inline-block;
   vertical-align: top;
   margin: 40px 60px 50px 0;
   h2 {
     text-transform: uppercase;
-  }
-}
-
-#contact ul {
-  margin-bottom: 20px;
-  &:nth-of-type(1) {
-    background-color: lightgreen;
   }
 }

@@ -1,0 +1,14 @@
+#contact {
+  width: 100px;
+  a {
+    display: block;
+  }
+}
+
+#contact > div {
+  margin-bottom: 15px;
+}
+
+#contact > div:first-of-type {
+  background-color: lightgreen;
+}
