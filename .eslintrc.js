@@ -53,7 +53,6 @@ module.exports = {
           ],
         },
       ],
-      'no-console': 2,
 
       // enable one day
       'react/require-default-props': 0,
