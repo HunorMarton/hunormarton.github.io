@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Preview from './Preview';
-import Source from './Source';
-import Techs from './Techs';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Preview from './Preview'
+import Source from './Source'
+import Techs from './Techs'
 
 export default function PortfolioItem({ data }) {
   return (
@@ -16,9 +16,9 @@ export default function PortfolioItem({ data }) {
         <Techs techs={data.techs} />
       </div>
     </article>
-  );
+  )
 }
 
 PortfolioItem.propTypes = {
   data: PropTypes.object.isRequired,
-};
+}

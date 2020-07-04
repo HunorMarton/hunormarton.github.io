@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './ResumeBlock.scss';
+import React from 'react'
+import PropTypes from 'prop-types'
+import './ResumeBlock.scss'
 
 export default function ResumeBlock({ pic, link, header, subheader, sub1, sub2 }) {
   return (
@@ -15,7 +15,7 @@ export default function ResumeBlock({ pic, link, header, subheader, sub1, sub2 }
       <p className="sub">{sub1}</p>
       <p className="sub">{sub2}</p>
     </article>
-  );
+  )
 }
 
 ResumeBlock.propTypes = {
@@ -25,4 +25,4 @@ ResumeBlock.propTypes = {
   subheader: PropTypes.string.isRequired,
   sub1: PropTypes.string.isRequired,
   sub2: PropTypes.string.isRequired,
-};
+}

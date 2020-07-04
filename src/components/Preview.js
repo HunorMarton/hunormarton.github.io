@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Preview({ link, data }) {
   return (
@@ -17,10 +17,10 @@ export default function Preview({ link, data }) {
         <div className="run">►</div>
       </a>
     </div>
-  );
+  )
 }
 
 Preview.propTypes = {
   link: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-};
+}

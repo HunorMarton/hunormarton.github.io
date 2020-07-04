@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default function Navigation() {
   return (
@@ -8,5 +8,5 @@ export default function Navigation() {
       <a href="#portfolio">portfolio</a>
       <a href="#skills">skills</a>
     </nav>
-  );
+  )
 }

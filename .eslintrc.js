@@ -55,12 +55,6 @@ module.exports = {
       ],
       'no-console': 2,
 
-      // prettier
-      'prettier/prettier': [
-        'error',
-        { trailingComma: 'es5', singleQuote: true, parser: 'flow', printWidth: 90 },
-      ],
-
       // enable one day
       'react/require-default-props': 0,
       'max-len': 0,

@@ -1,5 +1,5 @@
-import React from 'react';
-import './Header.scss';
+import React from 'react'
+import './Header.scss'
 
 export default function Header() {
   return (
@@ -10,5 +10,5 @@ export default function Header() {
 
       <div>Software engineer</div>
     </section>
-  );
+  )
 }

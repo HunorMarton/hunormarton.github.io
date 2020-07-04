@@ -1,10 +1,10 @@
-import React from 'react';
-import unuLogo from '../data/logos/unu.png';
-import leoLogo from '../data/logos/leo.png';
-import sapLogo from '../data/logos/sap.png';
-import universityLogo from '../data/logos/university.png';
-import upLogo from '../data/logos/up.png';
-import ResumeBlock from './ResumeBlock';
+import React from 'react'
+import unuLogo from '../data/logos/unu.png'
+import leoLogo from '../data/logos/leo.png'
+import sapLogo from '../data/logos/sap.png'
+import universityLogo from '../data/logos/university.png'
+import upLogo from '../data/logos/up.png'
+import ResumeBlock from './ResumeBlock'
 
 export default function Resume() {
   return (
@@ -60,5 +60,5 @@ export default function Resume() {
         />
       </article>
     </section>
-  );
+  )
 }

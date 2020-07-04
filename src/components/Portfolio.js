@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as techs from '../constants/techTypes';
-import portfolioItems from '../data/portfolioItems';
-import PortfolioItem from './PortfolioItem';
+import React from 'react'
+import PropTypes from 'prop-types'
+import * as techs from '../constants/techTypes'
+import portfolioItems from '../data/portfolioItems'
+import PortfolioItem from './PortfolioItem'
 
 export default function Portfolio({ filter }) {
   return (
@@ -21,9 +21,9 @@ export default function Portfolio({ filter }) {
           <PortfolioItem key={item.title} data={item} />
         ))}
     </section>
-  );
+  )
 }
 
 Portfolio.propTypes = {
   filter: PropTypes.string.isRequired,
-};
+}

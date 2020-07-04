@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Techs({ techs }) {
   return (
@@ -10,9 +10,9 @@ export default function Techs({ techs }) {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
 Techs.propTypes = {
   techs: PropTypes.array.isRequired,
-};
+}

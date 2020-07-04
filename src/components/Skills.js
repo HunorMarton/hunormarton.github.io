@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as techs from '../constants/techTypes';
-import Skill from './Skill';
+import React from 'react'
+import PropTypes from 'prop-types'
+import * as techs from '../constants/techTypes'
+import Skill from './Skill'
 
 export default function Skills({ filter, setFilter }) {
-  const props = { filter, setFilter };
+  const props = { filter, setFilter }
   return (
     <section id="skills">
       <h1>Skills</h1>
@@ -29,10 +29,10 @@ export default function Skills({ filter, setFilter }) {
         <Skill name="RxJS" id={techs.RXJS} score={2} {...props} />
       </div>
     </section>
-  );
+  )
 }
 
 Skills.propTypes = {
   filter: PropTypes.string.isRequired,
   setFilter: PropTypes.func.isRequired,
-};
+}
