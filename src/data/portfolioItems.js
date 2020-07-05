@@ -1,6 +1,12 @@
 import * as types from '../constants/portfolioTypes'
 import * as techs from '../constants/techTypes'
 
+import MinesweeperMedium from './img/Minesweeper-min.png'
+import MinesweeperLarge from './img/Minesweeper@2x-min.png'
+
+import LogicGateMedium from './img/LogicGate-min.png'
+import LogicGateLarge from './img/LogicGate@2x-min.png'
+
 import TicTacToeMedium from './img/TicTacToe.png'
 import TicTacToeLarge from './img/TicTacToe@2x.png'
 
@@ -55,6 +61,26 @@ import ClockMedium from './img/Clock-min.png'
 import ClockLarge from './img/Clock@2x-min.png'
 
 export default [
+  {
+    title: 'Minesweeper',
+    type: types.CODEPEN,
+    id: 'LYGYMgV',
+    link: 'https://codepen.io/HunorMarton/full/LYGYMgV',
+    'img@1x': MinesweeperMedium,
+    'img@2x': MinesweeperLarge,
+    date: 'May 2020',
+    techs: [techs.JAVASCRIPT, techs.VUE, techs.PUG],
+  },
+  {
+    title: 'Logic gate simulator',
+    type: types.GITHUB,
+    id: 'logic-gate',
+    link: 'https://hunormarton.github.io/logic-gate/',
+    'img@1x': LogicGateMedium,
+    'img@2x': LogicGateLarge,
+    date: 'May 2020',
+    techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG],
+  },
   {
     title: 'A Playful Intro to React',
     type: types.SKILLSHARE,
