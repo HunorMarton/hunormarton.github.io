@@ -20,20 +20,22 @@ export default function Source({ type, id }) {
       icon = 'CSSTricks'
       break
     case platforms.SKILLSHARE:
-      icon = 'Skillshare'
+      icon = 'SkillShare'
       break
     default:
       throw Error('Invalid source type')
   }
 
+  const Icon = <i className={`sprite sprite-${icon}`} />
+
   return (
     <div className="source">
-      {source && (
-        <a href={source} target="_blank" rel="noopener noreferrer">
-          <i className={`sprite sprite-${icon}`} />
-          Source
-        </a>
-      )}
+      {source
+        ? <a href={source} target="_blank" rel="noopener noreferrer">
+            {Icon}
+            Source
+          </a>
+        : Icon}
     </div>
   )
 }

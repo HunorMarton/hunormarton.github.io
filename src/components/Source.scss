@@ -1,5 +1,5 @@
 .source {
-  margin: 10px 0 10px 0;
+  margin: 20px 0;
 
   a {
     text-decoration: none;
@@ -13,14 +13,29 @@
     vertical-align: middle;
     margin-right: 5px;
   }
+
+  .sprite-CSSTricks {
+    width: 32px;
+    height: 32px;
+    background-position: -1px -1px;
+  }
+
   .sprite-CodePen {
     width: 32px;
     height: 32px;
-    background-position: -5px -5px;
+    background-position: -35px -1px;
   }
+
   .sprite-GitHub {
     width: 32px;
     height: 32px;
-    background-position: -47px -5px;
+    background-position: -1px -35px;
   }
+
+  .sprite-SkillShare {
+    width: 64px;
+    height: 32px;
+    background-position: -69px -1px;
+  }
+
 }

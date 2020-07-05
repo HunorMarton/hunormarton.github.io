@@ -1,0 +1,2 @@
+https://resizeimage.net/
+https://www.codeandweb.com/free-sprite-sheet-packer
