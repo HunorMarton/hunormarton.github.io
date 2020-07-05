@@ -97,7 +97,7 @@ export default [
     link: 'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
     desc: 'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
     date: 'August 2019',
-    techs: [techs.REACT, 'requestAnimationFrame'],
+    techs: [techs.REACT],
   },
   {
     title: 'A Playful Intro to React',

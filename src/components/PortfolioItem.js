@@ -9,7 +9,7 @@ export default function PortfolioItem({ data }) {
   return (
     <article>
       <h1>
-        {data.title} <span className="date">{data.date}</span>
+        <span>{data.title}</span> <span className="date">{data.date}</span>
       </h1>
       <Preview img={data.img} data={data} link={data.link} />
       <div className="info">

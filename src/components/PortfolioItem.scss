@@ -14,14 +14,26 @@
 
   .info {
     display: inline-block;
-    padding-left: 20px;
     vertical-align: bottom;
+    width: 200px;
   }
 }
 
 @media screen and (min-width: $desktop) {
   #portfolio article {
-    margin-right: 80px;
+    margin-right: 50px;
     margin-bottom: 80px;
+
+    h1 {
+      max-width: 500px;
+
+      span {
+        display: inline-block;
+      }
+    }
+
+    .info {
+      padding-left: 20px;
+    }
   }
 }
