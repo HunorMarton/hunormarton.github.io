@@ -6,10 +6,17 @@ export default function Preview({ link, data }) {
   return (
     <div className="preview">
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <picture>
-          <source srcSet={`${data['img@1x']} 1x, ${data['img@2x']} 2x`} />
-          <img src={data['img@1x']} alt="Portfolio item preview" />
-        </picture>
+        {data['img@1x']
+          ? <picture>
+              <source srcSet={`${data['img@1x']} 1x, ${data['img@2x']} 2x`} />
+              <img src={data['img@1x']} alt="Portfolio item preview" />
+            </picture>
+          : <div className="desc">
+              <h1>“</h1>
+              <h2>{data.title}</h2>
+              {data.desc}
+            </div>
+        }
         <div className="run">►</div>
       </a>
     </div>

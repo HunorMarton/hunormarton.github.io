@@ -22,6 +22,9 @@ export default function Contact() {
         <a href="https://github.com/HunorMarton" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
+        <a href="https://css-tricks.com/author/hunorborbely/" target="_blank" rel="noopener noreferrer">
+          CSS-Tricks
+        </a>
         <a
           href="https://www.skillshare.com/profile/Hunor-Borb%C3%A9ly/3932130"
           target="_blank"

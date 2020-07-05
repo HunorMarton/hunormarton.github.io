@@ -62,6 +62,15 @@ import ClockLarge from './img/Clock@2x-min.png'
 
 export default [
   {
+    title: 'How to Make localStorage Reactive in Vue',
+    type: types.CSSTRICKS,
+    id: 'How to Make localStorage Reactive in Vue',
+    link: 'https://css-tricks.com/how-to-make-localstorage-reactive-in-vue/',
+    desc: 'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
+    date: 'June 2020',
+    techs: [techs.VUE, 'localStorage'],
+  },
+  {
     title: 'Minesweeper',
     type: types.CODEPEN,
     id: 'LYGYMgV',
@@ -80,6 +89,15 @@ export default [
     'img@2x': LogicGateLarge,
     date: 'May 2020',
     techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG],
+  },
+  {
+    title: 'Using requestAnimationFrame with React Hooks',
+    type: types.CSSTRICKS,
+    id: 'Using requestAnimationFrame with React Hooks',
+    link: 'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
+    desc: 'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
+    date: 'August 2019',
+    techs: [techs.REACT, 'requestAnimationFrame'],
   },
   {
     title: 'A Playful Intro to React',

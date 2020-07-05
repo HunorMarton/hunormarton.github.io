@@ -9,9 +9,38 @@
   font-size: 0;
   width: 100%;
 
+  a {
+    display: flex;
+    align-items: center;
+    color: gray;
+    text-decoration: none;
+  }
+
   img {
     width: 100%;
     height: auto;
+  }
+
+  .desc {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 40px;
+
+    h1 {
+      font-size: 5em;
+      margin: 0;
+    }
+
+    h2 {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+
+      float: left;
+	    padding-top: 100%; 	/* initial ratio of 1:1*/
+    }
   }
 
   .run {
@@ -50,11 +79,18 @@
   .preview {
     width: auto;
 
-    img {
+    img,
+    .desc {
       $previewSize: 500px;
 
       width: $previewSize;
       height: $previewSize;
+    }
+
+    .desc {
+      h2 {
+        display: block;
+      }
     }
   }
 }
