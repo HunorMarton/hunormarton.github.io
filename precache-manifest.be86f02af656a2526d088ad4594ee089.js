@@ -1,23 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a01b5188262d53e4c72eec929f06c0a0",
+    "revision": "576cdea22417451f939781de7b909add",
     "url": "/index.html"
   },
   {
-    "revision": "fe8f7d8a771d8d03a0c2",
-    "url": "/static/css/main.55b57a8d.chunk.css"
+    "revision": "9d356516dbcb6ffa2892",
+    "url": "/static/css/main.7b79f3bb.chunk.css"
   },
   {
-    "revision": "a8f90f4e050342561f52",
-    "url": "/static/js/2.61fe039b.chunk.js"
+    "revision": "8b46c8a55a99316d3f05",
+    "url": "/static/js/2.d5aac14f.chunk.js"
   },
   {
-    "revision": "fe8f7d8a771d8d03a0c2",
-    "url": "/static/js/main.bfb0f428.chunk.js"
+    "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
+    "url": "/static/js/2.d5aac14f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "42ac5946195a7306e2a5",
-    "url": "/static/js/runtime~main.a8a9905a.js"
+    "revision": "9d356516dbcb6ffa2892",
+    "url": "/static/js/main.a5106909.chunk.js"
+  },
+  {
+    "revision": "e09751e01fd2c52ac4a8",
+    "url": "/static/js/runtime-main.5ffb660f.js"
   },
   {
     "revision": "161e160009cbd54985a731895e9ce20c",
@@ -36,12 +40,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/CrossyRoad-min.cd5e783b.png"
   },
   {
-    "revision": "a3048a677067c740c743590f7b8e2d65",
-    "url": "/static/media/CrossyRoad@0.5x-min.a3048a67.png"
-  },
-  {
     "revision": "a9ff379e913434d790fc45cb283940a8",
     "url": "/static/media/HSL@2x-min.a9ff379e.png"
+  },
+  {
+    "revision": "db77f0be59c22917114fd4b708f71bf6",
+    "url": "/static/media/LogicGate@2x-min.db77f0be.png"
   },
   {
     "revision": "4d93a260a1659f14a7fbd341a4ae4b5c",
@@ -58,6 +62,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6f7f1f8c4b964d2943e1d0ea09c32e7a",
     "url": "/static/media/Maze@2x-min.6f7f1f8c.png"
+  },
+  {
+    "revision": "48d3d44b0339638539d39ee1cd9db219",
+    "url": "/static/media/Minesweeper@2x-min.48d3d44b.png"
   },
   {
     "revision": "81a580492b51e0a8b7febfecdcfc698d",
