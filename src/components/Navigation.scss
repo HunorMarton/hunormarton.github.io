@@ -1,0 +1,40 @@
+@import '../styles/variables';
+@import '../styles/breakpoints';
+
+nav {
+  position: fixed;
+  background-color: lightgray;
+  right: 0;
+  top: -20px;
+  height: $nav-height;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  z-index: 10;
+
+  a {
+    display: inline-block;
+    margin: 0 10px;
+    transform: rotate(180deg);
+    color: gray;
+    font-size: 1.1em;
+    text-decoration: none;
+
+    &::after {
+      content: "_";
+    }
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  nav {
+    right: 30px;
+    top: 20px;
+
+    a {
+      font-size: 1.3em;
+    }
+  }
+}

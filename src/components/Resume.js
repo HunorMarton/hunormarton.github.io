@@ -5,6 +5,7 @@ import sapLogo from '../data/logos/sap.png'
 import universityLogo from '../data/logos/university.png'
 import upLogo from '../data/logos/up.png'
 import ResumeBlock from './ResumeBlock'
+import './Resume.scss';
 
 export default function Resume() {
   return (

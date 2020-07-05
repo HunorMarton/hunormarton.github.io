@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Preview from './Preview'
 import Source from './Source'
 import Techs from './Techs'
+import './PortfolioItem.scss';
 
 export default function PortfolioItem({ data }) {
   return (

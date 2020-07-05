@@ -1,0 +1,32 @@
+#skills {
+  .skillSection {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 80px 20px 0;
+  }
+}
+
+.skill {
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.skillName {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.selectedSkill {
+  background-color: yellow;
+}
+
+.skillScore {
+  font-size: 1.4em;
+  vertical-align: middle;
+
+  .skillDeficit {
+    color: lightgray;
+  }
+}

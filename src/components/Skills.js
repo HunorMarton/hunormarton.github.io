@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as techs from '../constants/techTypes'
 import Skill from './Skill'
+import './Skills.scss';
 
 export default function Skills({ filter, setFilter }) {
   return (

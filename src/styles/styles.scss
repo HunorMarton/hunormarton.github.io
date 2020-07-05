@@ -1,167 +1,46 @@
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Montserrat:400,900&display=swap');
 
+@import './variables';
+@import './breakpoints';
+
 html {
   font-family: 'Cutive Mono', monospace;
 }
 
-nav {
-  position: fixed;
-  background-color: lightgray;
-  right:30px;
-  top: 20px;
-  transform: rotate(-90deg);
-  transform-origin: bottom right;
-  a {
-    display: inline-block;
-    margin: 15px 10px 15px 10px;
-    transform: rotate(180deg);
-    color: gray;
-    font-size: 1.3em;
-    text-decoration: none;
-    &::after {
-      content: "_";
-    }
-  }
+body {
+  margin: 0;
 }
 
 section {
-  margin: 40px 40px 40px 40px;
-  padding: 10px;
+  $vertical-margin: 80px;
+  $horizontal-margin: 20px;
+
+  margin: $vertical-margin $horizontal-margin;
+  margin-right: calc(#{$horizontal-margin} + #{$nav-height});
+
+  & > h1 {
+    font-size: 1.7em;
+  }
+
   & > h1::after {
     content: "_";
   }
-}
 
-#skills {
-  .skillSection {
-    display: inline-block;
-    vertical-align: top;
-    margin: 20px 80px 20px 0;
+  article {
+    width: calc(100vw - #{$horizontal-margin} * 2 - #{$nav-height});
   }
 }
 
-.skill {
-  padding-bottom: 10px;
-  cursor: pointer;
-}
+@media screen and (min-width: $desktop) {
+  section {
+    margin: 40px;
 
-.skillName {
-  display: inline-block;
-  width: 100px;
-  text-align: right;
-  margin-right: 10px;
-}
-
-.selectedSkill {
-  background-color: yellow;
-}
-
-.skillScore {
-  font-size: 1.4em;
-  vertical-align: middle;
-  .skillDeficit {
-    color: lightgray;
-  }
-}
-
-
-#portfolio article {
-  margin: 50px 80px 80px 0;
-  display: inline-block;
-}
-.date {
-  color: gray;
-  &::before {
-    content: "// ";
-  }
-}
-.preview {
-  $previewSize: 500px;
-  display: inline-block;
-  position: relative;
-  isolation: isolate;
-  border: 1px solid rgba(gray, 0.4);
-  font-size: 0;
-
-  img {
-    width: $previewSize;
-    height: $previewSize;
-  }
-
-  .run {
-    // Positioning
-    position: absolute;
-    width: $previewSize;
-    height: $previewSize;
-    top: 0;
-    left: 0;
-
-    // Text
-    font-size: 128px;
-    user-select: none;
-    text-align: center;
-    line-height: $previewSize;
-
-    // Misc
-    cursor: pointer;
-    background-color: white;
-
-    mix-blend-mode: luminosity;
-
-    // Hover
-    opacity: 0;
-    &:hover {
-      opacity: 0.5;
+    & > h1 {
+      font-size: 1.5em;
     }
-  }
-}
-.info {
-  display: inline-block;
-  padding-left: 20px;
-}
-.source {
-  margin: 10px 0 10px 0;
 
-  a {
-    text-decoration: none;
-    color: black;
-  }
-
-  .sprite {
-    background-image: url(spritesheet.png);
-    background-repeat: no-repeat;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px;
-  }
-  .sprite-CodePen {
-    width: 32px;
-    height: 32px;
-    background-position: -5px -5px;
-  }
-  .sprite-GitHub {
-    width: 32px;
-    height: 32px;
-    background-position: -47px -5px;
-  }
-}
-.techs {
-  li::before {
-    content: "#";
-    color: gray;
-  }
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#resume article {
-  display: inline-block;
-  vertical-align: top;
-  margin: 40px 60px 50px 0;
-  h2 {
-    text-transform: uppercase;
+    article {
+      width: auto;
+    }
   }
 }

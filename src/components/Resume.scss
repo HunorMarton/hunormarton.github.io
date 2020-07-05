@@ -1,0 +1,17 @@
+@import '../styles/breakpoints';
+
+#resume article {
+  display: inline-block;
+  vertical-align: top;
+  margin: 40px 0 50px 0;
+
+  h2 {
+    text-transform: uppercase;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  #resume article {
+    margin-right: 60px;
+  }
+}

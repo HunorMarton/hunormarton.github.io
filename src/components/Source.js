@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as types from '../constants/portfolioTypes'
+import './Source.scss'
 
 export default function Source({ type, id }) {
   let source

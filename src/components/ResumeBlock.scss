@@ -1,8 +1,10 @@
+@import '../styles/breakpoints';
+
 .resume-block {
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
   margin: 50px 80px 80px 0;
-  width: 300px;
+  width: 100%;
 
   h3 {
     font-weight: normal;
@@ -12,8 +14,15 @@
     font-size: 0.8em;
     color: gray;
   }
+
   img {
-    width: 300px;
+    width: 100%;
     cursor: pointer;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .resume-block {
+    width: 300px;
   }
 }
