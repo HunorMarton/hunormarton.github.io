@@ -25,9 +25,9 @@ export default function Skills({ filter, setFilter }) {
       </div>
       <div className="skillSection">
         <Skill name="JavaScript" id={techs.JAVASCRIPT} score={4} filter={filter} setFilter={setFilter} />
-        <Skill name="TypeScript" id={techs.TYPESCRIPT} score={4} filter={filter} setFilter={setFilter} />
-        <Skill name="React" id={techs.REACT} score={4} filter={filter} setFilter={setFilter} />
-        <Skill name="Vue" id={techs.VUE} score={3} filter={filter} setFilter={setFilter} />
+        <Skill name="TypeScript" id={techs.TYPESCRIPT} score={3} filter={filter} setFilter={setFilter} />
+        <Skill name="React" id={techs.REACT} score={3} filter={filter} setFilter={setFilter} />
+        <Skill name="Vue" id={techs.VUE} score={4} filter={filter} setFilter={setFilter} />
         <Skill name="RxJS" id={techs.RXJS} score={2} filter={filter} setFilter={setFilter} />
       </div>
     </section>
