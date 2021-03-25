@@ -63,73 +63,73 @@ import ClockLarge from './img/Clock@2x-min.png'
 export default [
   {
     title: 'How to Make localStorage Reactive in Vue',
-    type: types.CSSTRICKS,
-    id: 'How to Make localStorage Reactive in Vue',
+    date: 'June 2020',
     link: 'https://css-tricks.com/how-to-make-localstorage-reactive-in-vue/',
     desc:
       'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
-    date: 'June 2020',
+    sources: [
+      { type: types.CSSTRICKS, id: 'How to Make localStorage Reactive in Vue' }
+    ],
     techs: [techs.VUE, 'localStorage']
   },
   {
     title: 'Minesweeper',
-    type: types.CODEPEN,
-    id: 'LYGYMgV',
+    date: 'May 2020',
     link: 'https://codepen.io/HunorMarton/full/LYGYMgV',
     'img@1x': MinesweeperMedium,
     'img@2x': MinesweeperLarge,
-    date: 'May 2020',
+    sources: [{ type: types.CODEPEN, id: 'LYGYMgV' }],
     techs: [techs.JAVASCRIPT, techs.VUE, techs.PUG]
   },
   {
     title: 'Logic gate simulator',
-    type: types.GITHUB,
-    id: 'logic-gate',
+    date: 'May 2020',
     link: 'https://hunormarton.github.io/logic-gate/',
     'img@1x': LogicGateMedium,
     'img@2x': LogicGateLarge,
-    date: 'May 2020',
+    sources: [{ type: types.GITHUB, id: 'logic-gate' }],
     techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG]
   },
   {
     title: 'Using requestAnimationFrame with React Hooks',
-    type: types.CSSTRICKS,
-    id: 'Using requestAnimationFrame with React Hooks',
+    date: 'August 2019',
     link:
       'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
     desc:
       'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
-    date: 'August 2019',
+    sources: [
+      {
+        type: types.CSSTRICKS,
+        id: 'Using requestAnimationFrame with React Hooks'
+      }
+    ],
     techs: [techs.REACT]
   },
   {
     title: 'A Playful Intro to React',
-    type: types.SKILLSHARE,
-    id: 'TicTacToe',
+    date: 'June 2019',
     link: 'https://skl.sh/2Lw526T',
     'img@1x': TicTacToeMedium,
     'img@2x': TicTacToeLarge,
-    date: 'June 2019',
+    sources: [{ type: types.SKILLSHARE, id: 'TicTacToe' }],
     techs: [techs.JAVASCRIPT, techs.REACT]
   },
   {
     title: 'Crossy Road',
-    type: types.CODEPEN,
-    id: 'JwWLJo',
+    date: 'December 2018',
     link: 'https://codepen.io/HunorMarton/full/JwWLJo',
     'img@1x': CrossyRoadMedium,
     'img@2x': CrossyRoadMedium,
-    date: 'December 2018',
+    sources: [{ type: types.CODEPEN, id: 'JwWLJo' }],
     techs: [techs.JAVASCRIPT, 'three.js']
   },
   {
     title: 'SVG Curves',
-    type: types.GITHUB,
-    id: 'svg-curves',
+    date: 'November 2018',
     link: 'https://hunormarton.github.io/svg-curves/',
     'img@1x': SVGCurvesMedium,
     'img@2x': SVGCurvesLarge,
-    date: 'November 2018',
+    sources: [{ type: types.GITHUB, id: 'svg-curves' }],
     techs: [
       techs.JAVASCRIPT,
       techs.TYPESCRIPT,
@@ -141,42 +141,38 @@ export default [
   },
   {
     title: 'Solitaire',
-    type: types.CODEPEN,
-    id: 'rwpGXj',
+    date: 'June 2017',
     link: 'http://codepen.io/HunorMarton/full/rwpGXj/',
     'img@1x': SolitaireMedium,
     'img@2x': SolitaireLarge,
-    date: 'June 2017',
+    sources: [{ type: types.CODEPEN, id: 'rwpGXj' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
   },
   {
     title: 'Task Manager',
-    type: types.CODEPEN,
-    id: 'qmJvvY',
+    date: 'May 2017',
     link: 'http://codepen.io/HunorMarton/full/qmJvvY/',
     'img@1x': TaskManagerMedium,
     'img@2x': TaskManagerLarge,
-    date: 'May 2017',
+    sources: [{ type: types.CODEPEN, id: 'qmJvvY' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS]
   },
   {
     title: 'Luminosity',
-    type: types.CODEPEN,
-    id: 'BRRLPP',
+    date: 'May 2017',
     link: 'http://codepen.io/HunorMarton/full/BRRLPP/',
     'img@1x': LuminosityMedium,
     'img@2x': LuminosityLarge,
-    date: 'May 2017',
+    sources: [{ type: types.CODEPEN, id: 'BRRLPP' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS3, techs.SVG]
   },
   {
     title: 'Maze',
-    type: types.GITHUB,
-    id: 'maze',
+    date: 'April 2017',
     link: 'https://hunormarton.github.io/maze/',
     'img@1x': MazeMedium,
     'img@2x': MazeLarge,
-    date: 'April 2017',
+    sources: [{ type: types.GITHUB, id: 'maze' }],
     techs: [
       techs.JAVASCRIPT,
       techs.REACT,
@@ -187,112 +183,101 @@ export default [
   },
   {
     title: 'Compass',
-    type: types.GITHUB,
-    id: 'compass',
+    date: 'April 2017',
     link: 'https://hunormarton.github.io/compass/',
     'img@1x': CompassMedium,
     'img@2x': CompassLarge,
-    date: 'April 2017',
+    sources: [{ type: types.GITHUB, id: 'compass' }],
     techs: [techs.JAVASCRIPT, techs.REACT, 'deviceorientation']
   },
   {
     title: 'Square',
-    type: types.CODEPEN,
-    id: 'bqWxgp',
+    date: 'March 2017',
     link: 'http://codepen.io/HunorMarton/full/bqWxgp',
     'img@1x': SquareMedium,
     'img@2x': SquareLarge,
-    date: 'March 2017',
+    sources: [{ type: types.CODEPEN, id: 'bqWxgp' }],
     techs: [techs.PUG, techs.SCSS]
   },
   {
     title: 'Countdown',
-    type: types.CODEPEN,
-    id: 'mWWqBv',
+    date: 'March 2017',
     link: 'http://codepen.io/HunorMarton/full/mWWqBv',
     'img@1x': CountdownMedium,
     'img@2x': CountdownLarge,
-    date: 'March 2017',
+    sources: [{ type: types.CODEPEN, id: 'mWWqBv' }],
     techs: [techs.PUG, techs.CSS3, techs.SCSS]
   },
   {
     title: 'HSL Color Picker',
-    type: types.CODEPEN,
-    id: 'dvXVvQ',
+    date: 'March 2017',
     link: 'http://codepen.io/HunorMarton/full/dvXVvQ',
     'img@1x': HSLMedium,
     'img@2x': HSLLarge,
-    date: 'March 2017',
+    sources: [{ type: types.CODEPEN, id: 'dvXVvQ' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS, techs.SVG]
   },
   {
     title: 'RGB',
-    type: types.CODEPEN,
-    id: 'PpwRdM',
+    date: 'February 2017',
     link: 'http://codepen.io/HunorMarton/full/PpwRdM',
     'img@1x': RGBMedium,
     'img@2x': RGBLarge,
-    date: 'February 2017',
+    sources: [{ type: types.CODEPEN, id: 'PpwRdM' }],
     techs: [techs.JAVASCRIPT, 'mix-blend-mode', techs.PUG]
   },
   {
     title: 'Transpose of a matrix',
-    type: types.CODEPEN,
-    id: 'LxqwjX',
+    date: 'February 2017',
     link: 'http://codepen.io/HunorMarton/full/LxqwjX',
     'img@1x': TransposeMedium,
     'img@2x': TransposeLarge,
-    date: 'February 2017',
+    sources: [{ type: types.CODEPEN, id: 'LxqwjX' }],
     techs: [techs.PUG, techs.CSS3]
   },
   {
     title: 'Sine',
-    type: types.CODEPEN,
-    id: 'ggQGqQ',
+    date: 'February 2017',
     link: 'http://codepen.io/HunorMarton/full/ggQGqQ',
     'img@1x': SineMedium,
     'img@2x': SineLarge,
-    date: 'February 2017',
+    sources: [{ type: types.CODEPEN, id: 'ggQGqQ' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.SVG]
   },
   {
     title: 'Redux Undo',
-    type: types.CODEPEN,
-    id: 'wgpKGL',
+    date: 'February 2017',
     link: 'http://codepen.io/HunorMarton/full/wgpKGL',
     'img@1x': UndoMedium,
     'img@2x': UndoLarge,
-    date: 'February 2017',
+    sources: [{ type: types.CODEPEN, id: 'wgpKGL' }],
     techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX]
   },
   {
     title: 'Text on the wall',
-    type: types.CODEPEN,
-    id: 'EZgMGb',
+    date: 'January 2017',
     link: 'http://codepen.io/HunorMarton/full/EZgMGb',
     'img@1x': WallMedium,
     'img@2x': WallLarge,
-    date: 'January 2017',
+    sources: [{ type: types.CODEPEN, id: 'EZgMGb' }],
     techs: [techs.PUG, techs.CSS3]
   },
   {
     title: 'Rotating 3D figure',
-    type: types.CODEPEN,
-    id: 'mRbNQd',
+    date: 'January 2017',
     link: 'http://codepen.io/HunorMarton/full/mRbNQd',
     'img@1x': FigureMedium,
     'img@2x': FigureLarge,
-    date: 'January 2017',
+    sources: [{ type: types.CODEPEN, id: 'mRbNQd' }],
     techs: [techs.PUG, techs.CSS3, techs.SCSS]
   },
   {
     title: 'Analog Text Clock',
-    type: types.CODEPEN,
-    id: 'vyGVpX',
+    date: 'November 2016',
     link: 'http://codepen.io/HunorMarton/full/vyGVpX',
     'img@1x': ClockMedium,
     'img@2x': ClockLarge,
-    date: 'November 2016',
+    sources: [{ type: types.CODEPEN, id: 'vyGVpX' }],
     techs: [techs.JAVASCRIPT, techs.REACT]
   }
 ]
