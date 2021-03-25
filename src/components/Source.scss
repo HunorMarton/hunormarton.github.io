@@ -7,35 +7,8 @@
   }
 
   .sprite {
-    background-image: url(../styles/spritesheet.png);
-    background-repeat: no-repeat;
     display: inline-block;
     vertical-align: middle;
     margin-right: 5px;
   }
-
-  .sprite-CSSTricks {
-    width: 32px;
-    height: 32px;
-    background-position: -1px -1px;
-  }
-
-  .sprite-CodePen {
-    width: 32px;
-    height: 32px;
-    background-position: -35px -1px;
-  }
-
-  .sprite-GitHub {
-    width: 32px;
-    height: 32px;
-    background-position: -1px -35px;
-  }
-
-  .sprite-SkillShare {
-    width: 64px;
-    height: 32px;
-    background-position: -69px -1px;
-  }
-
 }

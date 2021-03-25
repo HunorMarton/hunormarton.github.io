@@ -66,9 +66,10 @@ export default [
     type: types.CSSTRICKS,
     id: 'How to Make localStorage Reactive in Vue',
     link: 'https://css-tricks.com/how-to-make-localstorage-reactive-in-vue/',
-    desc: 'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
+    desc:
+      'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
     date: 'June 2020',
-    techs: [techs.VUE, 'localStorage'],
+    techs: [techs.VUE, 'localStorage']
   },
   {
     title: 'Minesweeper',
@@ -78,7 +79,7 @@ export default [
     'img@1x': MinesweeperMedium,
     'img@2x': MinesweeperLarge,
     date: 'May 2020',
-    techs: [techs.JAVASCRIPT, techs.VUE, techs.PUG],
+    techs: [techs.JAVASCRIPT, techs.VUE, techs.PUG]
   },
   {
     title: 'Logic gate simulator',
@@ -88,16 +89,18 @@ export default [
     'img@1x': LogicGateMedium,
     'img@2x': LogicGateLarge,
     date: 'May 2020',
-    techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG],
+    techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG]
   },
   {
     title: 'Using requestAnimationFrame with React Hooks',
     type: types.CSSTRICKS,
     id: 'Using requestAnimationFrame with React Hooks',
-    link: 'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
-    desc: 'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
+    link:
+      'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
+    desc:
+      'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
     date: 'August 2019',
-    techs: [techs.REACT],
+    techs: [techs.REACT]
   },
   {
     title: 'A Playful Intro to React',
@@ -107,7 +110,7 @@ export default [
     'img@1x': TicTacToeMedium,
     'img@2x': TicTacToeLarge,
     date: 'June 2019',
-    techs: [techs.JAVASCRIPT, techs.REACT],
+    techs: [techs.JAVASCRIPT, techs.REACT]
   },
   {
     title: 'Crossy Road',
@@ -117,7 +120,7 @@ export default [
     'img@1x': CrossyRoadMedium,
     'img@2x': CrossyRoadMedium,
     date: 'December 2018',
-    techs: [techs.JAVASCRIPT, 'three.js'],
+    techs: [techs.JAVASCRIPT, 'three.js']
   },
   {
     title: 'SVG Curves',
@@ -133,8 +136,8 @@ export default [
       techs.REACT,
       techs.REDUX,
       techs.RXJS,
-      techs.SVG,
-    ],
+      techs.SVG
+    ]
   },
   {
     title: 'Solitaire',
@@ -144,7 +147,7 @@ export default [
     'img@1x': SolitaireMedium,
     'img@2x': SolitaireLarge,
     date: 'June 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
   },
   {
     title: 'Task Manager',
@@ -154,7 +157,7 @@ export default [
     'img@1x': TaskManagerMedium,
     'img@2x': TaskManagerLarge,
     date: 'May 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS]
   },
   {
     title: 'Luminosity',
@@ -164,7 +167,7 @@ export default [
     'img@1x': LuminosityMedium,
     'img@2x': LuminosityLarge,
     date: 'May 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS3, techs.SVG],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS3, techs.SVG]
   },
   {
     title: 'Maze',
@@ -174,7 +177,13 @@ export default [
     'img@1x': MazeMedium,
     'img@2x': MazeLarge,
     date: 'April 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG, 'devicemotion'],
+    techs: [
+      techs.JAVASCRIPT,
+      techs.REACT,
+      techs.REDUX,
+      techs.SVG,
+      'devicemotion'
+    ]
   },
   {
     title: 'Compass',
@@ -184,7 +193,7 @@ export default [
     'img@1x': CompassMedium,
     'img@2x': CompassLarge,
     date: 'April 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, 'deviceorientation'],
+    techs: [techs.JAVASCRIPT, techs.REACT, 'deviceorientation']
   },
   {
     title: 'Square',
@@ -194,7 +203,7 @@ export default [
     'img@1x': SquareMedium,
     'img@2x': SquareLarge,
     date: 'March 2017',
-    techs: [techs.PUG, techs.SCSS],
+    techs: [techs.PUG, techs.SCSS]
   },
   {
     title: 'Countdown',
@@ -204,7 +213,7 @@ export default [
     'img@1x': CountdownMedium,
     'img@2x': CountdownLarge,
     date: 'March 2017',
-    techs: [techs.PUG, techs.CSS3, techs.SCSS],
+    techs: [techs.PUG, techs.CSS3, techs.SCSS]
   },
   {
     title: 'HSL Color Picker',
@@ -214,7 +223,7 @@ export default [
     'img@1x': HSLMedium,
     'img@2x': HSLLarge,
     date: 'March 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS, techs.SVG],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS, techs.SVG]
   },
   {
     title: 'RGB',
@@ -224,7 +233,7 @@ export default [
     'img@1x': RGBMedium,
     'img@2x': RGBLarge,
     date: 'February 2017',
-    techs: [techs.JAVASCRIPT, 'mix-blend-mode', techs.PUG],
+    techs: [techs.JAVASCRIPT, 'mix-blend-mode', techs.PUG]
   },
   {
     title: 'Transpose of a matrix',
@@ -234,7 +243,7 @@ export default [
     'img@1x': TransposeMedium,
     'img@2x': TransposeLarge,
     date: 'February 2017',
-    techs: [techs.PUG, techs.CSS3],
+    techs: [techs.PUG, techs.CSS3]
   },
   {
     title: 'Sine',
@@ -244,7 +253,7 @@ export default [
     'img@1x': SineMedium,
     'img@2x': SineLarge,
     date: 'February 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.SVG],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.SVG]
   },
   {
     title: 'Redux Undo',
@@ -254,7 +263,7 @@ export default [
     'img@1x': UndoMedium,
     'img@2x': UndoLarge,
     date: 'February 2017',
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX],
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX]
   },
   {
     title: 'Text on the wall',
@@ -264,7 +273,7 @@ export default [
     'img@1x': WallMedium,
     'img@2x': WallLarge,
     date: 'January 2017',
-    techs: [techs.PUG, techs.CSS3],
+    techs: [techs.PUG, techs.CSS3]
   },
   {
     title: 'Rotating 3D figure',
@@ -274,7 +283,7 @@ export default [
     'img@1x': FigureMedium,
     'img@2x': FigureLarge,
     date: 'January 2017',
-    techs: [techs.PUG, techs.CSS3, techs.SCSS],
+    techs: [techs.PUG, techs.CSS3, techs.SCSS]
   },
   {
     title: 'Analog Text Clock',
@@ -284,6 +293,6 @@ export default [
     'img@1x': ClockMedium,
     'img@2x': ClockLarge,
     date: 'November 2016',
-    techs: [techs.JAVASCRIPT, techs.REACT],
-  },
+    techs: [techs.JAVASCRIPT, techs.REACT]
+  }
 ]

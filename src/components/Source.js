@@ -22,6 +22,12 @@ export default function Source({ type, id }) {
     case platforms.SKILLSHARE:
       icon = 'SkillShare'
       break
+    case platforms.YOUTUBE:
+      icon = 'YouTube'
+      break
+    case platforms.FREECODECAMP:
+      icon = 'freeCodeCamp'
+      break
     default:
       throw Error('Invalid source type')
   }
@@ -30,17 +36,19 @@ export default function Source({ type, id }) {
 
   return (
     <div className="source">
-      {source
-        ? <a href={source} target="_blank" rel="noopener noreferrer">
-            {Icon}
-            Source
-          </a>
-        : Icon}
+      {source ? (
+        <a href={source} target="_blank" rel="noopener noreferrer">
+          {Icon}
+          Source
+        </a>
+      ) : (
+        Icon
+      )}
     </div>
   )
 }
 
 Source.propTypes = {
   type: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 }

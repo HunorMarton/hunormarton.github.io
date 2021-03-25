@@ -1,0 +1,41 @@
+.sprite {
+  background-image: url(spritesheet.png);
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.sprite-CSSTricks {
+  width: 30px;
+  height: 32px;
+  background-position: -1px -1px;
+}
+
+.sprite-CodePen {
+  width: 32px;
+  height: 32px;
+  background-position: -33px -1px;
+}
+
+.sprite-GitHub {
+  width: 32px;
+  height: 32px;
+  background-position: -1px -35px;
+}
+
+.sprite-SkillShare {
+  width: 65px;
+  height: 32px;
+  background-position: -67px -1px;
+}
+
+.sprite-YouTube {
+  width: 45px;
+  height: 32px;
+  background-position: -35px -35px;
+}
+
+.sprite-freeCodeCamp {
+  width: 47px;
+  height: 32px;
+  background-position: -82px -35px;
+}
