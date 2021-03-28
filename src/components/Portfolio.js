@@ -15,8 +15,8 @@ export default function Portfolio({ filter }) {
           item =>
             filter === types.ALL ||
             filter === techs.HTML ||
-            item.type === filter ||
-            item.techs.filter(tech => tech === filter).length === 1
+            item.sources.some(source => source.type === filter) ||
+            item.techs.some(tech => tech === filter)
         )
         .map(item => (
           <PortfolioItem key={item.title} data={item} />
@@ -26,5 +26,5 @@ export default function Portfolio({ filter }) {
 }
 
 Portfolio.propTypes = {
-  filter: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired
 }
