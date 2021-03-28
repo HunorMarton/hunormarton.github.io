@@ -64,7 +64,7 @@ export default [
       { type: types.YOUTUBE, id: 'bTk6dcAckuI' },
       { type: types.CODEPEN, id: 'VwKwgxX' }
     ],
-    techs: [techs.JAVASCRIPT]
+    techs: [techs.HTML, techs.JAVASCRIPT]
   },
   {
     title: 'Learn React & Vue in 20 minutes',
@@ -83,7 +83,7 @@ export default [
       { type: types.YOUTUBE, id: 'cNqgatGqvC8' },
       { type: types.CODEPEN, id: 'BazeOpE' }
     ],
-    techs: [techs.JAVASCRIPT, techs.CSS3, techs.SCSS]
+    techs: [techs.CSS, techs.SCSS]
   },
   {
     title: 'Stick Hero',
@@ -105,7 +105,7 @@ export default [
       { type: types.YOUTUBE, id: 'TAmYp4jKWoM' },
       { type: types.CODEPEN, id: 'dyXjaza' }
     ],
-    techs: [techs.JAVASCRIPT, techs.CSS3]
+    techs: [techs.HTML, techs.JAVASCRIPT, techs.CSS]
   },
   {
     title: 'CSS only interactive 3D die',
@@ -113,7 +113,7 @@ export default [
     link: 'https://codepen.io/HunorMarton/full/mdERrLy',
     ...images.Die,
     sources: [{ type: types.CODEPEN, id: 'mdERrLy' }],
-    techs: [techs.JAVASCRIPT, techs.CSS3, techs.SCSS]
+    techs: [techs.HTML, techs.CSS, techs.SCSS]
   },
   {
     title: 'A Playful Intro to Vue',
@@ -138,7 +138,7 @@ export default [
     link: 'https://codepen.io/HunorMarton/full/LYGYMgV',
     ...images.Minesweeper,
     sources: [{ type: types.CODEPEN, id: 'LYGYMgV' }],
-    techs: [techs.JAVASCRIPT, techs.VUE, techs.PUG]
+    techs: [techs.HTML, techs.JAVASCRIPT, techs.VUE, techs.PUG]
   },
   {
     title: 'Logic gate simulator',
@@ -146,7 +146,7 @@ export default [
     link: 'https://hunormarton.github.io/logic-gate/',
     ...images.LogicGate,
     sources: [{ type: types.GITHUB, id: 'logic-gate' }],
-    techs: [techs.JAVASCRIPT, techs.VUE, techs.SVG]
+    techs: [techs.HTML, techs.JAVASCRIPT, techs.VUE, techs.SVG]
   },
   {
     title: 'Using requestAnimationFrame with React Hooks',
@@ -181,6 +181,7 @@ export default [
     ...images.SVGCurves,
     sources: [{ type: types.GITHUB, id: 'svg-curves' }],
     techs: [
+      techs.HTML,
       techs.JAVASCRIPT,
       techs.TYPESCRIPT,
       techs.REACT,
@@ -195,7 +196,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/rwpGXj/',
     ...images.Solitaire,
     sources: [{ type: types.CODEPEN, id: 'rwpGXj' }],
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
+    techs: [techs.HTML, techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
   },
   {
     title: 'Task Manager',
@@ -211,7 +212,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/BRRLPP/',
     ...images.Luminosity,
     sources: [{ type: types.CODEPEN, id: 'BRRLPP' }],
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS3, techs.SVG]
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS, techs.SVG]
   },
   {
     title: 'Maze',
@@ -220,6 +221,7 @@ export default [
     ...images.Maze,
     sources: [{ type: types.GITHUB, id: 'maze' }],
     techs: [
+      techs.HTML,
       techs.JAVASCRIPT,
       techs.REACT,
       techs.REDUX,
@@ -249,7 +251,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/mWWqBv',
     ...images.Countdown,
     sources: [{ type: types.CODEPEN, id: 'mWWqBv' }],
-    techs: [techs.PUG, techs.CSS3, techs.SCSS]
+    techs: [techs.HTML, techs.PUG, techs.CSS, techs.SCSS]
   },
   {
     title: 'HSL Color Picker',
@@ -257,7 +259,14 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/dvXVvQ',
     ...images.HSL,
     sources: [{ type: types.CODEPEN, id: 'dvXVvQ' }],
-    techs: [techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.RXJS, techs.SVG]
+    techs: [
+      techs.HTML,
+      techs.JAVASCRIPT,
+      techs.REACT,
+      techs.REDUX,
+      techs.RXJS,
+      techs.SVG
+    ]
   },
   {
     title: 'RGB',
@@ -265,7 +274,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/PpwRdM',
     ...images.RGB,
     sources: [{ type: types.CODEPEN, id: 'PpwRdM' }],
-    techs: [techs.JAVASCRIPT, 'mix-blend-mode', techs.PUG]
+    techs: [techs.CSS, 'mix-blend-mode', techs.PUG]
   },
   {
     title: 'Transpose of a matrix',
@@ -273,7 +282,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/LxqwjX',
     ...images.Transpose,
     sources: [{ type: types.CODEPEN, id: 'LxqwjX' }],
-    techs: [techs.PUG, techs.CSS3]
+    techs: [techs.PUG, techs.CSS]
   },
   {
     title: 'Sine',
@@ -297,7 +306,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/EZgMGb',
     ...images.Wall,
     sources: [{ type: types.CODEPEN, id: 'EZgMGb' }],
-    techs: [techs.PUG, techs.CSS3]
+    techs: [techs.PUG, techs.CSS]
   },
   {
     title: 'Rotating 3D figure',
@@ -305,7 +314,7 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/mRbNQd',
     ...images.Figure,
     sources: [{ type: types.CODEPEN, id: 'mRbNQd' }],
-    techs: [techs.PUG, techs.CSS3, techs.SCSS]
+    techs: [techs.PUG, techs.CSS, techs.SCSS]
   },
   {
     title: 'Analog Text Clock',
@@ -313,6 +322,6 @@ export default [
     link: 'http://codepen.io/HunorMarton/full/vyGVpX',
     ...images.Clock,
     sources: [{ type: types.CODEPEN, id: 'vyGVpX' }],
-    techs: [techs.JAVASCRIPT, techs.REACT]
+    techs: [techs.JAVASCRIPT, techs.REACT, techs.CSS]
   }
 ]

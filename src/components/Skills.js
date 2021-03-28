@@ -91,7 +91,7 @@ export default function Skills({ filter, setFilter }) {
         />
         <Skill
           name="CSS"
-          id={techs.CSS3}
+          id={techs.CSS}
           score={4}
           filter={filter}
           setFilter={setFilter}
