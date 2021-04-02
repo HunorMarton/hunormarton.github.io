@@ -4,8 +4,9 @@ import leoLogo from '../data/logos/leo.png'
 import sapLogo from '../data/logos/sap.png'
 import universityLogo from '../data/logos/university.png'
 import upLogo from '../data/logos/up.png'
+import codebarLogo from '../data/logos/codebar.png'
 import ResumeBlock from './ResumeBlock'
-import './Resume.scss';
+import './Resume.scss'
 
 export default function Resume() {
   return (
@@ -58,6 +59,14 @@ export default function Resume() {
           link="https://www.facebook.com/budapest.up"
           sub1="Organizing urban playground events"
           sub2="2011 - 2016"
+        />
+        <ResumeBlock
+          header="codebar"
+          subheader="Coach"
+          pic={codebarLogo}
+          link="https://codebar.io/berlin"
+          sub1="Coaching future web developers"
+          sub2="2019 - present"
         />
       </article>
     </section>
