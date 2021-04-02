@@ -8,8 +8,7 @@ export default function Header() {
       <div className="hi">{hi}</div>
       <div className="subheader">
         <span className="job-title">Senior software engineer</span> based in
-        Berlin. Open for <span className="underline">freelance</span>{' '}
-        opportunities.
+        Berlin. Open for freelance opportunities.
       </div>
       <p className="description">
         Full stack web developer focused on frontend with a deep understanding

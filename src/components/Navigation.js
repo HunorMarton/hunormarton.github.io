@@ -7,6 +7,7 @@ export default function Navigation() {
       <a href="#contact">contact</a>
       <a href="#hobby">hobbies</a>
       <a href="#resume">résumé</a>
+      <a href="#header">intro</a>
     </nav>
   )
 }

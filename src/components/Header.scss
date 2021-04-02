@@ -1,13 +1,11 @@
 #header {
-  margin-top: 6em;
-  margin-bottom: 4em;
   font-family: 'Montserrat', sans-serif;
 
   .hi {
     color: #192b3e;
     font-size: 3em;
     font-weight: 800;
-    margin-bottom: 0.3em;
+    margin: 0.3em 0;
   }
 
   .subheader {
@@ -20,15 +18,12 @@
     .job-title {
       color: #192b3e;
     }
-
-    .underline {
-    }
   }
 
   .description {
     font-family: 'Montserrat', sans-serif;
     max-width: 700px;
     line-height: 1.8em;
-    margin: 1.5em 0 200px;
+    margin-top: 1.5em;
   }
 }

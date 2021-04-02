@@ -13,11 +13,11 @@ body {
 }
 
 section {
-  $vertical-margin: 80px;
-  $horizontal-margin: 20px;
+  $vertical-padding: 80px;
+  $horizontal-padding: 20px;
 
-  margin: $vertical-margin $horizontal-margin;
-  margin-right: calc(#{$horizontal-margin} + #{$nav-height});
+  padding: $vertical-padding $horizontal-padding;
+  padding-right: calc(#{$horizontal-padding} + #{$nav-height});
 
   & > h1 {
     font-size: 1.7em;
@@ -28,13 +28,13 @@ section {
   }
 
   article {
-    width: calc(100vw - #{$horizontal-margin} * 2 - #{$nav-height});
+    width: calc(100vw - #{$horizontal-padding} * 2 - #{$nav-height});
   }
 }
 
 @media screen and (min-width: $desktop) {
   section {
-    margin: 80px 40px;
+    padding: 80px 40px;
 
     & > h1 {
       font-size: 1.5em;
