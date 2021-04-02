@@ -1,6 +1,6 @@
 @import '../styles/breakpoints';
 
-#portfolio article {
+#hobby article {
   display: inline-block;
   margin: 50px 0 50px 0;
   vertical-align: top;
@@ -8,7 +8,7 @@
   .date {
     color: gray;
     &::before {
-      content: "// ";
+      content: '// ';
     }
   }
 
@@ -20,7 +20,7 @@
 }
 
 @media screen and (min-width: $desktop) {
-  #portfolio article {
+  #hobby article {
     margin-right: 50px;
     margin-bottom: 80px;
 

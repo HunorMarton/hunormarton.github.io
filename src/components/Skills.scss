@@ -1,4 +1,6 @@
 #skills {
+  margin: 40px;
+
   .skillSection {
     display: inline-block;
     vertical-align: top;
@@ -9,6 +11,7 @@
 .skill {
   padding-bottom: 10px;
   cursor: pointer;
+  white-space: pre;
 }
 
 .skillName {

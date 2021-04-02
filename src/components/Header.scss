@@ -1,17 +1,34 @@
 #header {
-  margin-top: 4em;
-  margin-bottom: 5em;
+  margin-top: 6em;
+  margin-bottom: 4em;
   font-family: 'Montserrat', sans-serif;
 
-  .name {
-    color: #444;
-    font-size: 4em;
-
-    font-weight: 900;
-
-    .first-name {
-      color: black;
-    }
+  .hi {
+    color: #192b3e;
+    font-size: 3em;
+    font-weight: 800;
     margin-bottom: 0.3em;
+  }
+
+  .subheader {
+    margin: 4em 0 0em;
+    max-width: 700px;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #898ea2;
+
+    .job-title {
+      color: #192b3e;
+    }
+
+    .underline {
+    }
+  }
+
+  .description {
+    font-family: 'Montserrat', sans-serif;
+    max-width: 700px;
+    line-height: 1.8em;
+    margin: 1.5em 0 200px;
   }
 }

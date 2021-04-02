@@ -20,7 +20,7 @@ export default function Resume() {
           pic={unuLogo}
           link="https://unumotors.com"
           sub1="Berlin, Germany"
-          sub2="2019 - present"
+          sub2="2019 - 2020"
         />
         <ResumeBlock
           header="LEO Innovation Lab"

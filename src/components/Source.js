@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as platforms from '../constants/portfolioTypes'
+import * as sources from '../constants/sourceTypes'
 import './Source.scss'
 
 export default function Source({ type, id }) {
@@ -9,28 +9,28 @@ export default function Source({ type, id }) {
   let icon
 
   switch (type) {
-    case platforms.CODEPEN:
+    case sources.CODEPEN:
       source = `http://codepen.io/HunorMarton/pen/${id}/`
       label = 'Source'
       icon = 'CodePen'
       break
-    case platforms.GITHUB:
+    case sources.GITHUB:
       source = `https://github.com/HunorMarton/${id}/`
       label = 'Source'
       icon = 'GitHub'
       break
-    case platforms.CSSTRICKS:
+    case sources.CSSTRICKS:
       icon = 'CSSTricks'
       break
-    case platforms.SKILLSHARE:
+    case sources.SKILLSHARE:
       icon = 'SkillShare'
       break
-    case platforms.YOUTUBE:
+    case sources.YOUTUBE:
       source = `https://youtu.be/${id}`
       label = 'Tutorial'
       icon = 'YouTube'
       break
-    case platforms.FREECODECAMP:
+    case sources.FREECODECAMP:
       source = `https://www.freecodecamp.org/news/${id}/`
       icon = 'freeCodeCamp'
       label = 'Article'

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import Preview from './Preview'
 import Source from './Source'
 import Techs from './Techs'
-import './PortfolioItem.scss'
+import './HobbyItem.scss'
 
-export default function PortfolioItem({ data }) {
+export default function HobbyItem({ data }) {
   return (
     <article>
       <h1>
@@ -26,6 +26,6 @@ export default function PortfolioItem({ data }) {
   )
 }
 
-PortfolioItem.propTypes = {
+HobbyItem.propTypes = {
   data: PropTypes.object.isRequired
 }

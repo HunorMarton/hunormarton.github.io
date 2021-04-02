@@ -6,12 +6,13 @@ export default function Contact() {
     <section id="contact">
       <h1>Contact</h1>
 
-      <div>
+      <div className="column">
         <a href="mailto:bor.hunor@gmail.com">E-mail</a>
         <a href="skype:borbely.hunor.marton">Skype</a>
       </div>
 
-      <div>
+      <div className="column">
+        <div className="icon">💬</div>
         <a
           href="https://www.linkedin.com/in/hunor-marton-borbely/"
           target="_blank"
@@ -26,7 +27,9 @@ export default function Contact() {
         >
           Twitter
         </a>
-
+      </div>
+      <div className="column">
+        <div className="icon">👾</div>
         <a
           href="http://codepen.io/HunorMarton/"
           target="_blank"
@@ -41,6 +44,9 @@ export default function Contact() {
         >
           GitHub
         </a>
+      </div>
+      <div className="column">
+        <div className="icon">📚</div>
         <a
           href="https://css-tricks.com/author/hunorborbely/"
           target="_blank"
@@ -55,6 +61,9 @@ export default function Contact() {
         >
           freeCodeCamp
         </a>
+      </div>
+      <div className="column">
+        <div className="icon">📺</div>
         <a
           href="https://www.youtube.com/channel/UCxhgW0Q5XLvIoXHAfQXg9oQ"
           target="_blank"
@@ -62,7 +71,6 @@ export default function Contact() {
         >
           YouTube
         </a>
-
         <a
           href="https://www.skillshare.com/profile/Hunor-Borb%C3%A9ly/3932130"
           target="_blank"

@@ -1,7 +1,19 @@
 #contact {
-  width: 100px;
+  padding-bottom: 50px;
+
+  .icon {
+    font-size: 1.5em;
+  }
+
   a {
     display: block;
+    line-height: 1.5em;
+  }
+
+  .column {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 80px 20px 0;
   }
 }
 
@@ -11,4 +23,8 @@
 
 #contact > div:first-of-type {
   background-color: lightgreen;
+  padding: 10px 20px;
+  a {
+    line-height: 2em;
+  }
 }

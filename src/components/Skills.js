@@ -1,60 +1,59 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as techs from '../constants/techTypes'
-import * as types from '../constants/portfolioTypes'
+import * as sources from '../constants/sourceTypes'
 import Skill from './Skill'
 import './Skills.scss'
 
 export default function Skills({ filter, setFilter }) {
   return (
-    <section id="skills">
-      <h1>Skills</h1>
+    <div id="skills">
       <div className="skillSection">
         <Skill
           name="Show All"
-          id={types.ALL}
+          id={sources.ALL}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="CodePen"
-          id={types.CODEPEN}
+          id={sources.CODEPEN}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="Github"
-          id={types.GITHUB}
+          id={sources.GITHUB}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="freeCodeCamp"
-          id={types.FREECODECAMP}
+          id={sources.FREECODECAMP}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="CSS-Tricks"
-          id={types.CSSTRICKS}
+          id={sources.CSSTRICKS}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="YouTube"
-          id={types.YOUTUBE}
+          id={sources.YOUTUBE}
           score={0}
           filter={filter}
           setFilter={setFilter}
         />
         <Skill
           name="Skillshare"
-          id={types.SKILLSHARE}
+          id={sources.SKILLSHARE}
           score={0}
           filter={filter}
           setFilter={setFilter}
@@ -148,7 +147,7 @@ export default function Skills({ filter, setFilter }) {
           setFilter={setFilter}
         />
       </div>
-    </section>
+    </div>
   )
 }
 
