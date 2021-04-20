@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.28ac1d42.chunk.css",
-    "main.js": "/static/js/main.980154e4.chunk.js",
-    "main.js.map": "/static/js/main.980154e4.chunk.js.map",
+    "main.css": "/static/css/main.9ac88973.chunk.css",
+    "main.js": "/static/js/main.d54fc888.chunk.js",
+    "main.js.map": "/static/js/main.d54fc888.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.be3cc5be.js",
     "runtime-main.js.map": "/static/js/runtime-main.be3cc5be.js.map",
     "static/js/2.4046927b.chunk.js": "/static/js/2.4046927b.chunk.js",
     "static/js/2.4046927b.chunk.js.map": "/static/js/2.4046927b.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.28ac1d42.chunk.css.map": "/static/css/main.28ac1d42.chunk.css.map",
+    "static/css/main.9ac88973.chunk.css.map": "/static/css/main.9ac88973.chunk.css.map",
     "static/js/2.4046927b.chunk.js.LICENSE.txt": "/static/js/2.4046927b.chunk.js.LICENSE.txt",
     "static/media/AirBalloon.5d8e21b9.png": "/static/media/AirBalloon.5d8e21b9.png",
     "static/media/AirBalloon@2x.6a111093.png": "/static/media/AirBalloon@2x.6a111093.png",
@@ -80,7 +80,7 @@
   "entrypoints": [
     "static/js/runtime-main.be3cc5be.js",
     "static/js/2.4046927b.chunk.js",
-    "static/css/main.28ac1d42.chunk.css",
-    "static/js/main.980154e4.chunk.js"
+    "static/css/main.9ac88973.chunk.css",
+    "static/js/main.d54fc888.chunk.js"
   ]
 }
