@@ -1,0 +1,15 @@
+@import '../styles/breakpoints';
+
+.hobby-items {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(auto-fill, auto);
+  grid-row-gap: 130px;
+  grid-column-gap: 50px;
+}
+
+@media screen and (min-width: $double-column) {
+  .hobby-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

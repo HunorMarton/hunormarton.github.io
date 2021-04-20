@@ -15,14 +15,13 @@
   .info {
     display: inline-block;
     vertical-align: bottom;
-    width: 200px;
+    width: 180px;
   }
 }
 
 @media screen and (min-width: $desktop) {
   #hobby article {
-    margin-right: 50px;
-    margin-bottom: 80px;
+    margin: 0;
 
     h1 {
       max-width: 500px;
