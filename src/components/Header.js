@@ -7,8 +7,7 @@ export default function Header() {
     <section id="header">
       <div className="hi">{hi}</div>
       <div className="subheader">
-        <span className="job-title">Senior web developer</span> with an interest
-        in UX design. Open for freelance opportunities.
+        Web developer with an interest in UX design.
       </div>
       <p className="description">
         Full-stack web developer focused on frontend with a deep understanding
