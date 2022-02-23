@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.d1a26ac9.chunk.css",
-    "main.js": "/static/js/main.cc73185a.chunk.js",
-    "main.js.map": "/static/js/main.cc73185a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.be3cc5be.js",
-    "runtime-main.js.map": "/static/js/runtime-main.be3cc5be.js.map",
-    "static/js/2.4046927b.chunk.js": "/static/js/2.4046927b.chunk.js",
-    "static/js/2.4046927b.chunk.js.map": "/static/js/2.4046927b.chunk.js.map",
+    "main.css": "/static/css/main.a6881b0e.chunk.css",
+    "main.js": "/static/js/main.574d7944.chunk.js",
+    "main.js.map": "/static/js/main.574d7944.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3e3c05f9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3e3c05f9.js.map",
+    "static/js/2.8421bafa.chunk.js": "/static/js/2.8421bafa.chunk.js",
+    "static/js/2.8421bafa.chunk.js.map": "/static/js/2.8421bafa.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.d1a26ac9.chunk.css.map": "/static/css/main.d1a26ac9.chunk.css.map",
-    "static/js/2.4046927b.chunk.js.LICENSE.txt": "/static/js/2.4046927b.chunk.js.LICENSE.txt",
+    "static/css/main.a6881b0e.chunk.css.map": "/static/css/main.a6881b0e.chunk.css.map",
+    "static/js/2.8421bafa.chunk.js.LICENSE.txt": "/static/js/2.8421bafa.chunk.js.LICENSE.txt",
     "static/media/AirBalloon.5d8e21b9.png": "/static/media/AirBalloon.5d8e21b9.png",
     "static/media/AirBalloon@2x.6a111093.png": "/static/media/AirBalloon@2x.6a111093.png",
     "static/media/Clock.b51fb89c.png": "/static/media/Clock.b51fb89c.png",
@@ -72,15 +72,16 @@
     "static/media/Undo@2x.4151f701.png": "/static/media/Undo@2x.4151f701.png",
     "static/media/Wall.a3cae000.png": "/static/media/Wall.a3cae000.png",
     "static/media/Wall@2x.b1090ee8.png": "/static/media/Wall@2x.b1090ee8.png",
+    "static/media/google.2170a07f.png": "/static/media/google.2170a07f.png",
     "static/media/leo.3f83e1ea.png": "/static/media/leo.3f83e1ea.png",
     "static/media/sap.070a9e56.png": "/static/media/sap.070a9e56.png",
     "static/media/university.9cc4a2bf.png": "/static/media/university.9cc4a2bf.png",
     "static/media/up.eab7c81f.png": "/static/media/up.eab7c81f.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.be3cc5be.js",
-    "static/js/2.4046927b.chunk.js",
-    "static/css/main.d1a26ac9.chunk.css",
-    "static/js/main.cc73185a.chunk.js"
+    "static/js/runtime-main.3e3c05f9.js",
+    "static/js/2.8421bafa.chunk.js",
+    "static/css/main.a6881b0e.chunk.css",
+    "static/js/main.574d7944.chunk.js"
   ]
 }
