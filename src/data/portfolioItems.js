@@ -51,6 +51,10 @@ export default [
     ...images.SVGTutorial,
     sources: [
       { type: sources.YOUTUBE, id: 'kBT90nwUb_o' },
+      {
+        type: sources.FREECODECAMP,
+        id: 'svg-tutorial-learn-to-code-images'
+      },
       { type: sources.CODEPEN, id: 'PoGbgqj' }
     ],
     techs: [techs.SVG]
@@ -127,8 +131,7 @@ export default [
     title: 'How to Make localStorage Reactive in Vue',
     date: 'June 2020',
     link: 'https://css-tricks.com/how-to-make-localstorage-reactive-in-vue/',
-    desc:
-      'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
+    desc: 'Reactivity is one of Vue’s greatest features. It is also one of the most mysterious if you don’t know what it’s doing behind the scenes. Like, why does it work with objects and arrays and not with other things, like localStorage?',
     sources: [{ type: sources.CSSTRICKS }],
     techs: [techs.VUE, 'localStorage']
   },
@@ -151,10 +154,8 @@ export default [
   {
     title: 'Using requestAnimationFrame with React Hooks',
     date: 'August 2019',
-    link:
-      'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
-    desc:
-      'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
+    link: 'https://css-tricks.com/using-requestanimationframe-with-react-hooks/',
+    desc: 'Animating with requestAnimationFrame should be easy, but if you haven’t read React’s documentation thoroughly then you will probably run into a few things that might cause you a headache. Here are three gotcha moments I learned the hard way.',
     sources: [{ type: sources.CSSTRICKS }],
     techs: [techs.REACT]
   },
