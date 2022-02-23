@@ -47,18 +47,18 @@ export default function Contact() {
       <div className="column">
         <div className="icon">📚</div>
         <a
-          href="https://css-tricks.com/author/hunorborbely/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CSS-Tricks
-        </a>
-        <a
           href="https://www.freecodecamp.org/news/author/hunor/"
           target="_blank"
           rel="noopener noreferrer"
         >
           freeCodeCamp
+        </a>
+        <a
+          href="https://css-tricks.com/author/hunorborbely/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CSS-Tricks
         </a>
       </div>
       <div className="column">
