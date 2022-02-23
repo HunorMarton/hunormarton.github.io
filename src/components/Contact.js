@@ -8,7 +8,6 @@ export default function Contact() {
 
       <div className="column">
         <a href="mailto:bor.hunor@gmail.com">E-mail</a>
-        <a href="skype:borbely.hunor.marton">Skype</a>
       </div>
 
       <div className="column">
