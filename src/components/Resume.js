@@ -1,4 +1,5 @@
 import React from 'react'
+import googleLogo from '../data/logos/google.png'
 import unuLogo from '../data/logos/unu.png'
 import leoLogo from '../data/logos/leo.png'
 import sapLogo from '../data/logos/sap.png'
@@ -14,6 +15,14 @@ export default function Resume() {
       <h1>Hunor Márton Borbély</h1>
       <article>
         <h2>Experience</h2>
+        <ResumeBlock
+          header="Google (via Nash Direct)"
+          subheader="UX Engineer"
+          pic={googleLogo}
+          link="https://google.com"
+          sub1="Berlin, Germany"
+          sub2="2021 - 2022"
+        />
         <ResumeBlock
           header="unu"
           subheader="Full stack developer"
