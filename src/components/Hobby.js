@@ -18,7 +18,11 @@ export default function Hobby() {
             item =>
               filter === sources.ALL ||
               item.sources.some(source => source.type === filter) ||
-              item.techs.some(tech => tech === filter)
+              item.techs.some(tech => tech === filter) ||
+              (filter === sources.CODEPEN &&
+                item.sources.some(
+                  source => source.type === sources.CODEPENPOST // Also include CodePen posts if filtered for CodePen
+                ))
           )
           .map(item => (
             <PortfolioItem key={item.title} data={item} />

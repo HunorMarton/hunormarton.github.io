@@ -192,12 +192,33 @@ export default [
     ]
   },
   {
+    title: 'Imperative vs Reactive',
+    date: 'September 2017',
+    link: 'https://codepen.io/HunorMarton/post/imperative-vs-reactive',
+    desc: 'Imperative and reactive programing are two separate programing paradigms. But what is the difference, and how do they correlate with functional programing?',
+    sources: [{ type: sources.CODEPENPOST, id: 'imperative-vs-reactive' }],
+    techs: [techs.JAVASCRIPT, techs.RXJS]
+  },
+  {
     title: 'Solitaire',
     date: 'June 2017',
     link: 'http://codepen.io/HunorMarton/full/rwpGXj/',
     ...images.Solitaire,
     sources: [{ type: sources.CODEPEN, id: 'rwpGXj' }],
     techs: [techs.HTML, techs.JAVASCRIPT, techs.REACT, techs.REDUX, techs.SVG]
+  },
+  {
+    title: 'Handling complex mouse and touch events with RxJS',
+    date: 'May 2017',
+    link: 'https://codepen.io/HunorMarton/post/handling-complex-mouse-and-touch-events-with-rxjs',
+    desc: 'In this tutorial we are going to create complex user interaction events like drag, drop and vertical, horizontal swipe events using the power of RxJS.',
+    sources: [
+      {
+        type: sources.CODEPENPOST,
+        id: 'handling-complex-mouse-and-touch-events-with-rxjs'
+      }
+    ],
+    techs: [techs.JAVASCRIPT, techs.RXJS]
   },
   {
     title: 'Task Manager',

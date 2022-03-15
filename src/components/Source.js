@@ -14,6 +14,11 @@ export default function Source({ type, id }) {
       label = 'Source'
       icon = 'CodePen'
       break
+    case sources.CODEPENPOST:
+      source = `http://codepen.io/HunorMarton/post/${id}/`
+      label = 'Article'
+      icon = 'CodePen'
+      break
     case sources.GITHUB:
       source = `https://github.com/HunorMarton/${id}/`
       label = 'Source'
