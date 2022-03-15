@@ -62,20 +62,20 @@ export default function Resume() {
       <article>
         <h2>Volunteer</h2>
         <ResumeBlock
-          header="Budapest UP!"
-          subheader="Founder"
-          pic={upLogo}
-          link="https://www.facebook.com/budapest.up"
-          sub1="Organizing urban playground events"
-          sub2="2011 - 2016"
-        />
-        <ResumeBlock
           header="codebar"
           subheader="Coach"
           pic={codebarLogo}
           link="https://codebar.io/berlin"
           sub1="Coaching future web developers"
           sub2="2019 - present"
+        />
+        <ResumeBlock
+          header="Budapest UP!"
+          subheader="Founder"
+          pic={upLogo}
+          link="https://www.facebook.com/budapest.up"
+          sub1="Organizing urban playground events"
+          sub2="2011 - 2016"
         />
       </article>
     </section>
