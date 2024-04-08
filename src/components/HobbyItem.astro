@@ -1,0 +1,59 @@
+---
+import Preview from "../components/Preview.astro";
+import Source from "../components/Source.astro";
+import Techs from "../components/Techs.astro";
+import { type HobbyItem } from "../types";
+
+interface Props {
+  data: HobbyItem;
+}
+
+const { data } = Astro.props;
+---
+
+<article>
+  <h1>
+    <span>{data.title}</span>
+    <span class="date">{data.date}</span>
+  </h1>
+  <Preview data={data} link={data.link} />
+  <div class="info">
+    {data.sources.map((source) => <Source type={source.type} id={source.id} />)}
+    <Techs techs={data.techs} />
+  </div>
+</article>
+
+<style>
+  article {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  article .date {
+    color: gray;
+  }
+
+  article .date::before {
+    content: "// ";
+  }
+
+  article .info {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 180px;
+  }
+
+  @media screen and (min-width: 650px) {
+    article h1 {
+      max-width: 500px;
+    }
+
+    article h1 span {
+      display: inline-block;
+    }
+
+    .info {
+      padding-left: 20px;
+    }
+  }
+</style>

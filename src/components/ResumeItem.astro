@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  link: string;
+  pic: ImageMetadata | string;
+  header: string;
+  subheader: string;
+  sub1: string;
+  sub2: string;
+}
+
+const { link, pic, header, subheader, sub1, sub2 } = Astro.props;
+---
+
+<article class="resume-block">
+  <a href={link} target="_blank" rel="noopener">
+    {
+      typeof pic !== "string" ? (
+        <Image
+          src={pic}
+          alt={header}
+          width={300}
+          height={300}
+          densities={[1, 2]}
+        />
+      ) : (
+        <Fragment set:html={pic} />
+      )
+    }
+  </a>
+  <h3>{header}</h3>
+  <p>{subheader}</p>
+  <p class="sub">{sub1}</p>
+  <p class="sub">{sub2}</p>
+</article>
+
+<style>
+  .resume-block {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    object-fit: contain;
+
+    h3 {
+      font-weight: normal;
+    }
+
+    .sub {
+      font-size: 0.8em;
+      color: gray;
+    }
+
+    img,
+    svg {
+      width: 100%;
+      max-width: 100%;
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @media screen and (min-width: 650px) {
+    .resume-block {
+      width: 300px;
+    }
+  }
+</style>

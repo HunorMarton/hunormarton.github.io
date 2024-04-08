@@ -1,0 +1,37 @@
+---
+import Skills from "../components/Skills.astro";
+import HobbyItem from "../components/HobbyItem.astro";
+import hobbyItems from "../data";
+---
+
+{/* id="hobby" is used for navigation */}
+
+<section id="hobby">
+  <h1>Hobby Projects</h1>
+  <Skills />
+  <div class="hobby-items">
+    {hobbyItems.map((item) => <HobbyItem data={item} />)}
+  </div>
+</section>
+
+<style>
+  .hobby-items {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(auto-fill, auto);
+    grid-row-gap: 80px;
+    grid-column-gap: 50px;
+  }
+
+  @media screen and (min-width: 650px) {
+    .hobby-items {
+      grid-row-gap: 130px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .hobby-items {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

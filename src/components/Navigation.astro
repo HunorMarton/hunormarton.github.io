@@ -1,0 +1,52 @@
+<nav>
+  <a href="#contact">contact</a>
+  <a href="#hobby">hobbies</a>
+  <a href="#resume">résumé</a>
+  <a href="#header">intro</a>
+</nav>
+
+<style>
+  nav {
+    position: fixed;
+    background-color: lightgray;
+    right: 0;
+    top: 0;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
+    z-index: 10;
+
+    a {
+      display: inline-block;
+      margin: 0 10px;
+      transform: rotate(180deg);
+      color: gray;
+      font-size: 1.1em;
+      text-decoration: none;
+
+      transition: color 0.5s ease;
+
+      &::after {
+        content: "_";
+      }
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
+  @media screen and (min-width: 650px) {
+    nav {
+      right: 20px;
+      top: 20px;
+
+      a {
+        font-size: 1.3em;
+      }
+    }
+  }
+</style>

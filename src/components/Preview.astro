@@ -1,0 +1,124 @@
+---
+import { Image } from "astro:assets";
+import { type HobbyItem } from "../types";
+
+interface Props {
+  link: string;
+  data: HobbyItem;
+}
+
+const { link, data } = Astro.props;
+---
+
+<a class="preview" href={link} target="_blank" rel="noopener">
+  {
+    data.image ? (
+      <Image
+        src={data.image}
+        alt={data.title}
+        width={500}
+        height={500}
+        densities={[1, 2]}
+      />
+    ) : (
+      <div class="desc">
+        <h2>{data.title}</h2>
+        {data.desc}
+      </div>
+    )
+  }
+</a>
+
+<style>
+  .preview {
+    display: inline-flex;
+    position: relative;
+    isolation: isolate;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    box-sizing: border-box;
+
+    color: gray;
+    text-decoration: none;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+
+  .preview::after {
+    content: "▶";
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 128px;
+    user-select: none;
+
+    cursor: pointer;
+    background-color: white;
+
+    mix-blend-mode: luminosity;
+
+    opacity: 0;
+  }
+
+  .preview:hover::after {
+    opacity: 0.5;
+  }
+
+  img,
+  .desc {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .desc {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 40px;
+    max-height: 200px;
+    text-overflow: ellipsis;
+
+    h2 {
+      display: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px; /* Adjust as needed */
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        white 90%
+      ); /* Adjust colors as needed */
+      pointer-events: none; /* Allows user to interact with text underneath */
+    }
+  }
+
+  .desc::before {
+    content: "“";
+    display: block;
+    font-size: 5em;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 650px) {
+    img,
+    .desc {
+      width: 500px;
+    }
+
+    .desc h2 {
+      display: block;
+    }
+  }
+</style>

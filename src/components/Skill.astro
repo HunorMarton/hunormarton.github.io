@@ -1,0 +1,39 @@
+---
+import { SourceType, TechTypes } from "../types";
+
+interface Props {
+  id: "ALL" | SourceType | TechTypes;
+  name: string;
+  selected?: boolean;
+}
+
+const { id, name, selected } = Astro.props;
+---
+
+<div class="skill">
+  <input type="radio" name="skill" id={id} checked={selected} />
+  <label for={id}>
+    {name}
+  </label>
+</div>
+
+<style>
+  input {
+    display: none;
+  }
+
+  .skill {
+    padding: 4px 0;
+    margin-bottom: 10px;
+    white-space: pre;
+  }
+
+  .skill,
+  .skill * {
+    cursor: pointer;
+  }
+
+  .skill:has(input:checked) {
+    background-color: yellow;
+  }
+</style>

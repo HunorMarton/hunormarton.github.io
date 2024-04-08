@@ -1,0 +1,86 @@
+---
+import SourceIcon from "./SourceIcon.astro";
+import { SourceType } from "../types";
+
+interface Props {
+  type: SourceType;
+  id?: string;
+}
+
+const { type, id } = Astro.props;
+
+let href;
+let label;
+let icon;
+
+switch (type) {
+  case SourceType.CODEPEN:
+    href = `http://codepen.io/HunorMarton/pen/${id}/`;
+    label = "Source";
+    icon = "CodePen";
+    break;
+  case SourceType.CODEPENPOST:
+    href = `http://codepen.io/HunorMarton/post/${id}/`;
+    label = "Article";
+    icon = "CodePen";
+    break;
+  case SourceType.GITHUB:
+    href = `https://github.com/HunorMarton/${id}/`;
+    label = "Source";
+    icon = "GitHub";
+    break;
+  case SourceType.CSSTRICKS:
+    icon = "CSSTricks";
+    break;
+  case SourceType.SKILLSHARE:
+    icon = "SkillShare";
+    break;
+  case SourceType.YOUTUBE:
+    href = `https://youtu.be/${id}`;
+    label = "Tutorial";
+    icon = "YouTube";
+    break;
+  case SourceType.FREECODECAMP:
+    href = `https://www.freecodecamp.org/news/${id}/`;
+    icon = "freeCodeCamp";
+    label = "Article";
+    break;
+  default:
+    throw Error("Invalid source type");
+}
+---
+
+<div class="source" data-source={type}>
+  {
+    href ? (
+      <a href={href} target="_blank" rel="noopener">
+        <SourceIcon icon={icon} />
+        <span>{label}</span>
+      </a>
+    ) : (
+      <SourceIcon icon={icon} />
+    )
+  }
+</div>
+
+<style>
+  .source {
+    margin: 20px 0;
+  }
+
+  .source a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .source a:hover {
+    text-decoration: underline;
+  }
+
+  .source span {
+    display: inline-block;
+    margin-left: 10px;
+  }
+</style>

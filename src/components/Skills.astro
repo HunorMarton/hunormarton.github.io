@@ -1,0 +1,70 @@
+---
+import Skill from "./Skill.astro";
+import { SourceType as sources, TechTypes as techs } from "../types";
+---
+
+<div id="skills">
+  <div class="skillSection">
+    <Skill name="Show All" id="ALL" selected={true} />
+    <Skill name="CodePen" id={sources.CODEPEN} />
+    <Skill name="Github" id={sources.GITHUB} />
+    <Skill name="YouTube" id={sources.YOUTUBE} />
+    <Skill name="freeCodeCamp" id={sources.FREECODECAMP} />
+    <Skill name="Skillshare" id={sources.SKILLSHARE} />
+    <Skill name="CSS-Tricks" id={sources.CSSTRICKS} />
+  </div>
+  <div class="skillSection">
+    <Skill name="HTML" id={techs.HTML} />
+    <Skill name="Pug" id={techs.PUG} />
+    <Skill name="CSS" id={techs.CSS} />
+    <Skill name="SVG" id={techs.SVG} />
+    <Skill name="Canvas" id={techs.CANVAS} />
+    <Skill name="Three.js" id={techs.THREEJS} />
+  </div>
+  <div class="skillSection">
+    <Skill name="JavaScript" id={techs.JAVASCRIPT} />
+    <Skill name="TypeScript" id={techs.TYPESCRIPT} />
+    <Skill name="Astro" id={techs.ASTRO} />
+    <Skill name="React" id={techs.REACT} />
+    <Skill name="Vue" id={techs.VUE} />
+    <Skill name="RxJS" id={techs.RXJS} />
+  </div>
+</div>
+
+<style>
+  #skills {
+    display: flex;
+    gap: 80px;
+    margin: 60px 0;
+    flex-wrap: wrap;
+  }
+
+  .skillSection {
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
+
+<style lang="scss" is:global>
+  $sources: "github", "codepen", "skillshare", "css-tricks", "youtube",
+    "freecodecamp";
+
+  @each $id in $sources {
+    #skills:has(input[type="radio"][id="#{$id}"]:checked)
+      + .hobby-items
+      article:not(:has([data-source="#{$id}"])) {
+      display: none;
+    }
+  }
+
+  $techs: "html", "astro", "javascript", "typescript", "react", "vue", "svg",
+    "pug", "scss", "css", "rxjs", "threejs", "canvas";
+
+  @each $id in $techs {
+    #skills:has(input[type="radio"][id="#{$id}"]:checked)
+      + .hobby-items
+      article:not(:has([data-tech="#{$id}"])) {
+      display: none;
+    }
+  }
+</style>

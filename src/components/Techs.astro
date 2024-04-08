@@ -1,0 +1,28 @@
+---
+import { type Tech } from "../types";
+
+interface Props {
+  techs: Tech[];
+}
+
+const { techs } = Astro.props;
+---
+
+<div class="techs">
+  <ul>
+    {techs.map((tech) => <li data-tech={tech}>{tech}</li>)}
+  </ul>
+</div>
+
+<style>
+  .techs li::before {
+    content: "#";
+    color: gray;
+  }
+
+  .techs ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>
