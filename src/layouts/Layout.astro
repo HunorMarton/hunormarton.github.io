@@ -34,6 +34,18 @@ const description =
     <meta property="og:image" content="https://svg-tutorial.com/image.png" />
     <meta name="twitter:image" content="https://svg-tutorial.com/image.png" />
     <meta property="og:url" content="https://hunormarton.github.io/" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-171674382-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(action: string, eventName: any) {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-171674382-1");
+    </script>
   </head>
   <body>
     <slot />
