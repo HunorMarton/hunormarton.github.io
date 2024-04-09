@@ -2,21 +2,21 @@
 interface Props {
   label: string;
   href: string;
+  primary?: boolean;
 }
 
-const { label, href } = Astro.props;
+const { label, href, primary } = Astro.props;
 ---
 
-<a href={href}>{label}</a>
+<a href={href} class:list={[{ primary }]}>{label}</a>
 
 <style>
   a {
-    color: #0070f3;
-    text-decoration: none;
     display: block;
   }
 
-  a:hover {
-    text-decoration: underline;
+  .primary {
+    display: inline-block;
+    margin: 40px 0;
   }
 </style>

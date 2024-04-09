@@ -1,97 +1,94 @@
-<section id="contact">
+<section>
   <h1>Contact</h1>
 
-  <div class="column">
-    <a href="mailto:bor.hunor@gmail.com">E-mail</a>
-  </div>
+  <p>Fill up the form below to send me a message.</p>
 
-  <div class="column">
-    <div class="icon">💬</div>
-    <a
-      href="https://www.linkedin.com/in/hunor-marton-borbely/"
-      target="_blank"
-      rel="noopener"
-    >
-      LinkedIn
-    </a>
-    <a href="https://twitter.com/HunorBorbely" target="_blank" rel="noopener">
-      Twitter
-    </a>
-  </div>
-  <div class="column">
-    <div class="icon">👾</div>
-    <a href="http://codepen.io/HunorMarton/" target="_blank" rel="noopener">
-      CodePen
-    </a>
-    <a href="https://github.com/HunorMarton" target="_blank" rel="noopener">
-      GitHub
-    </a>
-  </div>
-  <div class="column">
-    <div class="icon">📚</div>
-    <a
-      href="https://www.freecodecamp.org/news/author/hunor/"
-      target="_blank"
-      rel="noopener"
-    >
-      freeCodeCamp
-    </a>
-    <a
-      href="https://css-tricks.com/author/hunorborbely/"
-      target="_blank"
-      rel="noopener"
-    >
-      CSS-Tricks
-    </a>
-  </div>
-  <div class="column">
-    <div class="icon">📺</div>
-    <a
-      href="https://www.youtube.com/@HunorMartonBorbely"
-      target="_blank"
-      rel="noopener"
-    >
-      YouTube
-    </a>
-    <a
-      href="https://www.skillshare.com/profile/Hunor-Borb%C3%A9ly/3932130"
-      target="_blank"
-      rel="noopener"
-    >
-      Skillshare
-    </a>
-  </div>
+  <form action="https://api.web3forms.com/submit" method="POST" id="form">
+    <input
+      type="hidden"
+      name="access_key"
+      value="fbfacd63-1e5d-40a1-9438-742aed88b252"
+    />
+    <input
+      type="hidden"
+      name="subject"
+      value="New Submission from hunormarton.github.io"
+    />
+    <input
+      type="hidden"
+      name="redirect"
+      value="https://web3forms.com/success"
+    />
+    <input type="checkbox" name="botcheck" id="" style="display: none;" />
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="John Doe"
+        required
+      />
+    </div>
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="you@company.com"
+        required
+      />
+    </div>
+    <div class="field">
+      <label for="message">Your Message</label>
+
+      <textarea
+        rows="5"
+        name="message"
+        id="message"
+        placeholder="Your Message"
+        required></textarea>
+    </div>
+    <div class="field">
+      <button type="submit"> Send Message </button>
+    </div>
+  </form>
 </section>
 
 <style>
-  #contact {
-    background-color: #f8f7f2;
+  section *:not(h1) {
+    font-family: "Montserrat", sans-serif;
+  }
 
-    .icon {
-      font-size: 1.5em;
-    }
+  p {
+    margin-bottom: 2rem;
+  }
 
-    a {
+  .field {
+    margin-bottom: 1.5rem;
+
+    label {
       display: block;
-      line-height: 1.5em;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
     }
 
-    .column {
-      display: inline-block;
-      vertical-align: top;
-      margin: 20px 80px 20px 0;
+    input,
+    textarea {
+      padding: 0.5rem;
+      border-radius: 0;
     }
-  }
 
-  #contact > div {
-    margin-bottom: 15px;
-  }
+    input,
+    textarea {
+      border: 1px solid #ccc;
+      width: 500px;
+      max-width: 100%;
+    }
 
-  #contact > div:first-of-type {
-    a {
-      background-color: lightgreen;
-      line-height: 2em;
-      padding: 25px 25px;
+    textarea {
+      aspect-ratio: 1/1;
     }
   }
 </style>
