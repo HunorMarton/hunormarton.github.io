@@ -16,24 +16,24 @@ import hobbyItems from "../data";
   <Button href="/hobbies" label="Show more" />
 </section>
 
-<style>
+<style is:global>
   .hobby-items {
     display: flex;
-    row-gap: 80px;
-    column-gap: 80px;
+    gap: 80px;
     flex-wrap: wrap;
     margin: 40px 0 50px 0;
   }
 
-  @media screen and (min-width: 650px) {
-    .hobby-items {
-      grid-row-gap: 130px;
+  @media screen and (max-width: 1756px) {
+    .hobby-items article:nth-child(7) {
+      display: none;
     }
   }
 
-  @media screen and (min-width: 1200px) {
-    .hobby-items {
-      grid-template-columns: repeat(2, 1fr);
+  @media screen and (max-width: 1173px) {
+    .hobby-items article:nth-child(8),
+    .hobby-items article:nth-child(9) {
+      display: none;
     }
   }
 </style>
