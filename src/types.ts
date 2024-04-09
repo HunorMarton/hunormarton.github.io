@@ -1,4 +1,5 @@
 export type HobbyItem = {
+    highlight?: boolean;
     title: string;
     image?: ImageMetadata;
     desc?: string;

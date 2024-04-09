@@ -6,21 +6,32 @@ import { type HobbyItem } from "../types";
 
 interface Props {
   data: HobbyItem;
+  full?: boolean;
 }
 
-const { data } = Astro.props;
+const { data, full } = Astro.props;
 ---
 
 <article>
-  <h1>
-    <span>{data.title}</span>
-    <span class="date">{data.date}</span>
-  </h1>
+  {
+    full && (
+      <h1>
+        <span>{data.title}</span>
+        <span class="date">{data.date}</span>
+      </h1>
+    )
+  }
   <Preview data={data} link={data.link} />
-  <div class="info">
-    {data.sources.map((source) => <Source type={source.type} id={source.id} />)}
-    <Techs techs={data.techs} />
-  </div>
+  {
+    full && (
+      <div class="info">
+        {data.sources.map((source) => (
+          <Source type={source.type} id={source.id} />
+        ))}
+        <Techs techs={data.techs} />
+      </div>
+    )
+  }
 </article>
 
 <style>

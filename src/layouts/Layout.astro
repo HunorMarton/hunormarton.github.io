@@ -1,4 +1,6 @@
 ---
+import Navigation from "../components/Navigation.astro";
+
 interface Props {
   title: string;
 }
@@ -48,6 +50,7 @@ const description =
     </script>
   </head>
   <body>
+    <Navigation />
     <slot />
   </body>
 </html>

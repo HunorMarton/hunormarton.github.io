@@ -35,6 +35,7 @@ import Gorillas from './images/Gorillas.png';
 const data: HobbyItem[] = [
     {
         title: 'Gorillas',
+        highlight: true,
         date: 'February 2024',
         link: 'https://codepen.io/HunorMarton/full/jOJZqvp',
         image: Gorillas,
@@ -50,6 +51,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'SVG Tutorial',
+        highlight: true,
         date: 'December 2023',
         link: 'https://svg-tutorial.com',
         image: SVGTutorial,
@@ -65,6 +67,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'Traffic Run',
+        highlight: true,
         date: 'March 2021',
         link: 'https://codepen.io/HunorMarton/full/ExNzWqm',
         image: TrafficRun,
@@ -94,6 +97,7 @@ const data: HobbyItem[] = [
 
     {
         title: 'Stack',
+        highlight: true,
         date: 'January 2021',
         link: 'https://codepen.io/HunorMarton/full/MWjBRWp',
         image: Stack,
@@ -109,6 +113,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'Tilting Maze',
+        highlight: true,
         date: 'November 2020',
         link: 'https://codepen.io/HunorMarton/full/VwKwgxX',
         image: TiltingMaze,
@@ -130,6 +135,7 @@ const data: HobbyItem[] = [
     */
     {
         title: 'MC Escher Cube 23150',
+
         date: 'November 2020',
         link: 'https://codepen.io/HunorMarton/full/BazeOpE',
         image: Escher,
@@ -141,6 +147,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'Stick Hero',
+        highlight: true,
         date: 'November 2020',
         link: 'https://codepen.io/HunorMarton/full/xxOMQKg',
         image: StickHero,
@@ -153,6 +160,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'Fading Snake',
+        highlight: true,
         date: 'November 2020',
         link: 'https://codepen.io/HunorMarton/full/dyXjaza',
         image: FadingSnake,
@@ -198,6 +206,7 @@ const data: HobbyItem[] = [
     },
     {
         title: 'Logic gate simulator',
+        highlight: true,
         date: 'May 2020',
         link: 'https://hunormarton.github.io/logic-gate/',
         image: LogicGate,
@@ -278,6 +287,7 @@ const data: HobbyItem[] = [
     */
     {
         title: 'Task Manager',
+        highlight: true,
         date: 'May 2017',
         link: 'http://codepen.io/HunorMarton/full/qmJvvY/',
         image: TaskManager,

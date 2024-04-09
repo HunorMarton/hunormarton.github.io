@@ -7,6 +7,13 @@ import sapLogo from "../logos/sap.svg?raw";
 import universityLogo from "../logos/university.png";
 import codebarLogo from "../logos/codebar.png";
 import upLogo from "../logos/up.png";
+import Button from "./Button.astro";
+
+interface Props {
+  full?: boolean;
+}
+
+const { full } = Astro.props;
 ---
 
 {/* TODO Add descriptions? */}
@@ -40,50 +47,61 @@ import upLogo from "../logos/up.png";
         sub1="Copenhagen, Denmark"
         sub2="2017 - 2018"
       />
-      <ResumeItem
-        header="SAP"
-        subheader="Full stack developer, UX Designer"
-        pic={sapLogo}
-        link="https://www.sap.com/hungary/"
-        sub1="Budapest, Hungary"
-        sub2="2012 - 2017"
-      />
+      {
+        full && (
+          <ResumeItem
+            header="SAP"
+            subheader="Full stack developer, UX Designer"
+            pic={sapLogo}
+            link="https://www.sap.com/hungary/"
+            sub1="Budapest, Hungary"
+            sub2="2012 - 2017"
+          />
+        )
+      }
     </div>
   </section>
-  <section>
-    <h2>Education</h2>
-    <div class="grid">
-      <ResumeItem
-        header="Budapest University of Technology and Economics"
-        subheader="Bachelor's Degree"
-        pic={universityLogo}
-        link="https://www.bme.hu/"
-        sub1="Computer Science"
-        sub2="2007 - 2012"
-      />
-    </div>
-  </section>
-  <section>
-    <h2>Volunteer</h2>
-    <div class="grid">
-      <ResumeItem
-        header="codebar"
-        subheader="Coach"
-        pic={codebarLogo}
-        link="https://codebar.io/berlin"
-        sub1="Coaching future web developers"
-        sub2="2019 - 2020"
-      />
-      <ResumeItem
-        header="Budapest UP!"
-        subheader="Founder"
-        pic={upLogo}
-        link="https://www.facebook.com/budapest.up"
-        sub1="Organizing urban playground events"
-        sub2="2011 - 2016"
-      />
-    </div>
-  </section>
+  {
+    full && (
+      <>
+        <section>
+          <h2>Education</h2>
+          <div class="grid">
+            <ResumeItem
+              header="Budapest University of Technology and Economics"
+              subheader="Bachelor's Degree"
+              pic={universityLogo}
+              link="https://www.bme.hu/"
+              sub1="Computer Science"
+              sub2="2007 - 2012"
+            />
+          </div>
+        </section>
+        <section>
+          <h2>Volunteer</h2>
+          <div class="grid">
+            <ResumeItem
+              header="codebar"
+              subheader="Coach"
+              pic={codebarLogo}
+              link="https://codebar.io/berlin"
+              sub1="Coaching future web developers"
+              sub2="2019 - 2020"
+            />
+            <ResumeItem
+              header="Budapest UP!"
+              subheader="Founder"
+              pic={upLogo}
+              link="https://www.facebook.com/budapest.up"
+              sub1="Organizing urban playground events"
+              sub2="2011 - 2016"
+            />
+          </div>
+        </section>
+      </>
+    )
+  }
+  {!full && <Button href="/resume" label="Show more" />}
 </section>
 
 <style>
