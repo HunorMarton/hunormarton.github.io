@@ -8,6 +8,9 @@ interface Props {
 }
 
 const { full } = Astro.props;
+
+const cvFileId = "1NuFXxP13Km_FtHhKpqM0V5rK45q0zlyOANnKSIu2Qx4";
+const cvFileFormat = "pdf";
 ---
 
 <section id="resume">
@@ -42,6 +45,15 @@ const { full } = Astro.props;
           </div>
         </section>
       </>
+    )
+  }
+  {
+    full && (
+      <Button
+        href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
+        label="Download CV"
+        primary={true}
+      />
     )
   }
   {!full && <Button href="/resume" label="Show more" />}
