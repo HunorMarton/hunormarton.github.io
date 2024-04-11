@@ -43,10 +43,11 @@ export enum TechTypes {
 
 export type ResumeItem = {
     highlight?: boolean;
-    link: string;
-    pic: ImageMetadata | string;
     header: string;
     subheader: string;
-    sub1: string;
-    sub2: string;
+    description?: string;
+    location?: string;
+    date: string;
+    pic: ImageMetadata | string;
+    link: string;
 }

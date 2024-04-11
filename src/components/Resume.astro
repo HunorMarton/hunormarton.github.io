@@ -10,8 +10,6 @@ interface Props {
 const { full } = Astro.props;
 ---
 
-{/* TODO Add descriptions? */}
-
 <section id="resume">
   <h1>Hunor Márton Borbély</h1>
   <section>
@@ -20,16 +18,7 @@ const { full } = Astro.props;
       {
         experience
           .filter((item) => full || item.highlight)
-          .map((item) => (
-            <ResumeItem
-              header={item.header}
-              subheader={item.subheader}
-              pic={item.pic}
-              link={item.link}
-              sub1={item.sub1}
-              sub2={item.sub2}
-            />
-          ))
+          .map((item) => <ResumeItem data={item} full={full} />)
       }
     </div>
   </section>
@@ -40,14 +29,7 @@ const { full } = Astro.props;
           <h2>Education</h2>
           <div class="grid">
             {education.map((item) => (
-              <ResumeItem
-                header={item.header}
-                subheader={item.subheader}
-                pic={item.pic}
-                link={item.link}
-                sub1={item.sub1}
-                sub2={item.sub2}
-              />
+              <ResumeItem data={item} full={full} />
             ))}
           </div>
         </section>
@@ -55,14 +37,7 @@ const { full } = Astro.props;
           <h2>Volunteering</h2>
           <div class="grid">
             {volunteering.map((item) => (
-              <ResumeItem
-                header={item.header}
-                subheader={item.subheader}
-                pic={item.pic}
-                link={item.link}
-                sub1={item.sub1}
-                sub2={item.sub2}
-              />
+              <ResumeItem data={item} full={full} />
             ))}
           </div>
         </section>

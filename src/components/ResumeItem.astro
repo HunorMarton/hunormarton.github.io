@@ -1,8 +1,16 @@
 ---
 import { Image } from "astro:assets";
-import { type ResumeItem as Props } from "../types";
+import { type ResumeItem } from "../types";
 
-const { link, pic, header, subheader, sub1, sub2 } = Astro.props;
+interface Props {
+  data: ResumeItem;
+  full?: boolean;
+}
+
+const {
+  data: { link, pic, header, subheader, description, location, date },
+  full,
+} = Astro.props;
 ---
 
 <article class="resume-block">
@@ -23,8 +31,9 @@ const { link, pic, header, subheader, sub1, sub2 } = Astro.props;
   </a>
   <h3>{header}</h3>
   <p>{subheader}</p>
-  <p class="sub">{sub1}</p>
-  <p class="sub">{sub2}</p>
+  {full && <p class="sub">{description}</p>}
+  <p class="sub">{location}</p>
+  <p class="sub">{date}</p>
 </article>
 
 <style>
