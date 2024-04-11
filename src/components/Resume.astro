@@ -27,24 +27,26 @@ const cvFileFormat = "pdf";
   </section>
   {
     full && (
-      <>
-        <section>
-          <h2>Education</h2>
-          <div class="grid">
-            {education.map((item) => (
-              <ResumeItem data={item} full={full} />
-            ))}
-          </div>
-        </section>
-        <section>
-          <h2>Volunteering</h2>
-          <div class="grid">
-            {volunteering.map((item) => (
-              <ResumeItem data={item} full={full} />
-            ))}
-          </div>
-        </section>
-      </>
+      <section>
+        <h2>Education</h2>
+        <div class="grid">
+          {education.map((item) => (
+            <ResumeItem data={item} full={full} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+  {
+    full && (
+      <section>
+        <h2>Volunteering</h2>
+        <div class="grid">
+          {volunteering.map((item) => (
+            <ResumeItem data={item} full={full} />
+          ))}
+        </div>
+      </section>
     )
   }
   {
