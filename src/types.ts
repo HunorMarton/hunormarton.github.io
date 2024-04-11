@@ -40,3 +40,13 @@ export enum TechTypes {
     CANVAS = 'canvas',
     ASTRO = 'astro',
 }
+
+export type ResumeItem = {
+    highlight?: boolean;
+    link: string;
+    pic: ImageMetadata | string;
+    header: string;
+    subheader: string;
+    sub1: string;
+    sub2: string;
+}

@@ -1,13 +1,7 @@
 ---
 import ResumeItem from "./ResumeItem.astro";
-import googleLogo from "../logos/google.svg?raw";
-import unuLogo from "../logos/unu.svg?raw";
-import leoLogo from "../logos/leo.svg?raw";
-import sapLogo from "../logos/sap.svg?raw";
-import universityLogo from "../logos/university.png";
-import codebarLogo from "../logos/codebar.png";
-import upLogo from "../logos/up.png";
 import Button from "./Button.astro";
+import { experience, education, volunteering } from "../resume-data.ts";
 
 interface Props {
   full?: boolean;
@@ -23,41 +17,19 @@ const { full } = Astro.props;
   <section>
     <h2>Experience</h2>
     <div class="grid">
-      <ResumeItem
-        header="Google"
-        subheader="UX Engineer (temporary staff)"
-        pic={googleLogo}
-        link="https://google.com"
-        sub1="Berlin & Paris"
-        sub2="2021 - 2022"
-      />
-      <ResumeItem
-        header="unu"
-        subheader="Full stack developer"
-        pic={unuLogo}
-        link="https://unumotors.com"
-        sub1="Berlin, Germany"
-        sub2="2019 - 2020"
-      />
-      <ResumeItem
-        header="LEO Innovation Lab"
-        subheader="Full stack developer"
-        pic={leoLogo}
-        link="https://www.linkedin.com/company/leo-innovation-lab/about/"
-        sub1="Copenhagen, Denmark"
-        sub2="2017 - 2018"
-      />
       {
-        full && (
-          <ResumeItem
-            header="SAP"
-            subheader="Full stack developer, UX Designer"
-            pic={sapLogo}
-            link="https://www.sap.com/hungary/"
-            sub1="Budapest, Hungary"
-            sub2="2012 - 2017"
-          />
-        )
+        experience
+          .filter((item) => full || item.highlight)
+          .map((item) => (
+            <ResumeItem
+              header={item.header}
+              subheader={item.subheader}
+              pic={item.pic}
+              link={item.link}
+              sub1={item.sub1}
+              sub2={item.sub2}
+            />
+          ))
       }
     </div>
   </section>
@@ -67,35 +39,31 @@ const { full } = Astro.props;
         <section>
           <h2>Education</h2>
           <div class="grid">
-            <ResumeItem
-              header="Budapest University of Technology and Economics"
-              subheader="Bachelor's Degree"
-              pic={universityLogo}
-              link="https://www.bme.hu/"
-              sub1="Computer Science"
-              sub2="2007 - 2012"
-            />
+            {education.map((item) => (
+              <ResumeItem
+                header={item.header}
+                subheader={item.subheader}
+                pic={item.pic}
+                link={item.link}
+                sub1={item.sub1}
+                sub2={item.sub2}
+              />
+            ))}
           </div>
         </section>
         <section>
-          <h2>Volunteer</h2>
+          <h2>Volunteering</h2>
           <div class="grid">
-            <ResumeItem
-              header="codebar"
-              subheader="Coach"
-              pic={codebarLogo}
-              link="https://codebar.io/berlin"
-              sub1="Coaching future web developers"
-              sub2="2019 - 2020"
-            />
-            <ResumeItem
-              header="Budapest UP!"
-              subheader="Founder"
-              pic={upLogo}
-              link="https://www.facebook.com/budapest.up"
-              sub1="Organizing urban playground events"
-              sub2="2011 - 2016"
-            />
+            {volunteering.map((item) => (
+              <ResumeItem
+                header={item.header}
+                subheader={item.subheader}
+                pic={item.pic}
+                link={item.link}
+                sub1={item.sub1}
+                sub2={item.sub2}
+              />
+            ))}
           </div>
         </section>
       </>
