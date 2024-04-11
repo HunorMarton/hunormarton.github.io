@@ -49,11 +49,14 @@ const cvFileFormat = "pdf";
   }
   {
     full && (
-      <Button
-        href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
-        label="Download CV"
-        primary={true}
-      />
+      <>
+        <br />
+        <Button
+          href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
+          label="Download CV"
+          primary={true}
+        />
+      </>
     )
   }
   {!full && <Button href="/resume" label="Show more" />}
