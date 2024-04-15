@@ -3,14 +3,13 @@ import { Image } from "astro:assets";
 import { type HobbyItem } from "../types";
 
 interface Props {
-  link: string;
   data: HobbyItem;
 }
 
-const { link, data } = Astro.props;
+const { data } = Astro.props;
 ---
 
-<a class="preview" href={link} target="_blank" rel="noopener">
+<a class="preview" href={data.link} target="_blank" rel="noopener">
   {
     data.image ? (
       <Image

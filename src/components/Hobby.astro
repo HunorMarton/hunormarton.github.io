@@ -1,14 +1,18 @@
 ---
+import { getCollection } from "astro:content";
 import Skills from "../components/Skills.astro";
 import HobbyItem from "../components/HobbyItem.astro";
-import hobbyItems from "../hobbies-data";
+
+const entries = (await getCollection("hobbies")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <section>
   <h1>Hobby Projects</h1>
   <Skills />
   <div class="hobby-items">
-    {hobbyItems.map((item) => <HobbyItem full={true} data={item} />)}
+    {entries.map((item) => <HobbyItem full={true} entry={item} />)}
   </div>
 </section>
 

@@ -1,17 +1,19 @@
 ---
+import { getCollection } from "astro:content";
 import Button from "../components/Button.astro";
 import HobbyItem from "../components/HobbyItem.astro";
-import hobbyItems from "../hobbies-data";
+
+const entries = (
+  await getCollection("hobbies", ({ data }) => {
+    return data.highlight === true;
+  })
+).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <section>
   <h1>Hobby Projects</h1>
   <div class="hobby-items">
-    {
-      hobbyItems
-        .filter((item) => item.highlight)
-        .map((item) => <HobbyItem data={item} />)
-    }
+    {entries.map((entry) => <HobbyItem entry={entry} />)}
   </div>
   <Button href="/hobbies" label="Show more" />
 </section>

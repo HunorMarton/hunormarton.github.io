@@ -1,4 +1,4 @@
-import { type HobbyItem, SourceType as sources, TechTypes as techs } from './types'
+import { type HobbyItem, SourceType as sources, TechTypes as techs } from '../types'
 import TrafficRun from './images/TrafficRun.png';
 // import AirBalloon from './images/AirBalloon.png';
 import Stack from './images/Stack.png';

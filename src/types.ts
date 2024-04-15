@@ -3,7 +3,7 @@ export type HobbyItem = {
     title: string;
     image?: ImageMetadata;
     desc?: string;
-    date: string;
+    date: Date | string; // string is not a thing anymore, but the obsolete file list still uses that
     link: string;
     sources: Source[];
     techs: Tech[];

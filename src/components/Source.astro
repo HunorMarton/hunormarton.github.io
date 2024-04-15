@@ -46,7 +46,7 @@ switch (type) {
     label = "Article";
     break;
   default:
-    throw Error("Invalid source type");
+    throw Error(`Invalid source type: ${type}`);
 }
 ---
 
