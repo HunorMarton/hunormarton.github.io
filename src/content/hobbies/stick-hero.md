@@ -2,16 +2,13 @@
 title: Stick Hero
 highlight: true
 date: 2020-11-15
-link: https://codepen.io/HunorMarton/full/xxOMQKg
 image: ./stick-hero.png
 sources:
-    - type: youtube
-      id: eue3UdFvwPo
-    - type: freecodecamp
-      id: javascript-game-tutorial-stick-hero-with-html-canvas
-    - type: codepen
-      id: xxOMQKg
+    youtube: eue3UdFvwPo
+    freecodecamp: javascript-game-tutorial-stick-hero-with-html-canvas
+    codepen: xxOMQKg
 techs:
     - javascript
     - canvas
 ---
+I created a bridge-building game inspired by [Stick Hero](https://apps.apple.com/us/app/stick-hero/id918338898) using JavaScript and the Canvas API. It was my first project to use the HTML Canvas element.

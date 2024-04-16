@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from "astro:content";
+import HobbyTitle from "../components/HobbyTitle.astro";
+import { getPrimaryLink } from "../utility";
+import Preview from "../components/Preview.astro";
+import HobbyInfo from "./HobbyInfo.astro";
+import Button from "../components/Button.astro";
+
+interface Props {
+  entry: CollectionEntry<"hobbies">;
+}
+
+const { entry } = Astro.props;
+
+const link = getPrimaryLink(entry);
+const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not supported
+---
+
+<main>
+  <div class:list={[{ embeddable }]}>
+    {
+      embeddable && (
+        <iframe
+          allowfullscreen
+          loading="lazy"
+          src={getPrimaryLink(entry, true).href}
+        />
+      )
+    }
+    <Preview entry={entry} self={false} />
+  </div>
+
+  <article>
+    <HobbyTitle entry={entry} />
+    <div class="description">
+      <slot />
+    </div>
+    <Button href={link.href} primary>{link.label}</Button>
+    <HobbyInfo entry={entry} />
+  </article>
+</main>
+
+<style>
+  main {
+    display: grid;
+    gap: 40px;
+    vertical-align: top;
+    container-type: inline-size;
+
+    grid-template-columns: 100%;
+  }
+
+  @media screen and (min-width: 1100px) {
+    main {
+      grid-template-columns: auto minmax(300px, 500px);
+    }
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+    min-width: 600px;
+    max-height: 100vh;
+    aspect-ratio: 16 / 12;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  .description {
+    font-family: "Montserrat", sans-serif;
+    max-width: 700px;
+    line-height: 1.8em;
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+
+    padding-right: 40px;
+    max-width: 100%;
+  }
+</style>
+
+<style is:global>
+  /* If the project is embeddable, keep the embed and hide the preview */
+  .embeddable *:last-child {
+    display: none;
+  }
+
+  /* On smaller screen sizes remove the embed even if it's embeddable */
+  @container (max-width: 600px) {
+    .embeddable *:first-child {
+      display: none;
+    }
+
+    .embeddable *:last-child {
+      display: block;
+    }
+  }
+</style>

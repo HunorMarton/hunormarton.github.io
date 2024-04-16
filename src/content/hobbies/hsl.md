@@ -1,11 +1,9 @@
 ---
 title: HSL Color Picker
 date: 2017-03-04
-link: http://codepen.io/HunorMarton/full/dvXVvQ
 image: ./hsl.png
 sources:
-    - type: codepen
-      id: dvXVvQ
+    codepen: dvXVvQ
 techs:
     - html
     - javascript
@@ -13,3 +11,4 @@ techs:
     - rxjs
     - svg
 ---
+Another project that combines SVG generation with interaction. As you move the selector on the color wheel or the other sliders, the rest of the color picker updates colors automatically.

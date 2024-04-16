@@ -1,8 +1,8 @@
 ---
-title: Rotating 3D figure
+title: CSS-only 3D figure
 date: 2017-01-02
-link: http://codepen.io/HunorMarton/full/mRbNQd
 image: ./3d-figure.png
-sources: [{ type: codepen, id: mRbNQd }]
+sources:
+    codepen: mRbNQd
 techs: [pug, css]
 ---

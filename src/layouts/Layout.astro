@@ -85,6 +85,10 @@ const description =
     padding: var(--vertical-padding) var(--horizontal-padding);
     padding-right: calc(var(--horizontal-padding) + var(--nav-height));
 
+    @media (min-width: 650px) {
+      padding-right: calc(var(--horizontal-padding) * 2 + var(--nav-height));
+    }
+
     border-bottom: 1px dashed lightgray;
 
     & > h1 {

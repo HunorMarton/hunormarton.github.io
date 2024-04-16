@@ -1,8 +1,9 @@
 ---
 title: Compass
 date: 2017-04-05
-link: https://hunormarton.github.io/compass/
 image: ./compass.png
-sources: [{ type: github, id: compass }]
+sources: 
+    github: compass
 techs: [javascript, react, deviceorientation]
 ---
+A quick demo using the device orientation. It tells you in which direction you are looking. It only works on mobile devices.

@@ -51,17 +51,17 @@ const cvFileFormat = "pdf";
   }
   {
     full && (
-      <>
-        <br />
+      <div class="after">
         <Button
           href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
-          label="Download CV"
-          primary={true}
-        />
-      </>
+          primary
+        >
+          Download CV
+        </Button>
+      </div>
     )
   }
-  {!full && <Button href="/resume" label="Show more" />}
+  {!full && <Button href="/resume">Show more</Button>}
 </section>
 
 <style>
@@ -79,6 +79,10 @@ const cvFileFormat = "pdf";
     gap: 100px 80px;
     flex-wrap: wrap;
     margin: 50px 0 50px 0;
+  }
+
+  .after {
+    margin: 40px 0;
   }
 
   @media screen and (min-width: 650px) {

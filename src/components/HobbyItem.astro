@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import HobbyTitle from "../components/HobbyTitle.astro";
 import Preview from "../components/Preview.astro";
-import Source from "../components/Source.astro";
-import Techs from "../components/Techs.astro";
+import HobbyInfo from "../components/HobbyInfo.astro";
 
 interface Props {
   entry: CollectionEntry<"hobbies">;
@@ -13,63 +13,14 @@ const { entry, full } = Astro.props;
 ---
 
 <article>
-  {
-    full && (
-      <h1>
-        <span>{entry.data.title}</span>
-        <span class="date">
-          {new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "long",
-          }).format(entry.data.date)}
-        </span>
-      </h1>
-    )
-  }
-  <Preview data={entry.data} />
-  {
-    full && (
-      <div class="info">
-        {entry.data.sources.map((source) => (
-          <Source type={source.type} id={source.id} />
-        ))}
-        <Techs techs={entry.data.techs} />
-      </div>
-    )
-  }
+  {full && <HobbyTitle entry={entry} />}
+  <Preview entry={entry} self={true} />
+  {full && <HobbyInfo entry={entry} />}
 </article>
 
 <style>
   article {
     display: inline-block;
     vertical-align: top;
-  }
-
-  article .date {
-    color: gray;
-  }
-
-  article .date::before {
-    content: "// ";
-  }
-
-  article .info {
-    display: inline-block;
-    vertical-align: bottom;
-    width: 180px;
-  }
-
-  @media screen and (min-width: 650px) {
-    article h1 {
-      max-width: 500px;
-    }
-
-    article h1 span {
-      display: inline-block;
-    }
-
-    .info {
-      padding-left: 20px;
-    }
   }
 </style>

@@ -45,23 +45,29 @@ switch (type) {
     icon = "freeCodeCamp";
     label = "Article";
     break;
+  case SourceType.VERCEL:
+    break;
+  case SourceType.WEB:
+    break;
   default:
     throw Error(`Invalid source type: ${type}`);
 }
 ---
 
-<div class="source" data-source={type}>
-  {
-    href ? (
-      <a href={href} target="_blank" rel="noopener">
+{
+  icon && (
+    <div class="source" data-source={type}>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener">
+          <SourceIcon icon={icon} />
+          <span>{label}</span>
+        </a>
+      ) : (
         <SourceIcon icon={icon} />
-        <span>{label}</span>
-      </a>
-    ) : (
-      <SourceIcon icon={icon} />
-    )
-  }
-</div>
+      )}
+    </div>
+  )
+}
 
 <style>
   .source {

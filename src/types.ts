@@ -24,6 +24,8 @@ export enum SourceType {
     CSSTRICKS = 'css-tricks',
     YOUTUBE = 'youtube',
     FREECODECAMP = 'freecodecamp',
+    VERCEL = 'vercel',
+    WEB = 'web',
 }
 
 export enum TechTypes {

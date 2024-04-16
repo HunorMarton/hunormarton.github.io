@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Source from "../components/Source.astro";
+import Techs from "../components/Techs.astro";
+import { type SourceType } from "../types";
+
+interface Props {
+  entry: CollectionEntry<"hobbies">;
+}
+
+const { entry } = Astro.props;
+
+const sources = Object.entries(entry.data.sources) as [SourceType, string][];
+---
+
+<div class="info">
+  {sources.map(([type, id]) => <Source type={type} id={id} />)}
+  <Techs techs={entry.data.techs} />
+</div>
+
+<style>
+  .info {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 180px;
+  }
+
+  @media (min-width: 650px) {
+    .info {
+      padding-left: 20px;
+    }
+  }
+</style>

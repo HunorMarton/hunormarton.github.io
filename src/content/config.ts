@@ -10,13 +10,7 @@ const hobbiesCollection = defineCollection({
         image: image().optional(),
         desc: z.string().optional(),
         date: z.date(),
-        link: z.string().url(),
-        sources: z.array(
-            z.object({
-                type: z.nativeEnum(SourceType),
-                id: z.string().optional(),
-            }),
-        ),
+        sources: z.record(z.nativeEnum(SourceType), z.string()),
         techs: z.array(z.union([
             z.nativeEnum(TechTypes),
             z.string()

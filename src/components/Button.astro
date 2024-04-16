@@ -1,14 +1,13 @@
 ---
 interface Props {
-  label: string;
   href: string;
   primary?: boolean;
 }
 
-const { label, href, primary } = Astro.props;
+const { href, primary } = Astro.props;
 ---
 
-<a href={href} class:list={[{ primary }]}>{label}</a>
+<a href={href} class:list={[{ primary }]}><slot /></a>
 
 <style>
   a {
@@ -17,6 +16,5 @@ const { label, href, primary } = Astro.props;
 
   .primary {
     display: inline-block;
-    margin: 40px 0;
   }
 </style>

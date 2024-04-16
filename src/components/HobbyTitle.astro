@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"hobbies">;
+}
+
+const { entry } = Astro.props;
+---
+
+<h1>
+  <span>{entry.data.title}</span>
+  <span class="date">
+    {
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+      }).format(entry.data.date)
+    }
+  </span>
+</h1>
+
+<style>
+  .date {
+    color: gray;
+  }
+
+  .date::before {
+    content: "// ";
+  }
+
+  @media screen and (min-width: 650px) {
+    h1 {
+      max-width: 500px;
+    }
+  }
+</style>
