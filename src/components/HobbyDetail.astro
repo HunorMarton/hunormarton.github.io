@@ -35,7 +35,7 @@ const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not s
     <div class="description">
       <slot />
     </div>
-    <Button href={link.href} primary>{link.label}</Button>
+    <Button href={link.href} primary external={true}>{link.label}</Button>
     <HobbyInfo entry={entry} />
   </article>
 </main>

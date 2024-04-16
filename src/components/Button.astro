@@ -2,12 +2,14 @@
 interface Props {
   href: string;
   primary?: boolean;
+  external?: boolean;
 }
 
-const { href, primary } = Astro.props;
+const { href, primary, external } = Astro.props;
+const target = external ? "_blank" : "_self";
 ---
 
-<a href={href} class:list={[{ primary }]}><slot /></a>
+<a href={href} class:list={[{ primary }]} target={target}><slot /></a>
 
 <style>
   a {
