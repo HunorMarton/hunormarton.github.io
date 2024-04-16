@@ -9,16 +9,16 @@ dependencies:
     specifier: ^0.5.10
     version: 0.5.10(typescript@5.4.5)
   astro:
-    specifier: ^4.5.14
+    specifier: ^4.6.1
     version: 4.6.1(sass@1.75.0)(typescript@5.4.5)
   sass:
-    specifier: ^1.74.1
+    specifier: ^1.75.0
     version: 1.75.0
   sharp:
     specifier: ^0.33.3
     version: 0.33.3
   typescript:
-    specifier: ^5.4.3
+    specifier: ^5.4.5
     version: 5.4.5
 
 packages:
