@@ -8,6 +8,15 @@ dependencies:
   '@astrojs/check':
     specifier: ^0.5.10
     version: 0.5.10(typescript@5.4.5)
+  '@fontsource-variable/maven-pro':
+    specifier: ^5.0.19
+    version: 5.0.19
+  '@fontsource/cutive-mono':
+    specifier: ^5.0.20
+    version: 5.0.20
+  '@fontsource/mitr':
+    specifier: ^5.0.13
+    version: 5.0.13
   astro:
     specifier: ^4.6.1
     version: 4.6.1(sass@1.75.0)(typescript@5.4.5)
@@ -800,6 +809,18 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@fontsource-variable/maven-pro@5.0.19:
+    resolution: {integrity: sha512-f1HFNayiyV/YnlLDhI1fCKacVoEtFDO/4Dyu7tVA36e5lPpY4qJ2C21APdRWjF2PHeij9YK747PV8xFRQJ/6og==}
+    dev: false
+
+  /@fontsource/cutive-mono@5.0.20:
+    resolution: {integrity: sha512-U7PQRH39j+eEsjXz0rQC+2zxoPmPKyfyvuuO8bLBjvhoH1CgQFTEE95pYvAmKgrhg+dF4rn1uRJpJZInykOAFw==}
+    dev: false
+
+  /@fontsource/mitr@5.0.13:
+    resolution: {integrity: sha512-ifJ4t2YFtjOVH2AKQtwVJwx+WJs9JozDMfJn/B65HLccxVjElTRIdca93u/iEyZX9Lt7kPiiy2/LE3Y51Zg1Jw==}
+    dev: false
 
   /@img/sharp-darwin-arm64@0.33.3:
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
