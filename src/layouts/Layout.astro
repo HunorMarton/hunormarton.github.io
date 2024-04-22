@@ -88,6 +88,10 @@ const description =
     --vertical-padding: 80px;
     --horizontal-padding: 20px;
 
+    @media (min-width: 650px) {
+      --horizontal-padding: 40px;
+    }
+
     padding: var(--vertical-padding) var(--horizontal-padding);
     padding-right: calc(var(--horizontal-padding) + var(--nav-height));
 
