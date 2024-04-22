@@ -2,9 +2,9 @@
 import Button from "./Button.astro";
 ---
 
-<section id="header">
-  <div class="hi">Hi, I'm Hunor 👋</div>
-  <div class="subheader">Web developer with an interest in UX design</div>
+<section>
+  <h1>Hi, I'm Hunor 👋</h1>
+  <h2>Web developer with an interest in UX design</h2>
   <p class="description">
     I specialize in front-end and web app development, with a focus on visually
     complex projects. I enjoy teaching and UX design, and share my hobby
@@ -26,42 +26,40 @@ import Button from "./Button.astro";
 </section>
 
 <style>
-  #header {
-    .hi {
-      font-family: "Cutive Mono", monospace;
-      color: #192b3e;
-      font-size: 42px;
-      font-weight: 800;
-      margin: 0.3em 0;
-    }
+  h1 {
+    font-family: "Cutive Mono", monospace;
+    color: #192b3e;
+    font-size: 42px;
+    font-weight: 800;
+  }
 
-    .subheader {
-      margin: 4em 0 0em;
-      font-family: "Mitr", sans-serif;
-      font-weight: 600;
+  h1::after {
+    content: "";
+  }
 
-      max-width: 700px;
-      font-size: 28px;
+  h2 {
+    font-family: "Mitr", sans-serif;
+    font-weight: 600;
 
-      color: #898ea2;
-    }
+    max-width: 700px;
+    font-size: 28px;
 
-    .job-title {
-      color: #192b3e;
-    }
+    color: #898ea2;
+  }
 
-    .description {
-      max-width: 700px;
-      margin-top: 1.5em;
+  .description {
+    max-width: 700px;
+    margin-top: 1.5em;
 
-      font-family: "Maven Pro Variable", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 17.5px;
-      line-height: 1.6em;
-    }
+    font-family: "Maven Pro Variable", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 17.5px;
+    line-height: 1.6em;
+  }
 
+  section {
     a {
       margin: 40px 0;
     }
