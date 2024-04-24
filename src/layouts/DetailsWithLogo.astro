@@ -35,6 +35,9 @@ const { title, logo } = Astro.props as Props;
     height: 100%;
     max-height: 100%;
     overflow: scroll;
+
+    padding: 80px 0;
+    box-sizing: border-box;
   }
 
   figure {
@@ -49,6 +52,7 @@ const { title, logo } = Astro.props as Props;
   @media (min-width: 900px) {
     .content {
       grid-template-columns: 1.2fr minmax(500px, 2fr);
+      padding: 0;
     }
   }
 </style>
