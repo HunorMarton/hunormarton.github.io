@@ -1,5 +1,4 @@
 ---
-highlight: true
 header: unu
 subheader: Full stack developer
 pic: ./unu.svg

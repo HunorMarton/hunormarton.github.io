@@ -1,5 +1,4 @@
 ---
-highlight: true
 header: Google
 subheader: UX Engineer (temporary staff)
 pic: ./google.svg

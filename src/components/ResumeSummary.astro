@@ -3,26 +3,51 @@ import { getCollection } from "astro:content";
 import ResumeItem from "./ResumeItem.astro";
 import Button from "./Button.astro";
 
-const workEntries = (
-  await getCollection("work", ({ data }) => {
-    return data.highlight === true;
-  })
-).sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+const workEntries = (await getCollection("work")).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime()
+);
 ---
 
-<section id="resume">
+<section>
   <h1>Work Experience</h1>
-  <div class="grid">
+  <div class="resume-items">
     {workEntries.map((item) => <ResumeItem entry={item} full={false} />)}
   </div>
   <Button href="/resume">Show more</Button>
 </section>
 
-<style>
-  .grid {
+<style is:global>
+  .resume-items {
     display: flex;
     gap: 100px 80px;
     flex-wrap: wrap;
     margin: 50px 0 50px 0;
+    container-type: inline-size;
+  }
+
+  .resume-items article:nth-child(4) {
+    display: none;
+  }
+
+  @container (min-width: 680px) {
+    .resume-items article:nth-child(4) {
+      display: inline-block;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .resume-items {
+      flex-wrap: nowrap;
+    }
+
+    .resume-items article:nth-child(4) {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    .resume-items article:nth-child(4) {
+      display: inline-block;
+    }
   }
 </style>

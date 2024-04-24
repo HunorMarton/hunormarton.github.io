@@ -21,7 +21,6 @@ const hobbiesCollection = defineCollection({
 const resumeItemCollection = defineCollection({
     type: 'content',
     schema: ({ image }: { image: ImageFunction }) => z.object({
-        highlight: z.boolean().optional(),
         header: z.string(),
         subheader: z.string(),
         pic: image(),

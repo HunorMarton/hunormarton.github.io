@@ -1,5 +1,4 @@
 ---
-highlight: true
 header: LEO Innovation Lab
 subheader: Full stack developer
 pic: ./leo.svg
