@@ -8,26 +8,21 @@ interface Props {
     | CollectionEntry<"education">
     | CollectionEntry<"volunteering">;
   full?: boolean;
-  self?: boolean;
 }
 
-const { entry, full, self } = Astro.props;
+const { entry, full } = Astro.props;
 
-const { link, pic, header, subheader, location, start, end } = entry.data;
+const { pic, header, subheader, location, start, end } = entry.data;
 
 const { Content } = await entry.render();
-
-const href = self ? `/work/${entry.slug}` : link;
-const target = self ? "_self" : "_blank";
-const rel = self ? "" : "noopener";
 ---
 
 <article class="resume-item">
-  <a href={href} target={target} rel={rel}>
+  <a href={`/work/${entry.slug}`}>
     <Image src={pic} alt={header} width={300} height={300} densities={[1, 2]} />
   </a>
   <h3>{header}</h3>
-  <p>{subheader}</p>
+  <h4>{subheader}</h4>
   {
     full && (
       <div class="sub">
@@ -59,6 +54,11 @@ const rel = self ? "" : "noopener";
 
     h3 {
       font-weight: normal;
+    }
+
+    h4 {
+      font-weight: normal;
+      line-height: 1.3;
     }
 
     .sub {

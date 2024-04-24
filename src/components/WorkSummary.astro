@@ -11,11 +11,7 @@ const workEntries = (await getCollection("work")).sort(
 <section>
   <h1>Work Experience</h1>
   <div class="work-items">
-    {
-      workEntries.map((item) => (
-        <ResumeItem entry={item} full={false} self={true} />
-      ))
-    }
+    {workEntries.map((item) => <ResumeItem entry={item} full={false} />)}
   </div>
   <Button href="/work">Show more</Button>
 </section>

@@ -1,6 +1,6 @@
 ---
 header: LEO Innovation Lab
-subheader: Full stack developer
+subheader: Founding Engineer of Studies&Me
 pic: ./leo.svg
 link: https://www.linkedin.com/company/leo-innovation-lab/about/
 location: Copenhagen, Denmark
