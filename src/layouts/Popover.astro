@@ -9,8 +9,8 @@ export interface Props {
 const { title } = Astro.props as Props;
 ---
 
-<Layout title={title}>
-  <div class="popover">
+<Layout title={`Hunor Márton Borbély | ${title}`}>
+  <div class="popover" transition:name={`item-${title}`}>
     <slot />
 
     <Close />

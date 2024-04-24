@@ -2,6 +2,7 @@
 import "@fontsource/cutive-mono";
 import "@fontsource-variable/maven-pro"; // Supports weights 400-900
 import "@fontsource/mitr";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -61,105 +62,97 @@ const description =
       defer
       src="https://analytics.eu.umami.is/script.js"
       data-website-id="f0174326-b261-4c1e-959b-1579f05b28eb"></script>
+
+    <ViewTransitions />
   </head>
   <body>
     <slot />
+    <style is:global>
+      :root {
+        --nav-height: 50px;
+      }
+
+      html {
+        font-family: "Cutive Mono", monospace;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body > section,
+      footer {
+        --vertical-padding: 80px;
+        --horizontal-padding: 20px;
+
+        @media (min-width: 650px) {
+          --horizontal-padding: 40px;
+        }
+
+        padding: var(--vertical-padding) var(--horizontal-padding);
+        padding-right: calc(var(--horizontal-padding) + var(--nav-height));
+
+        @media (min-width: 650px) {
+          padding-right: calc(
+            var(--horizontal-padding) * 2 + var(--nav-height)
+          );
+        }
+
+        border-bottom: 1px dashed lightgray;
+
+        & > h1 {
+          margin-bottom: 2em;
+          font-size: 1.7em;
+        }
+
+        & > h1::after {
+          content: "_";
+        }
+
+        article {
+          width: calc(
+            100vw - var(--horizontal-padding) * 2 - var(--nav-height)
+          );
+        }
+      }
+
+      a,
+      button {
+        color: #0070f3;
+        text-decoration: none;
+        text-underline-offset: 4px;
+      }
+
+      a.primary,
+      button {
+        border: 1px solid #0070f3;
+        display: inline-block;
+        padding: 12px 20px;
+        background-color: transparent;
+        cursor: pointer;
+      }
+
+      a:not(.primary):hover {
+        text-decoration: underline;
+      }
+
+      @media screen and (min-width: 650px) {
+        body > section,
+        footer {
+          & > h1 {
+            font-size: 1.5em;
+          }
+
+          article {
+            width: auto;
+          }
+        }
+      }
+    </style>
   </body>
 </html>
-<style is:global>
-  :root {
-    --nav-height: 50px;
-  }
-
-  html {
-    font-family: "Cutive Mono", monospace;
-  }
-
-  body {
-    margin: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-  }
-
-  body > section,
-  footer {
-    --vertical-padding: 80px;
-    --horizontal-padding: 20px;
-
-    @media (min-width: 650px) {
-      --horizontal-padding: 40px;
-    }
-
-    padding: var(--vertical-padding) var(--horizontal-padding);
-    padding-right: calc(var(--horizontal-padding) + var(--nav-height));
-
-    @media (min-width: 650px) {
-      padding-right: calc(var(--horizontal-padding) * 2 + var(--nav-height));
-    }
-
-    border-bottom: 1px dashed lightgray;
-
-    & > h1 {
-      margin-bottom: 2em;
-      font-size: 1.7em;
-    }
-
-    & > h1::after {
-      content: "_";
-    }
-
-    article {
-      width: calc(100vw - var(--horizontal-padding) * 2 - var(--nav-height));
-    }
-  }
-
-  a,
-  button {
-    color: #0070f3;
-    text-decoration: none;
-    text-underline-offset: 4px;
-  }
-
-  a.primary,
-  button {
-    border: 1px solid #0070f3;
-    display: inline-block;
-    padding: 12px 20px;
-    background-color: transparent;
-    cursor: pointer;
-  }
-
-  a:not(.primary):hover {
-    text-decoration: underline;
-  }
-
-  @media screen and (min-width: 650px) {
-    body > section,
-    footer {
-      & > h1 {
-        font-size: 1.5em;
-      }
-
-      article {
-        width: auto;
-      }
-    }
-  }
-
-  /*
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-  */
-</style>

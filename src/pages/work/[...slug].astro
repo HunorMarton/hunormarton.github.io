@@ -16,10 +16,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<DetailsWithLogo
-  title={`Hunor Márton Borbély | ${entry.data.header}`}
-  logo={entry.data.pic}
->
+<DetailsWithLogo title={entry.data.header} logo={entry.data.pic}>
   <section>
     <WorkDetail entry={entry}>
       <Content />

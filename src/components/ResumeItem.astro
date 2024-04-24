@@ -17,9 +17,16 @@ const { pic, header, subheader, location, start, end } = entry.data;
 const { Content } = await entry.render();
 ---
 
-<article class="resume-item">
+<article class="resume-item" transition:name={`item-${header}`}>
   <a href={`/work/${entry.slug}`}>
-    <Image src={pic} alt={header} width={300} height={300} densities={[1, 2]} />
+    <Image
+      transition:name={`logo-${header}`}
+      src={pic}
+      alt={header}
+      width={300}
+      height={300}
+      densities={[1, 2]}
+    />
   </a>
   <h3>{header}</h3>
   <h4>{subheader}</h4>
