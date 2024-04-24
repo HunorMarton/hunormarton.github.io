@@ -5,11 +5,9 @@
 - Consider GoatCounter analytics as well (?)
 
 - View transitioning between work popups
-- Open popups from work page
-- Update work description with links
-- Add button on the bottom to launch website
+- Add button on the bottom to launch website (?)
 - Add skills to work
-- Go back to previous work position on back button
+- Go back to previous scroll position on back button
 - Adjust mobile layout of work page
   - Main image
   - Close Button
