@@ -4,11 +4,8 @@
 - Add Page transition (?)
 - Consider GoatCounter analytics as well (?)
 
-- View transitioning between work popups
 - Add either see more or clickable title/subtitle on review items
-- Add button on the bottom to launch website (?)
 - Add skills to work
-- Go back to previous scroll position on back button
 - Adjust mobile layout of work page
   - Main image
   - Close Button
