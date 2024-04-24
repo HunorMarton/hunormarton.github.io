@@ -29,13 +29,6 @@ const cvFileFormat = "pdf";
   </section>
 
   <section>
-    <h2>Education</h2>
-    <div class="grid">
-      {educationEntries.map((item) => <ResumeItem entry={item} full={true} />)}
-    </div>
-  </section>
-
-  <section>
     <h2>Volunteering</h2>
     <div class="grid">
       {
@@ -43,6 +36,13 @@ const cvFileFormat = "pdf";
           <ResumeItem entry={item} full={true} />
         ))
       }
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="grid">
+      {educationEntries.map((item) => <ResumeItem entry={item} full={true} />)}
     </div>
   </section>
 
@@ -57,6 +57,11 @@ const cvFileFormat = "pdf";
 </section>
 
 <style>
+  #resume {
+    display: flex;
+    flex-direction: column;
+  }
+
   #resume section {
     display: inline-block;
     vertical-align: top;
