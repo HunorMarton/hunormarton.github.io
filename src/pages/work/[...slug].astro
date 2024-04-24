@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import Main from "../../layouts/Main.astro";
-import HobbyDetail from "../../components/HobbyDetail.astro";
+import DetailsWithLogo from "../../layouts/DetailsWithLogo.astro";
+import WorkDetail from "../../components/WorkDetail.astro";
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("hobbies");
+  const blogEntries = await getCollection("work");
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -16,10 +16,13 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Main title="Hunor Márton Borbély">
+<DetailsWithLogo
+  title={`Hunor Márton Borbély | ${entry.data.header}`}
+  logo={entry.data.pic}
+>
   <section>
-    <HobbyDetail entry={entry}>
+    <WorkDetail entry={entry}>
       <Content />
-    </HobbyDetail>
+    </WorkDetail>
   </section>
-</Main>
+</DetailsWithLogo>

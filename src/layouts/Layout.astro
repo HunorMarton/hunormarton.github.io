@@ -2,8 +2,6 @@
 import "@fontsource/cutive-mono";
 import "@fontsource-variable/maven-pro"; // Supports weights 400-900
 import "@fontsource/mitr";
-import Navigation from "../components/Navigation.astro";
-import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
@@ -65,9 +63,7 @@ const description =
       data-website-id="f0174326-b261-4c1e-959b-1579f05b28eb"></script>
   </head>
   <body>
-    <Navigation />
     <slot />
-    <Footer />
   </body>
 </html>
 <style is:global>
@@ -81,6 +77,11 @@ const description =
 
   body {
     margin: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
   }
 
   body > section,

@@ -8,17 +8,22 @@ interface Props {
     | CollectionEntry<"education">
     | CollectionEntry<"volunteering">;
   full?: boolean;
+  self?: boolean;
 }
 
-const { entry, full } = Astro.props;
+const { entry, full, self } = Astro.props;
 
 const { link, pic, header, subheader, location, start, end } = entry.data;
 
 const { Content } = await entry.render();
+
+const href = self ? `/work/${entry.slug}` : link;
+const target = self ? "_self" : "_blank";
+const rel = self ? "" : "noopener";
 ---
 
 <article class="resume-item">
-  <a href={link} target="_blank" rel="noopener">
+  <a href={href} target={target} rel={rel}>
     <Image src={pic} alt={header} width={300} height={300} densities={[1, 2]} />
   </a>
   <h3>{header}</h3>
