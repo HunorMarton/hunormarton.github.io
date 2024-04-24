@@ -24,7 +24,7 @@ const resumeItemCollection = defineCollection({
         header: z.string(),
         subheader: z.string(),
         pic: image(),
-        link: z.string(),
+        link: z.string().optional(),
         location: z.string().optional(),
         start: z.date(),
         end: z.date(),

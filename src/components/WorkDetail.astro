@@ -7,12 +7,12 @@ interface Props {
 
 const { entry } = Astro.props;
 
-const { link, header, subheader, location, start, end } = entry.data;
+const { header, subheader, location, start, end } = entry.data;
 ---
 
 <article>
-  <h1 transition:name={`logo2-${header}`}>{header}</h1>
-  <p transition:name={`logo3-${header}`}>{subheader}</p>
+  <h1>{header}</h1>
+  <p>{subheader}</p>
   <p class="sub">{location}</p>
   <p class="sub">
     {

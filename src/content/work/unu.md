@@ -3,7 +3,6 @@ header: unu
 subheader: Senior Software Engineer
 pic: ./unu.svg
 description: Worked both on the customer-facing website and an internal web app. Primarily responsible for frontend development, code reviews, and mentoring a junior backend developer. Occasionally giving tech talks.
-link: https://unumotors.com
 location: Berlin, Germany
 start: 2019-04-01
 end: 2020-08-31

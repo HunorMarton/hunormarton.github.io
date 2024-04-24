@@ -12,13 +12,17 @@ interface Props {
 
 const { entry, full } = Astro.props;
 
-const { pic, header, subheader, location, start, end } = entry.data;
+const { pic, link, header, subheader, location, start, end } = entry.data;
+
+const href = link ?? `/work/${entry.slug}`;
+const target = link ? "_blank" : "_self";
+const rel = link ? "noopener" : "";
 
 const { Content } = await entry.render();
 ---
 
 <article class="resume-item" transition:name={`item-${header}`}>
-  <a href={`/work/${entry.slug}`}>
+  <a href={href} target={target} rel={rel}>
     <Image
       transition:name={`logo-${header}`}
       src={pic}
