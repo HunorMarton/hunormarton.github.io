@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import ResumeItem from "./ResumeItem.astro";
+import Button from "./Button.astro";
+
+const workEntries = (
+  await getCollection("work", ({ data }) => {
+    return data.highlight === true;
+  })
+).sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+---
+
+<section id="resume">
+  <h1>Work Experience</h1>
+  <div class="grid">
+    {workEntries.map((item) => <ResumeItem entry={item} full={false} />)}
+  </div>
+  <Button href="/resume">Show more</Button>
+</section>
+
+<style>
+  .grid {
+    display: flex;
+    gap: 100px 80px;
+    flex-wrap: wrap;
+    margin: 50px 0 50px 0;
+  }
+</style>

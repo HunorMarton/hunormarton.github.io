@@ -3,17 +3,9 @@ import { getCollection } from "astro:content";
 import ResumeItem from "./ResumeItem.astro";
 import Button from "./Button.astro";
 
-interface Props {
-  full?: boolean;
-}
-
-const { full } = Astro.props;
-
-const workEntries = (
-  await getCollection("work", ({ data }) => {
-    return full || data.highlight === true;
-  })
-).sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+const workEntries = (await getCollection("work")).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime()
+);
 
 const educationEntries = (await getCollection("education")).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime()
@@ -32,46 +24,36 @@ const cvFileFormat = "pdf";
   <section>
     <h2>Experience</h2>
     <div class="grid">
-      {workEntries.map((item) => <ResumeItem entry={item} full={full} />)}
+      {workEntries.map((item) => <ResumeItem entry={item} full={true} />)}
     </div>
   </section>
-  {
-    full && (
-      <section>
-        <h2>Education</h2>
-        <div class="grid">
-          {educationEntries.map((item) => (
-            <ResumeItem entry={item} full={full} />
-          ))}
-        </div>
-      </section>
-    )
-  }
-  {
-    full && (
-      <section>
-        <h2>Volunteering</h2>
-        <div class="grid">
-          {volunteeringEntries.map((item) => (
-            <ResumeItem entry={item} full={full} />
-          ))}
-        </div>
-      </section>
-    )
-  }
-  {
-    full && (
-      <div class="after">
-        <Button
-          href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
-          primary
-        >
-          Download CV
-        </Button>
-      </div>
-    )
-  }
-  {!full && <Button href="/resume">Show more</Button>}
+
+  <section>
+    <h2>Education</h2>
+    <div class="grid">
+      {educationEntries.map((item) => <ResumeItem entry={item} full={true} />)}
+    </div>
+  </section>
+
+  <section>
+    <h2>Volunteering</h2>
+    <div class="grid">
+      {
+        volunteeringEntries.map((item) => (
+          <ResumeItem entry={item} full={true} />
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="after">
+    <Button
+      href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
+      primary
+    >
+      Download CV
+    </Button>
+  </div>
 </section>
 
 <style>
@@ -93,11 +75,5 @@ const cvFileFormat = "pdf";
 
   .after {
     margin: 40px 0;
-  }
-
-  @media screen and (min-width: 650px) {
-    #resume section {
-      margin-right: 20px;
-    }
   }
 </style>
