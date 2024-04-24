@@ -17,7 +17,7 @@ const { link, pic, header, subheader, location, start, end } = entry.data;
 const { Content } = await entry.render();
 ---
 
-<article class="resume-block">
+<article class="resume-item">
   <a href={link} target="_blank" rel="noopener">
     <Image src={pic} alt={header} width={300} height={300} densities={[1, 2]} />
   </a>
@@ -45,7 +45,7 @@ const { Content } = await entry.render();
 </article>
 
 <style>
-  .resume-block {
+  .resume-item {
     display: inline-block;
     font-family: "Maven Pro Variable", sans-serif;
     width: 100%;
@@ -71,7 +71,7 @@ const { Content } = await entry.render();
   }
 
   @media screen and (min-width: 650px) {
-    .resume-block {
+    .resume-item {
       width: 300px;
     }
   }

@@ -10,14 +10,14 @@ const workEntries = (await getCollection("work")).sort(
 
 <section>
   <h1>Work Experience</h1>
-  <div class="resume-items">
+  <div class="work-items">
     {workEntries.map((item) => <ResumeItem entry={item} full={false} />)}
   </div>
-  <Button href="/resume">Show more</Button>
+  <Button href="/work">Show more</Button>
 </section>
 
 <style is:global>
-  .resume-items {
+  .work-items {
     display: flex;
     gap: 100px 80px;
     flex-wrap: wrap;
@@ -25,28 +25,28 @@ const workEntries = (await getCollection("work")).sort(
     container-type: inline-size;
   }
 
-  .resume-items article:nth-child(4) {
+  .work-items article:nth-child(4) {
     display: none;
   }
 
   @container (min-width: 680px) {
-    .resume-items article:nth-child(4) {
+    .work-items article:nth-child(4) {
       display: inline-block;
     }
   }
 
   @media (min-width: 900px) {
-    .resume-items {
+    .work-items {
       flex-wrap: nowrap;
     }
 
-    .resume-items article:nth-child(4) {
+    .work-items article:nth-child(4) {
       display: none;
     }
   }
 
   @media screen and (min-width: 1100px) {
-    .resume-items article:nth-child(4) {
+    .work-items article:nth-child(4) {
       display: inline-block;
     }
   }
