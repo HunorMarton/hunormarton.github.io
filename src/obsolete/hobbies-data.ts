@@ -1,4 +1,4 @@
-import { type HobbyItem, SourceType as sources, TechTypes as techs } from '../types'
+import { SourceType as sources, TechTypes as techs } from '../types'
 import TrafficRun from './images/TrafficRun.png';
 // import AirBalloon from './images/AirBalloon.png';
 import Stack from './images/Stack.png';
@@ -31,6 +31,24 @@ import Sine from './images/Sine.png';
 import Figure from './images/Figure.png';
 import Clock from './images/Clock.png';
 import Gorillas from './images/Gorillas.png';
+
+export type HobbyItem = {
+    highlight?: boolean;
+    title: string;
+    image?: ImageMetadata;
+    desc?: string;
+    date: Date | string; // string is not a thing anymore, but the obsolete file list still uses that
+    link: string;
+    sources: Source[];
+    techs: Tech[];
+};
+
+type Source = {
+    id?: string;
+    type: sources;
+}
+
+export type Tech = techs | string;
 
 const data: HobbyItem[] = [
     {

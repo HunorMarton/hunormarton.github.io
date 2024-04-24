@@ -1,13 +1,27 @@
 ---
+import { getCollection } from "astro:content";
 import ResumeItem from "./ResumeItem.astro";
 import Button from "./Button.astro";
-import { experience, education, volunteering } from "../resume-data.ts";
 
 interface Props {
   full?: boolean;
 }
 
 const { full } = Astro.props;
+
+const workEntries = (
+  await getCollection("work", ({ data }) => {
+    return full || data.highlight === true;
+  })
+).sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+
+const educationEntries = (await getCollection("education")).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime()
+);
+
+const volunteeringEntries = (await getCollection("volunteering")).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime()
+);
 
 const cvFileId = "1NuFXxP13Km_FtHhKpqM0V5rK45q0zlyOANnKSIu2Qx4";
 const cvFileFormat = "pdf";
@@ -18,11 +32,7 @@ const cvFileFormat = "pdf";
   <section>
     <h2>Experience</h2>
     <div class="grid">
-      {
-        experience
-          .filter((item) => full || item.highlight)
-          .map((item) => <ResumeItem data={item} full={full} />)
-      }
+      {workEntries.map((item) => <ResumeItem entry={item} full={full} />)}
     </div>
   </section>
   {
@@ -30,8 +40,8 @@ const cvFileFormat = "pdf";
       <section>
         <h2>Education</h2>
         <div class="grid">
-          {education.map((item) => (
-            <ResumeItem data={item} full={full} />
+          {educationEntries.map((item) => (
+            <ResumeItem entry={item} full={full} />
           ))}
         </div>
       </section>
@@ -42,8 +52,8 @@ const cvFileFormat = "pdf";
       <section>
         <h2>Volunteering</h2>
         <div class="grid">
-          {volunteering.map((item) => (
-            <ResumeItem data={item} full={full} />
+          {volunteeringEntries.map((item) => (
+            <ResumeItem entry={item} full={full} />
           ))}
         </div>
       </section>

@@ -1,21 +1,3 @@
-export type HobbyItem = {
-    highlight?: boolean;
-    title: string;
-    image?: ImageMetadata;
-    desc?: string;
-    date: Date | string; // string is not a thing anymore, but the obsolete file list still uses that
-    link: string;
-    sources: Source[];
-    techs: Tech[];
-};
-
-type Source = {
-    id?: string;
-    type: SourceType;
-}
-
-export type Tech = TechTypes | string;
-
 export enum SourceType {
     GITHUB = 'github',
     CODEPEN = 'codepen',
@@ -41,15 +23,4 @@ export enum TechTypes {
     THREEJS = 'threejs',
     CANVAS = 'canvas',
     ASTRO = 'astro',
-}
-
-export type ResumeItem = {
-    highlight?: boolean;
-    header: string;
-    subheader: string;
-    description?: string;
-    location?: string;
-    date: string;
-    pic: ImageMetadata | string;
-    link: string;
 }
