@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import HobbyTitle from "../components/HobbyTitle.astro";
 import { getPrimaryLink } from "../utility";
 import HobbyInfo from "./HobbyInfo.astro";
 import Button from "../components/Button.astro";
@@ -15,7 +14,15 @@ const link = getPrimaryLink(entry);
 ---
 
 <article>
-  <HobbyTitle entry={entry} />
+  <h1>{entry.data.title}</h1>
+  <p class="sub">
+    {
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+      }).format(entry.data.date)
+    }
+  </p>
   <div class="description">
     <slot />
   </div>
@@ -36,8 +43,19 @@ const link = getPrimaryLink(entry);
     height: 100%;
     box-sizing: border-box;
 
-    gap: 10px;
     max-width: 550px;
+  }
+
+  @media (min-width: 900px) {
+    article h1 {
+      font-size: 2em;
+      color: #898ea2;
+    }
+  }
+
+  .sub {
+    font-size: 0.8em;
+    color: gray;
   }
 
   .description {
@@ -47,5 +65,6 @@ const link = getPrimaryLink(entry);
     font-style: normal;
     font-size: 0.9em;
     line-height: 1.6em;
+    margin-bottom: 40px;
   }
 </style>
