@@ -12,7 +12,7 @@ interface Props {
 const { entry, full } = Astro.props;
 ---
 
-<article transition:name={`hobby-${entry.data.title}`}>
+<article transition:name={`item-${entry.data.title}`}>
   {full && <HobbyTitle entry={entry} />}
   <Preview entry={entry} self={true} />
   {full && <HobbyInfo entry={entry} />}

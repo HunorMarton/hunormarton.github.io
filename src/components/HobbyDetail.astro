@@ -1,10 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import HobbyTitle from "../components/HobbyTitle.astro";
 import { getPrimaryLink } from "../utility";
 import Preview from "../components/Preview.astro";
-import HobbyInfo from "./HobbyInfo.astro";
-import Button from "../components/Button.astro";
+import HobbyDescription from "./HobbyDescription.astro";
 
 interface Props {
   entry: CollectionEntry<"hobbies">;
@@ -17,7 +15,7 @@ const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not s
 ---
 
 <main>
-  <div class:list={[{ embeddable }]}>
+  <figure class:list={[{ embeddable }]}>
     {
       embeddable && (
         <iframe
@@ -28,31 +26,40 @@ const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not s
       )
     }
     <Preview entry={entry} self={false} />
-  </div>
+  </figure>
 
-  <article>
-    <HobbyTitle entry={entry} />
-    <div class="description">
-      <slot />
-    </div>
-    <Button href={link.href} primary external={true}>{link.label}</Button>
-    <HobbyInfo entry={entry} />
-  </article>
+  <HobbyDescription entry={entry}>
+    <slot />
+  </HobbyDescription>
 </main>
 
 <style>
   main {
     display: grid;
-    gap: 40px;
-    vertical-align: top;
-    container-type: inline-size;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: scroll;
 
-    grid-template-columns: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    container-type: inline-size;
+  }
+
+  figure {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   @media screen and (min-width: 1100px) {
     main {
       grid-template-columns: auto minmax(300px, 500px);
+      padding: 0;
     }
   }
 
@@ -64,27 +71,6 @@ const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not s
     aspect-ratio: 16 / 12;
     border: 1px solid #ccc;
     box-sizing: border-box;
-  }
-
-  .description {
-    font-family: "Maven Pro Variable", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 0.9em;
-    line-height: 1.6em;
-
-    max-width: 700px;
-  }
-
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 500px;
-
-    padding-right: 40px;
-    max-width: 100%;
   }
 </style>
 

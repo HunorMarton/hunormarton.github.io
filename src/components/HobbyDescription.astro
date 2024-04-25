@@ -1,33 +1,26 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import HobbyTitle from "../components/HobbyTitle.astro";
+import { getPrimaryLink } from "../utility";
+import HobbyInfo from "./HobbyInfo.astro";
+import Button from "../components/Button.astro";
 
 interface Props {
-  entry: CollectionEntry<"work">;
+  entry: CollectionEntry<"hobbies">;
 }
 
 const { entry } = Astro.props;
 
-const { header, subheader, location, start, end } = entry.data;
+const link = getPrimaryLink(entry);
 ---
 
 <article>
-  <h1>{header}</h1>
-  <p>{subheader}</p>
-  <p class="sub">{location}</p>
-  <p class="sub">
-    {
-      new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-      }).format(start)
-    } - {
-      new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-      }).format(end)
-    }
-  </p>
+  <HobbyTitle entry={entry} />
   <div class="description">
     <slot />
   </div>
+  <Button href={link.href} primary external={true}>{link.label}</Button>
+  <HobbyInfo entry={entry} />
 </article>
 
 <style>
@@ -43,19 +36,8 @@ const { header, subheader, location, start, end } = entry.data;
     height: 100%;
     box-sizing: border-box;
 
+    gap: 10px;
     max-width: 550px;
-  }
-
-  @media (min-width: 900px) {
-    article h1 {
-      font-size: 2em;
-      color: #898ea2;
-    }
-  }
-
-  .sub {
-    font-size: 0.8em;
-    color: gray;
   }
 
   .description {

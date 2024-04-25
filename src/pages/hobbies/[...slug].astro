@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Main from "../../layouts/Main.astro";
+import Popover from "../../layouts/Popover.astro";
 import HobbyDetail from "../../components/HobbyDetail.astro";
 
 // 1. Generate a new path for every collection entry
@@ -16,10 +16,8 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Main title="Hunor Márton Borbély">
-  <section>
-    <HobbyDetail entry={entry}>
-      <Content />
-    </HobbyDetail>
-  </section>
-</Main>
+<Popover title={entry.data.title}>
+  <HobbyDetail entry={entry}>
+    <Content />
+  </HobbyDetail>
+</Popover>

@@ -10,7 +10,7 @@ export interface Props {
 const { entry } = Astro.props as Props;
 ---
 
-<div class="content">
+<main>
   <figure>
     <Image
       transition:name={`logo-${entry.data.header}`}
@@ -25,10 +25,10 @@ const { entry } = Astro.props as Props;
   <WorkDescription entry={entry}>
     <slot />
   </WorkDescription>
-</div>
+</main>
 
 <style>
-  .content {
+  main {
     display: grid;
     justify-content: center;
     width: 100%;
@@ -50,7 +50,7 @@ const { entry } = Astro.props as Props;
   }
 
   @media (min-width: 900px) {
-    .content {
+    main {
       grid-template-columns: 1.2fr minmax(500px, 2fr);
       padding: 0;
     }
