@@ -12,6 +12,8 @@ const { title } = Astro.props;
 
 const description =
   "Hunor Márton Borbély, Software Engineer, Freelancer in Berlin.";
+
+const isProd = import.meta.env.PROD;
 ---
 
 <!doctype html>
@@ -58,10 +60,15 @@ const description =
       gtag("config", "UA-171674382-1");
     </script>
 
-    <script
-      defer
-      src="https://analytics.eu.umami.is/script.js"
-      data-website-id="f0174326-b261-4c1e-959b-1579f05b28eb"></script>
+    {
+      isProd && (
+        <script
+          defer
+          src="https://analytics.eu.umami.is/script.js"
+          data-website-id="f0174326-b261-4c1e-959b-1579f05b28eb"
+        />
+      )
+    }
 
     <ViewTransitions />
   </head>
