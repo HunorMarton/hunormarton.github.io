@@ -47,7 +47,6 @@
     perspective: 400px;
     width: 850px;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
   }
 
   #div1,
@@ -55,6 +54,7 @@
   #div3 {
     display: inline-block;
     transform-style: preserve-3d;
+    backface-visibility: hidden;
   }
 
   .frame {
@@ -133,6 +133,96 @@
 
     .mobile {
       display: inline-block;
+    }
+  }
+
+  #div1,
+  #div1 > .frame,
+  #div2,
+  #div2 > .frame,
+  #div3,
+  #div3 > .frame {
+    animation-duration: 0.7ms; /* Firefox requires this to apply the animation */
+    animation-direction: forwards;
+    animation-timeline: scroll(block nearest);
+  }
+
+  #div1 {
+    animation-name: div1-animation;
+  }
+
+  #div1 > .frame {
+    animation-name: div1-frame-animation;
+  }
+
+  #div2 {
+    animation-name: div2-animation;
+  }
+
+  #div2 > .frame {
+    animation-name: div2-frame-animation;
+  }
+
+  #div3 {
+    animation-name: div3-animation;
+  }
+
+  #div3 > .frame {
+    animation-name: div3-frame-animation;
+  }
+
+  @keyframes div1-animation {
+    4% {
+      transform: rotateX(0);
+      transform-origin: left bottom;
+    }
+
+    10% {
+      transform: rotateX(110deg);
+    }
+  }
+
+  @keyframes div1-frame-animation {
+    3% {
+      background-color: $bg-color;
+    }
+
+    6% {
+      background-color: transparent;
+    }
+  }
+
+  @keyframes div2-animation {
+    3% {
+      transform: rotateY(0);
+    }
+  }
+
+  @keyframes div2-frame-animation {
+    3% {
+      color: $color;
+      background-color: $bg-color;
+    }
+
+    6% {
+      background-color: transparent;
+    }
+  }
+
+  @keyframes div3-animation {
+    3% {
+      transform: rotateY(0);
+    }
+  }
+
+  @keyframes div3-frame-animation {
+    3% {
+      color: $color;
+      background-color: $bg-color;
+    }
+
+    6% {
+      background-color: transparent;
     }
   }
 </style>
