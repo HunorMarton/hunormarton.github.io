@@ -32,8 +32,12 @@ const { Content } = await entry.render();
       densities={[1, 2]}
     />
   </a>
-  <h3>{header}</h3>
-  <h4>{subheader}</h4>
+
+  <a href={href} target={target} rel={rel}>
+    <h3>{header}</h3>
+    <h4>{subheader}</h4>
+  </a>
+
   {
     full && (
       <div class="sub">
@@ -62,6 +66,10 @@ const { Content } = await entry.render();
     width: 100%;
     object-fit: contain;
     min-width: 150px;
+
+    a {
+      color: black;
+    }
 
     h3 {
       font-weight: normal;
