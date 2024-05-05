@@ -1,0 +1,138 @@
+<>
+  <div class="desktop">
+    <div id="div1">
+      <div class="frame">
+        <div class="content"><slot /></div>
+      </div>
+      <div id="div2">
+        <div class="frame">
+          <div class="content"><slot /></div>
+        </div>
+        <div id="div3">
+          <div class="frame">
+            <div class="content"><slot /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile">Hi, I'm Hunor 👋</div>
+</>
+
+<style lang="scss">
+  $div1-width: 290px;
+  $div2-width: 240px;
+  $div3-width: 260px;
+  $height: 200px;
+  $color: #b0413e;
+  $bg-color: rgb(228, 230, 235); // Same as var(--lightgray)
+
+  $angle2: -40deg;
+  $angle3: 50deg;
+
+  .desktop,
+  .mobile {
+    font-family: "Maven Pro Variable", sans-serif;
+    font-weight: 900;
+  }
+
+  .desktop {
+    margin: 120px 0;
+    font-size: 0;
+
+    // Center
+    white-space: nowrap;
+
+    // 3D
+    perspective: 400px;
+    width: 850px;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+
+  #div1,
+  #div2,
+  #div3 {
+    display: inline-block;
+    transform-style: preserve-3d;
+  }
+
+  .frame {
+    overflow: hidden;
+    height: $height;
+    line-height: $height;
+
+    font-size: 100px;
+
+    display: inline-block;
+  }
+
+  #div1 {
+    .frame {
+      color: $color;
+      background-color: $bg-color;
+
+      width: $div1-width;
+    }
+  }
+
+  #div2 {
+    margin-left: -1px;
+    transform-origin: left center;
+    transform: rotateY($angle2);
+
+    .frame {
+      color: darken($color, 5%);
+      background-color: darken($bg-color, 5%);
+
+      width: $div2-width;
+
+      .content {
+        position: relative;
+        left: -$div1-width;
+      }
+    }
+  }
+
+  #div3 {
+    margin-left: -1px;
+    transform-origin: left center;
+    transform: rotateY($angle3);
+
+    .frame {
+      color: lighten($color, 5%);
+      background-color: lighten($bg-color, 5%);
+
+      width: $div3-width;
+
+      .content {
+        position: relative;
+        left: -$div1-width - $div2-width;
+      }
+    }
+  }
+
+  .mobile {
+    display: none;
+
+    font-family: "Cutive Mono", monospace;
+    color: #192b3e;
+    font-size: 42px;
+    font-weight: 800;
+    margin: 40px 0;
+
+    @media (min-width: 650px) {
+      margin: 120px 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .desktop {
+      display: none;
+    }
+
+    .mobile {
+      display: inline-block;
+    }
+  }
+</style>
