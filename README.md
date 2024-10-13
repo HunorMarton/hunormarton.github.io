@@ -1,3 +1,9 @@
+# Personal Portfolio
+
+Personal portfolio of Hunor Marton Borbely located at [hunormarton.com](https://hunormarton.com/). The project follows the general structure of an Astro project.
+
+<hr>
+
 # Astro Starter Kit: Basics
 
 ```sh
