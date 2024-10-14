@@ -15,7 +15,7 @@ const volunteeringEntries = (await getCollection("volunteering")).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime()
 );
 
-const cvFileId = "1NuFXxP13Km_FtHhKpqM0V5rK45q0zlyOANnKSIu2Qx4";
+const cvFileId = "19dLT_i3Ge9yhJjh2WqW0oKqrsAE_I0beQ_k7X-4Dd_0";
 const cvFileFormat = "pdf";
 ---
 
@@ -48,7 +48,7 @@ const cvFileFormat = "pdf";
 
   <div class="after">
     <Button
-      href={`https://docs.google.com/presentation/d/${cvFileId}/export/${cvFileFormat}`}
+      href={`https://docs.google.com/document/d/${cvFileId}/export?format=${cvFileFormat}`}
       primary
     >
       Download CV
