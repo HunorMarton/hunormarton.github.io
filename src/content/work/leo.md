@@ -10,8 +10,10 @@ end: 2018-12-31
 
 [LEO Innovation Lab](https://www.linkedin.com/company/leo-innovation-lab/) was a digital healthcare innovation unit established by [LEO Pharma](https://www.leo-pharma.com/). It included several independent projects.
 
-I joined as a founding engineer of the [Studies&Me](https://studiesandme.com/) project. Studies&Me aims to revolutionize clinical research by leveraging digital technology and patient-centric approaches to improve the efficiency and effectiveness of clinical trials.
+I joined as a founding engineer of the [Studies&Me](https://studiesandme.com/) project. I created a patient-facing website for clinical trial signups and developing custom web apps for evaluating, monitoring, and scheduling patients.
 
-Responsibilities quickly evolved to a system of multiple sites serving four different personas. I was responsible for the client-facing recruitment tool, where people could sign up for clinical trials; an internal evaluation tool, where in-house doctors could assess the patients; an administration tool, where we could track and funnel the recruitment progress; and a scheduling tool, where third-party doctors all around the world could find the contact information of the assigned patients.
+I created the React frontend and a Node.js backend and used a database as a service.
 
-Due to the small team and flexible setup, I also designed the appearance and behavior of most features.
+In addition to development, I designed the appearance and behavior of most key features and validated them through user and A/B testing.
+
+Automating these processes significantly streamlined patient management, replacing manual workflows.
