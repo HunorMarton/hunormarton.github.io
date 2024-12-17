@@ -2,7 +2,7 @@
 import "@fontsource/cutive-mono";
 import "@fontsource-variable/maven-pro"; // Supports weights 400-900
 import "@fontsource/mitr";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -70,7 +70,7 @@ const isProd = import.meta.env.PROD;
       )
     }
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <slot />
