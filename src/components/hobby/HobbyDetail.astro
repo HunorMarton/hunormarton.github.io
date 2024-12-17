@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 import { getPrimaryLink } from "../../utility";
 import Preview from "./Preview.astro";
 import HobbyDescription from "./HobbyDescription.astro";
@@ -12,7 +12,7 @@ const { entry } = Astro.props;
 
 const link = getPrimaryLink(entry);
 const embeddable = !link.href.includes("skl.sh"); // Skillshare embeds are not supported
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <main>

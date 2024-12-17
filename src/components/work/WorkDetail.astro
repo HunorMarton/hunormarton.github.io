@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 import WorkDescription from "./WorkDescription.astro";
 
 export interface Props {
@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const { entry } = Astro.props as Props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <main>

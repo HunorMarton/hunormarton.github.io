@@ -1,12 +1,12 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 
 interface Props {
   entry: CollectionEntry<"blog">;
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <section>
