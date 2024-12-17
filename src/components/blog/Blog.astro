@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import BlogItem from "./BlogItem.astro";
+
+const entries = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<section>
+  <h1>Blog</h1>
+  <div>
+    {entries.map((item) => <BlogItem entry={item} />)}
+  </div>
+</section>

@@ -1,0 +1,14 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+---
+
+<a href={`/blog/${entry.slug}`}>
+  <h2>{entry.data.title}</h2>
+  <p>{entry.data.date}</p>
+</a>
