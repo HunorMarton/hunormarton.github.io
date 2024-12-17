@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import Skills from "../components/Skills.astro";
-import HobbyItem from "../components/HobbyItem.astro";
+import Skills from "./Skills.astro";
+import HobbyItem from "./HobbyItem.astro";
 
 const entries = (await getCollection("hobbies")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()

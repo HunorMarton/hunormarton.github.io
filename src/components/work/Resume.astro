@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import ResumeItem from "./ResumeItem.astro";
-import Button from "./Button.astro";
+import Button from "../Button.astro";
 
 const workEntries = (await getCollection("work")).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime()

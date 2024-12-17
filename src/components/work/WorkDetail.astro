@@ -8,6 +8,7 @@ export interface Props {
 }
 
 const { entry } = Astro.props as Props;
+const { Content } = await entry.render();
 ---
 
 <main>
@@ -23,7 +24,7 @@ const { entry } = Astro.props as Props;
   </figure>
 
   <WorkDescription entry={entry}>
-    <slot />
+    <Content />
   </WorkDescription>
 </main>
 
