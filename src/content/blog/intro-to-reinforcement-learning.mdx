@@ -1,0 +1,2559 @@
+---
+title: Introduction to Reinforcement Learning
+date: 2024-12-17
+---
+
+import Definition from "../../components/reinforcement-learning/ui/Definition.astro";
+import Grid from "../../components/reinforcement-learning/ui/grid/Grid.astro";
+import GridWithLabels from "../../components/reinforcement-learning/ui/grid/GridWithLabels.astro";
+import DemoBlackjack from "../../components/reinforcement-learning/demo/blackjack/MonteCarlo.astro";
+import DemoWindyMonteCarloAndSarsaLambdaTD from "../../components/reinforcement-learning/demo/windy-gridworld/MonteCarlo+SarsaTemporalDifference.astro";
+import DemoWindySarsaLambdaTD from "../../components/reinforcement-learning/demo/windy-gridworld/SarsaLambdaTemporalDifference.astro";
+import {
+  evaluatePolicy,
+  evaluateValueFunction,
+  iterateValueFunction,
+} from "../../components/reinforcement-learning/demo/lesson3.ts";
+import { monteCarloPolicyEvaluation } from "../../components/reinforcement-learning/demo/lesson4.ts";
+import {
+  transformBlackjackValueFunction,
+  transformBlackjackPolicyControl,
+} from "../../components/reinforcement-learning/demo/blackjack/utils.ts";
+
+Content
+
+- There is no supervisor, only reward signal
+- Feedback is delayed
+- Agent moving through a world, time matters
+- Agent gets to take actions
+
+## The Reinforcement Learning Problem
+
+### Rewards
+
+- A reward $$R_t$$ is a scalar feedback signal
+- It indicated how well agent is doing at step $$t$$
+- Agent's job is to maximize cumulative reward
+
+Reinforcement learning is based on the reward hypothesis.
+
+<Definition title="Reward Hypothesis">
+
+All goals can be described by the maximization of expected cumulative reward
+
+</Definition>
+
+Goal: _select actions to maximize total future reward_
+
+- Actions may have long term consequences
+- Reward may be delayed
+- It may be better to sacrifice immediate reward to gain more long-term reward
+
+### Agent and Environment
+
+At each step $$t$$:
+
+- Receives observations $$O_t$$
+- Executes action $$A_t$$
+- Receives reward $$R_t$$
+
+### History and State
+
+_History_ is a sequence of observations, actions, rewards
+
+```math
+H_t = A_1, O_1, R_1, ..., A_t, O_t, R_t
+```
+
+All observable variables up to time $$t$$
+
+What happens next depends on the history
+
+- The agent selects actions
+- The environment selects observations and rewards
+
+_State_ is the information used to determine what happens next
+
+```math
+S_t = f(H_t)
+```
+
+### Environment State
+
+- $$S_t^e$$ is the environment state, the environment's private representation
+- It's the data used by the environment to determine the next observation and reward
+- It's not usually visible to the agent
+- Even if it's visible, it's often not useful
+
+### Agent State
+
+- $$S_t^\mathrm{a}$$ is the agent state, the agent's internal representation
+- It's the data used by the agent to pick actions
+- It is the information used by the reinforcement learning algorithm
+- It can be any function of the history $$S_t^\mathrm{a} = f(H_t)$$
+
+### Information State
+
+- The _information state_ (a.k.a. Markov state) is the state that contains all useful information from the history
+
+<Definition title="Markov Property">
+
+A state $$S_t$$ is Markov if and only if
+
+```math
+\mathbb{P}[S_{t+1} | S_t] = \mathbb{P}[S_{t+1} | S_1, ..., S_t]
+```
+
+The probability of the next state based on the current state is the same as the probability of the next state based on the entire history.
+
+The probability of the next state depends only on the current state, not on the past.
+
+</Definition>
+
+The future is independent of the past given the present.
+
+Once the state is known, the history may be thrown away.
+
+The state is a sufficient statistic of the future (it characterizes all future rewards).
+
+The environment state $$S_t^e$$ and the entire history $$H_t$$ are Markov.
+
+### Fully Observable Environments
+
+Agent directly observes the environment state.
+
+$$O_t = S_t^\mathrm{a} = S_t^e$$
+
+Agent state = environment state = information state.
+
+Formally, this is a Markov decision process (MDP).
+
+### Partially Observable Environments
+
+Agent indirectly observes the environment state.
+
+Now agent state is not equal to environment state.
+
+Formally, this is a partially observable Markov decision process (POMDP).
+
+Agent must construct its own state representation $$S_t^\mathrm{a}$$.
+
+- Complete history $$S_t^\mathrm{a} = H_t$$
+- _Beliefs_ of environment state $$S_t^\mathrm{a} = (\mathbb{P}[S_t^e = s^1], ..., \mathbb{P}[S_t^e = s^n])$$
+
+Every step you build beliefs. I don't know what's happening in the environment. I create probability distribution over where I think I am in the environment. There is some probability that the environment state is $$s^1$$, some probability that it's $$s^2$$, etc. And then this is used to decide what to do.
+
+- Recurrent neural networks: $$S_t^\mathrm{a} = \sigma(S_{t-1}^aW_s + O_tW_o)$$
+
+Take a linear combination of the agent's state at the last time step with the latest observation.
+
+## Inside an RL Agent
+
+An RL agent may include one or more of these components:
+
+- Policy: agent's behavior function
+- Value function: how good is each state and/or action
+- Model: agent's representation of the environment
+
+### Policy
+
+- A policy is the agent's behavior.
+- It is a map from state to action.
+- Deterministic policy: $$\mathrm{a} = \pi(s)$$.
+- Stochastic policy: $$\pi(\mathrm{a}|s) = \mathbb{P}[A = \mathrm{a} | S = s]$$.
+
+Probability of taking a particular action conditioned on being in a particular state.
+
+### Value Function
+
+- Value function is a prediction of future reward.
+- Used to evaluate the goodness/badness of states.
+- And therefore to select between actions.
+
+```math
+\mathrm{v}_\pi(s) = \mathbb{E}_\pi[R_{t} + \gamma R_{t+1} + \gamma^2 R_{t+2} + ... | S_t = s]
+```
+
+The value function for a policy tells us, how much total reward we can expect to accumulate starting from that state. We accumulate reward over time. We add the reward at time $$t$$, the reward at time $$t+1$$, and so on. We can also discount the rewards in the future by a factor of $$\gamma$$, because we care more about immediate awards than future rewards.
+
+### Model
+
+- A model predicts what the environment will do next.
+- _State Transition model_: $$\mathcal{P}$$ predicts the next state.
+- _Rewards model_: $$\mathcal{R}$$ predicts the next immediate reward.
+
+```math
+\mathcal{P}_{ss'}^\mathrm{a} = \mathbb{P}[S' = s' | S = s, A = \mathrm{a}]
+```
+
+Probability of the next state being $$s'$$ given that the current state is $$s$$ and the action taken is $$\mathrm{a}$$.
+
+```math
+\mathcal{R}_s^\mathrm{a} = \mathbb{E}[R | S = s, A = \mathrm{a}]
+```
+
+Expected reward for taking action $$\mathrm{a}$$ in state $$s$$.
+
+### Maze Example
+
+- Rewards: -1 for each step (to encourage the agent to find a shorter path)
+- Actions: up, down, left, right
+- States: agent's location
+
+<Grid
+  data={[
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+    ["x", " ", " ", " ", " ", " ", " ", "x"],
+    [" ", " ", "x", "x", " ", "x", " ", "x"],
+    ["x", " ", " ", "x", "x", " ", " ", "x"],
+    ["x", "x", " ", " ", "x", " ", "x", "x"],
+    ["x", " ", "x", " ", "x", " ", " ", "x"],
+    ["x", " ", " ", " ", " ", "x", " ", " "],
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+  ]}
+/>
+
+#### Policy
+
+Arrows represent policy $$\pi(s)$$ for each state $$s$$.
+
+<Grid
+  data={[
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+    ["x", "r", "r", "r", "r", "r", "d", "x"],
+    ["r", "u", "x", "x", "u", "x", "d", "x"],
+    ["x", "u", "l", "x", "x", "d", "l", "x"],
+    ["x", "x", "u", "l", "x", "d", "x", "x"],
+    ["x", "d", "x", "u", "x", "r", "d", "x"],
+    ["x", "r", "r", "u", "l", "x", "r", "r"],
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+  ]}
+/>
+
+#### Value Function
+
+Numbers represent value function $$\mathrm{v}_\pi(s)$$ for each state $$s$$.
+
+<Grid
+  data={[
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+    ["x", -14, -13, -12, -11, -10, -9, "x"],
+    [-16, -15, "x", "x", -12, "x", -8, "x"],
+    ["x", -16, -17, "x", "x", -6, -7, "x"],
+    ["x", "x", -18, -19, "x", -5, "x", "x"],
+    ["x", -24, "x", -20, "x", -4, -3, "x"],
+    ["x", -23, -22, -21, -22, "x", -2, -1],
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+  ]}
+/>
+
+#### Model
+
+<Grid
+  data={[
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+    ["x", -1, -1, -1, -1, -1, -1, "x"],
+    [-1, -1, "x", "x", -1, "x", -1, "x"],
+    ["x", -1, "x", "x", "x", -1, -1, "x"],
+    ["x", "x", "x", "x", "x", -1, "x", "x"],
+    ["x", "x", "x", "x", "x", -1, -1, "x"],
+    ["x", "x", "x", "x", "x", "x", -1, -1],
+    ["x", "x", "x", "x", "x", "x", "x", "x"],
+  ]}
+/>
+
+Grid layout represents transition model $$\mathcal{P}_{ss'}^\mathrm{a}$$.
+
+Numbers represent immediate reward $$\mathcal{R}_s^\mathrm{a}$$ from each state $$s$$ (same for all actions).
+
+It's not reality, it's the agent's model of reality.
+
+### Categories of RL Agents
+
+- Value-Based: the value function is the key to making decisions
+  - No Policy (implicit)
+- Policy-Based: stores the policy
+  - No Value Function
+- Actor-Critic: combines value-based and policy-based methods
+
+Regarding model
+
+- Model free
+  - Policy and/or value function
+  - No model
+- Model based
+  - Policy and/or value function
+  - Model
+
+## Problems within Reinforcement Learning
+
+### Learning and Planning
+
+Two fundamental problems in reinforcement learning:
+
+Reinforcement Learning:
+
+- The environment is initially unknown
+- The agent interacts with the environment
+- The agent improves its policy
+
+Planning:
+
+- A model of the environment is known
+- The agent performs computations with its model (without any external interaction)
+- The agent improves its policy
+
+### Exploration and Exploitation
+
+Reinforcement learning is like trial and error learning.
+
+The agent should discover a good policy.
+
+From its experience, the agent should exploit the best policy.
+
+Without loosing the opportunity to discover a better policy.
+
+- Exploration finds more information about the environment.
+- Exploitation exploits known information to maximize reward.
+
+### Prediction and Control
+
+Prediction: evaluate the future
+
+- Given a policy, estimate the value function
+
+Control: optimize the future
+
+- Find the best policy
+
+## Introduction to Markov Decision Processes
+
+Markov decision processes formally describe an environment for reinforcement learning.
+
+Where the environment is fully observable.
+
+- The current state completely characterizes the process.
+
+Almost all RL problems can be formalized as MDPs.
+
+- Optimal control primarily deals with continuous MDPs.
+- Partially observable problems can be converted into MDPs.
+- Bandits are MDPs with one state.
+
+### Markov Property
+
+The state $$S_t$$ is Markov if and only if
+
+```math
+\mathbb{P}[S_{t+1} | S_t] = \mathbb{P}[S_{t+1} | S_1, ..., S_t]
+```
+
+The state captures all relevant information from the history.
+
+Once the state is known, the history may be thrown away.
+
+### State Transition Matrix
+
+For a Markov state $$s$$ and a successor state $$s^ \prime$$ , the state transition probability is defined by
+
+```math
+\mathcal{P}_{ss'} = \mathbb{P}[S_{t+1} = s' | S_t = s]
+```
+
+State transition matrix $$\mathcal{P}$$ defines the probability of moving from all states $$s$$ to all successor states $$s'$$.
+
+```math
+\mathcal{P} = \begin{bmatrix}
+\mathcal{P}_{11} & \mathcal{P}_{12} & \cdots & \mathcal{P}_{1n} \\
+\mathcal{P}_{21} & \mathcal{P}_{22} & \cdots & \mathcal{P}_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\mathcal{P}_{n1} & \mathcal{P}_{n2} & \cdots & \mathcal{P}_{nn}
+\end{bmatrix}
+```
+
+### Markov Process
+
+A Markov process is a memoryless random process. It's a sequence of random states $$S_1, S_2, ...$$ with the Markov property.
+
+<Definition title="Markov Process">
+
+A Markov Process (or Markov Chain) is a tuple $$\langle \mathcal{S}, \mathcal{P} \rangle$$
+
+- $$\mathcal{S}$$ is a (finite) set of states
+- $$\mathcal{P}$$ is a state transition probability matrix, $$\mathcal{P}_{ss'} = \mathbb{P}[S_{t+1} = s' | S_t = s]$$
+
+</Definition>
+
+### Example: Student Markov Process
+
+Taking class example. Sampling episodes.
+
+Each sample is a random sequence that is drawn from transition probabilities from one state to another.
+
+Example of the transition matrix.
+
+```math
+\mathcal{P} = \begin{bmatrix}
+0.7 & 0.3 & 0.0 \\
+0.0 & 0.2 & 0.8 \\
+0.0 & 0.0 & 1.0
+\end{bmatrix}
+```
+
+### Markov Reward Process
+
+A Markov Reward Process is a Markov chain with values.
+
+<Definition title="Markov Reward Process">
+
+A Markov Reward Process is a tuple $$\langle \mathcal{S}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$
+
+- $$\mathcal{S}$$ is a (finite) set of states
+- $$\mathcal{P}$$ is a state transition probability matrix, $$\mathcal{P}_{ss'} = \mathbb{P}[S_{t+1} = s' | S_t = s]$$
+- $$\mathcal{R}$$ is a reward function, $$\mathcal{R}_s = \mathbb{E}[R_{t+1} | S_t = s]$$
+- $$\gamma$$ is a discount factor, $$\gamma \in [0, 1]$$
+
+</Definition>
+
+The reward function tells us if we start in state $$s$$, what is the expected reward we will get in the next time step. This is an immediate reward. We try to maximize the expected cumulative reward.
+
+### Return
+
+<Definition title="Return">
+
+The return $$G_t$$ (goal) is the total discounted reward from time step $$t$$.
+
+```math
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+```
+
+</Definition>
+
+$$G_t$$ tells the rewards of a random sample.
+
+The discount factor $$\gamma \in [0, 1]$$ is the present value of future rewards.
+
+The value of receiving reward $$R$$ after $$t$$ time steps is $$\gamma^t R$$.
+
+We value immediate rewards more than future rewards. There's more uncertainty about future rewards. We do not have a perfect model. It is also mathematically convenient and avoids infinite returns in cyclic Markov processes.
+
+- $$\gamma = 0$$ means we only care about immediate rewards. The agent is short-sighted, it only cares about immediate rewards.
+- $$\gamma = 1$$ means we care about all rewards equally. The agent is far-sighted, it cares about future rewards.
+
+### Value Function
+
+The value function $$\mathrm{v}(s)$$ gives the long-term value of state $$s$$.
+
+<Definition title="Value Function">
+
+The value function $$\mathrm{v}(s)$$ of an MRP is the expected return starting from state $$s$$.
+
+```math
+\mathrm{v}(s) = \mathbb{E}[G_t | S_t = s]
+```
+
+</Definition>
+
+### Bellman Equation for Markov Reward Processes
+
+The value function can be decomposed into two parts:
+
+- Immediate reward $$R_{t+1}$$
+- Discounted value of successor state $$\gamma \mathrm{v}(S_{t+1})$$
+
+$$\mathrm{v}(s) = \mathbb{E}[G_t | S_t = s]$$
+
+$$\phantom{v(s)} = \mathbb{E}[R_{t+1} + \gamma R_{t+2} + \gamma ^2R_{t+3} + ... | S_t = s]$$
+
+$$\phantom{v(s)} = \mathbb{E}[R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + ... ) | S_t = s]$$
+
+$$\phantom{v(s)} = \mathbb{E}[R_{t+1} + \gamma G_{t+1} | S_t = s]$$
+
+$$\phantom{v(s)} = \mathbb{E}[R_{t+1} + \gamma \mathrm{v}(S_{t+1}) | S_t = s]$$
+
+Immediate reward + the value of the next state.
+
+### Bellman Equation Example
+
+```math
+\mathrm{v}(s) = \mathbb{E}[R_{t+1} + \gamma \mathrm{v}(S_{t+1}) | S_t = s]
+```
+
+One step lookahead tree example.
+
+```math
+\mathrm{v}(s) = \mathcal{R}_s + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}\mathrm{v}(s')
+```
+
+### Bellman Equation in Matrix Form
+
+The Bellman equation can be expressed concisely using matrices.
+
+```math
+\mathrm{v} = \mathcal{R} + \gamma \mathcal{P}\mathrm{v}
+```
+
+Where $$\mathrm{v}$$ is a column vector with one entry for each state.
+
+```math
+\begin{bmatrix}
+\mathrm{v}(1) \\
+\mathrm{v}(2) \\
+\vdots \\
+\mathrm{v}(n)
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathcal{R}_1 \\
+\mathcal{R}_2 \\
+\vdots \\
+\mathcal{R}_n
+\end{bmatrix}
++
+\gamma
+\begin{bmatrix}
+\mathcal{P}_{11} & \mathcal{P}_{12} & \cdots & \mathcal{P}_{1n} \\
+\mathcal{P}_{21} & \mathcal{P}_{22} & \cdots & \mathcal{P}_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\mathcal{P}_{n1} & \mathcal{P}_{n2} & \cdots & \mathcal{P}_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+\mathrm{v}(1) \\
+\mathrm{v}(2) \\
+\vdots \\
+\mathrm{v}(n)
+\end{bmatrix}
+```
+
+A column vector where each element of the column vector contains the value function of a specific state for all states from $$1$$ to $$n$$. The value of the state is equal to the immediate reward plus the discounted value of the next state based on the transition matrix.
+
+### Solving the Bellman Equation
+
+The Bellman equation is a linear equation.
+
+It can be solved directly:
+
+$$\phantom{(I - \gamma \mathcal{P})}\mathrm{v} = \mathcal{R} + \gamma \mathcal{P}\mathrm{v}$$
+
+$$(I - \gamma \mathcal{P})\mathrm{v} = \mathcal{R}$$
+
+$$\phantom{(I - \gamma \mathcal{P})}\mathrm{v} = (I - \gamma \mathcal{P})^{-1} \mathcal{R}$$
+
+Where $$I$$ is the identity matrix.
+
+Computational complexity is $$O(n^3)$$ in the $$n$$ states.
+
+Direct solution only possible for small MRPs.
+
+## Markov Decision Processes
+
+A Markov Decision Process (MDP) is a Markov Reward Process with decisions. It's an environment in which all states are Markov.
+
+<Definition title="Markov Decision Process">
+
+A Markov Decision Process is a tuple $$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$
+
+- $$\mathcal{S}$$ is a finite set of states
+- $$\mathcal{A}$$ is a finite set of actions
+- $$\mathcal{P}$$ is a state transition probability matrix, $$\mathcal{P}_{ss'}^\mathrm{a} = \mathbb{P}[S_{t+1} = s' | S_t = s, A_t = \mathrm{a}]$$
+- $$\mathcal{R}$$ is a reward function, $$\mathcal{R}_s^\mathrm{a} = \mathbb{E}[R_{t+1} | S_t = s, A_t = \mathrm{a}]$$
+- $$\gamma$$ is a discount factor, $$\gamma \in [0, 1]$$
+
+</Definition>
+
+### Policies
+
+<Definition title="Policy">
+
+A policy $$\pi$$ is a distribution over actions given states.
+
+```math
+\pi(\mathrm{a}|s) = \mathbb{P}[A_t = \mathrm{a} | S_t = s]
+```
+
+</Definition>
+
+The probability of taking action $$\mathrm{a}$$ in state $$s$$ under policy $$\pi$$.
+
+A policy fully defines the behavior of an agent.
+
+In an MDP the policies depend on the current state (not the history).
+
+Policies are stationary (time-independent).
+
+$$A_t \sim \pi(\cdot | S_t), \forall t > 0$$
+
+We can always go back to a Markov Process or Markov Reward Process by averaging over a policy.
+
+Given an MDP $$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$ and a policy $$\pi$$, the state sequence $$S_1, S_2, ...$$ is a Markov process $$\langle \mathcal{S}, \mathcal{P}^\pi \rangle$$.
+
+The state and reward sequence $$S_1, R_2, S_2, ...$$ is a Markov reward process $$\langle \mathcal{S}, \mathcal{P}^\pi, \mathcal{R}^\pi, \gamma \rangle$$.
+
+where
+
+```math
+\mathcal{P}_{ss'}^\pi = \sum_{\mathrm{a} \in \mathcal{A}} \pi(\mathrm{a}|s) \mathcal{P}_{ss'}^\mathrm{a}
+```
+
+```math
+\mathcal{R}_s^\pi = \sum_{\mathrm{a} \in \mathcal{A}} \pi(\mathrm{a}|s) \mathcal{R}_s^\mathrm{a}
+```
+
+### Value Functions
+
+<Definition title="State-Value Function">
+
+The state-value function $$\mathrm{v}_\pi(s)$$ of an MDP is the expected return starting from state $$s$$, and then following policy $$\pi$$.
+
+```math
+\mathrm{v}_\pi(s) = \mathbb{E}_\pi[G_t | S_t = s]
+```
+
+</Definition>
+
+<Definition title="Action-Value Function">
+
+The action-value function $$q_\pi(s, \mathrm{a})$$ is the expected return starting from state $$s$$, taking action $$\mathrm{a}$$, and then following policy $$\pi$$.
+
+```math
+q_\pi(s, \mathrm{a}) = \mathbb{E}_\pi[G_t | S_t = s, A_t = \mathrm{a}]
+```
+
+</Definition>
+
+### Bellman Expectation Equation
+
+The state-value function can be decomposed into immediate reward and discounted value of successor state.
+
+```math
+\mathrm{v}_\pi(s) = \mathbb{E}_\pi[R_{t+1} + \gamma \mathrm{v}_\pi(S_{t+1}) | S_t = s]
+```
+
+The action-value function can be decomposed into immediate reward and discounted value of successor state.
+
+```math
+q_\pi(s, \mathrm{a}) = \mathbb{E}_\pi[R_{t+1} + \gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = \mathrm{a}]
+```
+
+### Calculating the state-value function $$\mathrm{v}_\pi(s)$$ based on the action-value function $$q_\pi(s, \mathrm{a})$$.
+
+You are in a state value function $$\mathrm{v}_\pi(s)$$, we are going to average over all possible actions. The probability of taking an action is defined by the policy $$\pi(\mathrm{a}|s)$$ and we multiply it with the action-value function $$q_\pi(s, \mathrm{a})$$, which is the expected return of taking that action in that state and then following the policy.
+
+```math
+\mathrm{v}_\pi(s) = \sum_{\mathrm{a} \in \mathcal{A}} \pi(\mathrm{a}|s) q_\pi(s, \mathrm{a})
+```
+
+### Calculating the action-value function $$q_\pi(s, \mathrm{a})$$ based on the state-value function $$\mathrm{v}_\pi(s)$$.
+
+We have to average over the possible outcomes of the MDP. The environment might blow you into different states. We have to average over all possible outcomes of the MDP. We have to average over the next state $$s'$$ and the reward $$r$$ that we get in the next state.
+
+```math
+q_\pi(s, \mathrm{a}) = \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \mathrm{v}_\pi(s')
+```
+
+### Bellman Expectation Equation for $$\mathrm{v}_\pi(s)$$
+
+We consider all the actions we can take next. We are averaging over out policy. We are weighting all the actions we can take next based on the probability our policy will select it. Then we average over the transition probabilities
+
+```math
+\mathrm{v}_\pi(s) = \sum_{\mathrm{a} \in \mathcal{A}} \pi(\mathrm{a}|s) \left( \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \mathrm{v}_\pi(s') \right)
+```
+
+### Bellman Expectation Equation for $$q_\pi(s, \mathrm{a})$$
+
+First we consider where the wind might blow us (which state we might end up in). Then we average over the rewards we might get in those states. We are averaging over the transition probabilities.
+
+```math
+q_\pi(s, \mathrm{a}) = \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \sum_{\mathrm{a'} \in \mathcal{A}} \pi(\mathrm{a'}|s') q_\pi(s', \mathrm{a'})
+```
+
+### Bellman Expectation Equation in Matrix Form
+
+You can flatten back every MDP into a Markov Reward Process.
+
+The Bellman expectation equation can be expressed concisely using the induced MRP.
+
+```math
+\mathrm{v}_\pi = \mathcal{R}^\pi + \gamma \mathcal{P}^\pi \mathrm{v}_\pi
+```
+
+Where $$\mathrm{v}_\pi$$ is a column vector with one entry for each state.
+
+```math
+\begin{bmatrix}
+\mathrm{v}_\pi(1) \\
+\mathrm{v}_\pi(2) \\
+\vdots \\
+\mathrm{v}_\pi(n)
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathcal{R}_1^\pi \\
+\mathcal{R}_2^\pi \\
+\vdots \\
+\mathcal{R}_n^\pi
+\end{bmatrix}
++
+\gamma
+\begin{bmatrix}
+\mathcal{P}_{11}^\pi & \mathcal{P}_{12}^\pi & \cdots & \mathcal{P}_{1n}^\pi \\
+\mathcal{P}_{21}^\pi & \mathcal{P}_{22}^\pi & \cdots & \mathcal{P}_{2n}^\pi \\
+\vdots & \vdots & \ddots & \vdots \\
+\mathcal{P}_{n1}^\pi & \mathcal{P}_{n2}^\pi & \cdots & \mathcal{P}_{nn}^\pi
+\end{bmatrix}
+\begin{bmatrix}
+\mathrm{v}_\pi(1) \\
+\mathrm{v}_\pi(2) \\
+\vdots \\
+\mathrm{v}_\pi(n)
+\end{bmatrix}
+```
+
+### Optimal Value Functions
+
+Finding the best behavior of the MDP. The optimal value function specifies the best possible performance in an MDP.
+
+<Definition title="Optimal Value Function">
+
+The optimal state-value function $$\mathrm{v}_*(s)$$ is the maximum value function over all policies.
+
+```math
+\mathrm{v}_*(s) = \max_\pi \mathrm{v}_\pi(s)
+```
+
+The optimal action-value function $$q_*(s, \mathrm{a})$$ is the maximum action-value function over all policies.
+
+```math
+q_*(s, \mathrm{a}) = \max_\pi q_\pi(s, \mathrm{a})
+```
+
+</Definition>
+
+An MDP is "solved" when we know the optimal value function.
+
+### Optimal Policy
+
+What's the best possible way to behave in an MDP. So far we only talked about what is the maximum amount of reward we can get.
+
+From two arbitrary policies one is better than the other if the value function of a policy is greater than or equal to the value function of the other policy for all states: $$\pi \geq \pi'$$ if $$\mathrm{v}_\pi(s) \geq \mathrm{v}_{\pi'}(s)$$ for all $$s \in \mathcal{S}$$.
+
+<Definition title="Theorem: Optimal Policy Exists">
+
+For any Markov Decision Process, there exists an optimal policy $$\pi_*$$ that is better than or equal to all other policies, $$\pi_* \geq \pi, \forall \pi$$.
+
+All optimal policies achieve the optimal value function, $$\mathrm{v}_{\pi_*}(s) = \mathrm{v}_*(s)$$.
+
+All optimal policies achieve the optimal action-value function, $$q_{\pi_*}(s, \mathrm{a}) = q_*(s, \mathrm{a})$$.
+
+</Definition>
+
+### Finding the Optimal Policy
+
+An optimal policy can be found by maximizing over $$q_*(s, \mathrm{a})$$.
+
+```math
+\pi_*(a|s) = \begin{cases}
+1 & \text{if } \mathrm{a} = \argmax_{a \in \mathcal{A}} q_*(s, \mathrm{a}) \\
+0 & \text{otherwise}
+\end{cases}
+```
+
+There is always a deterministic optimal policy for any MDP.
+
+### Bellman Optimality Equation for $$\mathrm{v}_*$$
+
+The optimal value functions are recursively related by the Bellman optimality equation.
+
+What's the optimal value of some state? Each of the actions you might take will a action value. Now instead of taking the average of these, we take the maximum of these.
+
+```math
+\mathrm{v}_*(s) = \max_{\mathrm{a} \in \mathcal{A}} q_*(s, \mathrm{a})
+```
+
+### Bellman Optimality Equation for $$q_*$$
+
+Each of the states we might end up in has an optimal value. We are averaging over the next state and the reward we might get in the next state.
+
+There's no max here, because we don't know where we end up. We are averaging over the transition probabilities.
+
+```math
+q_*(s, \mathrm{a}) = \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \mathrm{v}_*(s')
+```
+
+### Bellman Optimality Equation for $$\mathrm{v}_*$$
+
+```math
+\mathrm{v}_*(s) = \max_{\mathrm{a} \in \mathcal{A}} \left( \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \mathrm{v}_*(s') \right)
+```
+
+### Bellman Optimality Equation for $$q_*$$
+
+```math
+q_*(s, \mathrm{a}) = \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \max_{\mathrm{a'} \in \mathcal{A}} q_*(s', \mathrm{a'})
+```
+
+### Solving the Bellman Optimality Equation
+
+The Bellman optimality equation is a non-linear equation.
+
+No closed-form solution for most MDPs.
+
+Many iterative solution methods:
+
+- Value iteration
+- Policy iteration
+- Q-learning
+- Sarsa
+
+# Lecture 3: Planning by Dynamic Programming
+
+## Introduction
+
+### Introduction to Dynamic Programming
+
+A method for solving complex problems by breaking them down into simpler subproblems.
+
+- Dynamic: sequential or temporal component to the problem
+- Programming: optimizing a "program" i.e. a policy.
+
+Dynamic Programming is a very general solution method for problems which have two properties:
+
+- Optimal substructure: principle of optimality applies. Optimal solution can be decomposed into subproblems.
+- Overlapping subproblems: subproblems recur many times and solutions can be cached and reused.
+
+MDPs have both properties:
+
+- The Bellman equation gives the recursive decomposition.
+- The value function stores and reuses solutions to subproblems.
+
+Dynamic programming assumes full knowledge of the MDP. It's a planning method. Not a Reinforcement Learning method.
+
+Planning for prediction:
+
+- Input: MDP: $$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$ and policy $$\pi$$
+- Or MRP: $$\langle \mathcal{S}, \mathcal{P}^\pi, \mathcal{R}^\pi, \gamma \rangle$$
+- Output: value function $$\mathrm{v}_\pi$$
+
+Planning for control:
+
+- Input: MDP: $$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$
+- Output: optimal value function $$\mathrm{v}_*$$ and optimal policy $$\pi_*$$
+
+## Policy Evaluation
+
+Given a policy $$\pi$$, evaluate how good it is.
+
+Solution: iterative application of the Bellman expectation backup.
+
+```math
+v_1 \rightarrow v_2 \rightarrow v_3 \rightarrow ... \rightarrow \mathrm{v}_\pi
+```
+
+Using synchronous backups:
+
+- At each iteration $$k+1$$, for all states $$s \in \mathcal{S}$$, update $$\mathrm{v}_{k+1}(s)$$ from $$v_k(s')$$. Where $$s'$$ is a successor state of $$s$$.
+
+### Iterative Policy Evaluation
+
+Bellman expectation backup. We calculate a new value $$\mathrm{v}_{k+1}(s)$$ based on the previous values of the state we might end up in $$v_k(s')$$.
+
+```math
+\mathrm{v}_{k+1}(s) = \sum_{\mathrm{a} \in \mathcal{A}} \pi(\mathrm{a}|s) \left( \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} v_k(s') \right)
+```
+
+In vector form:
+
+```math
+\mathrm{v}_{k+1} = \mathcal{R}^\pi + \gamma \mathcal{P}^\pi v_k
+```
+
+### Evaluating a Random Policy in the Small Gridworld
+
+- Undiscounted, episodic MDP ($$\gamma = 1$$)
+- The top-left and bottom-right states are terminal states
+- Four possible actions in each state
+- Actions leading out of the grid leave the state unchanged
+- Reward of -1 in all transitions until the terminal state is reached
+- Agents follows uniform random policy. At any state it has a 0.25 probability of going in any of the four directions.
+
+```math
+\pi(n|\cdot) = \pi(e|\cdot) = \pi(s|\cdot) = \pi(w|\cdot) = 0.25
+```
+
+We can iterate our bellman equation again and again and again until we reach the optimal value function or until the value function converges. This will give us the optimal policy.
+
+<div style="display:grid;grid-template-columns: 33% 33% 33%;">
+
+<div />
+
+**Value function**
+
+**Greedy Policy**
+
+<div>
+
+$$k = 0$$
+
+At the initial value function $$v_0$$, all states are an initial estimate of zero and the policy is random.
+
+</div>
+
+<Grid
+  data={[
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ]}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<Grid
+  data={evaluateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    0
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<div>
+
+$$k = 1$$
+
+Then at the first iteration we do a one step lookahead and we calculate a new value function $$v_1$$ by averaging the value of the next states. We skip terminal states because from a terminal state we don't move anywhere.
+
+</div>
+
+<Grid
+  data={evaluatePolicy(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    1
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<Grid
+  data={evaluateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    1
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+$$k = 2$$
+
+<Grid
+  data={evaluatePolicy(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    2
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<Grid
+  data={evaluateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    2
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<div>
+
+$$k = 3$$
+
+With the third iteration we already reach the optimal policy. The value function keeps changing but the policy is already optimal.
+
+</div>
+
+<Grid
+  data={evaluatePolicy(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    3
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<Grid
+  data={evaluateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    3
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+$$k = 10$$
+
+<Grid
+  data={evaluatePolicy(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    10
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+<Grid
+  data={evaluateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [
+      [0, 0],
+      [3, 3],
+    ],
+    10
+  )}
+  terminalStates={[
+    [0, 0],
+    [3, 3],
+  ]}
+  size={50}
+/>
+
+</div>
+
+## Policy Iteration
+
+Given a policy $$\pi$$, how can we make it better?
+
+**Evaluate** the policy $$\mathrm{v}_\pi(s)$$. We compute the value function, which is going to tell how much reward we are going to get in expectation. How much is the reward I get till I hit the terminal state from any start state.
+
+```math
+\mathrm{v}_\pi(s) = \mathbb{E}[R_{t+1} + \gamma R_{t+2} + ... | S_t = s]
+```
+
+**Improve** the policy by acting greedily with respect to $$\mathrm{v}_\pi$$. We look at all the actions and take the action that gives us the maximum value.
+
+```math
+\pi'(s) = \text{greedy}(\mathrm{v}_\pi)
+```
+
+This process of policy iteration always converges to the optimal policy.
+
+### Policy Iteration
+
+We start with some arbitrary value function (e.g. all zeros), and some policy. We evaluate the policy, and get a new value function. Then we improve the policy by acting greedily with respect to the new value function. We keep iterating this process until the policy converges.
+
+If improvements stop, then the policy is optimal.
+
+### Modified Policy Iteration
+
+Policy iteration can be computationally expensive. What if introduce a stopping condition. We don't have to evaluate the policy all the way to convergence. In the previous example $$k = 3$$ was already optimal. Why not update policy every iteration?
+
+## Value Iteration
+
+An optimal policy can be subdivided into two components:
+
+- An optimal first action $$A_*$$
+- Followed by an optimal policy from successor state $$S'$$
+
+<Definition title="Theorem: Principle of Optimality">
+
+A policy $$\pi(\mathrm{a}|s)$$ achieves the optimal value from state $$s$$, $$\mathrm{v}_\pi(s) = \mathrm{v}_*(s)$$ if and only if
+
+- for any state $$s'$$ reachable from $$s$$
+- $$\pi$$ achieves the optimal value from state $$s'$$, $$\mathrm{v}_\pi(s') = \mathrm{v}_*(s')$$
+
+</Definition>
+
+### Deterministic Value Iteration
+
+All we need is a one step lookahead.
+
+If we know the solution to subproblems $$\mathrm{v}_*(s')$$, we can solve the original problem $$\mathrm{v}_*(s)$$.
+
+```math
+\mathrm{v}_*(s) = \max_{\mathrm{a} \in \mathcal{A}} \left( \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} \mathrm{v}_*(s') \right)
+```
+
+The idea of value iteration is to apply these updates iteratively.
+
+In the following example we iteratively update the value function until it converges. The top-left and bottom-right states are terminal states. For each step the reward is -1 until the terminal state is reached. This value function will tell how many steps do we have to take at a minimum to reach a terminal state.
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    0
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    1
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    2
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    3
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    4
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    5
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+<Grid
+  data={iterateValueFunction(
+    [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+    [[0, 0]],
+    6
+  )}
+  terminalStates={[[0, 0]]}
+  size={50}
+/>
+
+Problem: find optimal policy $$\pi_*$$.
+
+Solution: iterative application of Bellman optimality backup.
+
+```math
+v_1 \rightarrow v_2 \rightarrow v_3 \rightarrow ... \rightarrow \mathrm{v}_*
+```
+
+Using asynchronous backups: At each iteration $$k+1$$, for all states $$s \in \mathcal{S}$$, update $$\mathrm{v}_{k+1}(s)$$ from $$v_k(s')$$. Where $$s'$$ is a successor state of $$s$$.
+
+```math
+\mathrm{v}_{k+1}(s) = \max_{\mathrm{a} \in \mathcal{A}} \left( \mathcal{R}_s^\mathrm{a} + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}^\mathrm{a} v_k(s') \right)
+```
+
+In vector form:
+
+```math
+\mathrm{v}_{k+1} = \max_{\mathrm{a} \in \mathcal{A}} \left( \mathcal{R}^\mathrm{a} + \gamma \mathcal{P}^\mathrm{a} v_k \right)
+```
+
+Convergence to the optimal value function is guaranteed.
+
+Unlike policy iteration, there is no explicit policy. The policy is implicit in the value function. Intermediate value functions may not correspond to any policy. Earlier we went from value function to policy and from there to a new value function and a new policy. Now we go from value function to value function.
+
+### Synchronous Dynamic Programming Algorithms
+
+Prediction
+
+- Iterative Policy Evaluation - Bellman Expectation Equation
+
+Control:
+
+- Policy Iteration - Policy Evaluation + Policy Improvement (Bellman Expectation Equation + Greedy Policy Improvement)
+- Value Iteration - Bellman Optimality Equation
+
+Algorithms are based on state-value functions $$\mathrm{v}(s)$$ or $$\mathrm{v}_*(s)$$. Complexity $$O(mn^2)$$ for each iteration, where $$m$$ is the number of actions and $$n$$ is the number of states.
+
+Could also apply to action-value functions $$q(s, a)$$ or $$q_*(s, a)$$. Complexity $$O(m^2n^2)$$ for each iteration.
+
+# Lecture 4: Model-Free Prediction
+
+The agent doesn't know the environment (the MDP). It has to learn from experience.
+
+## Introduction
+
+Previously:
+
+- Planning by dynamic programming
+- Solve a known MDP. The agent knew the dynamics of the environment and the reward function.
+  - First we evaluated the policy
+  - Then we improved the policy
+
+This lecture:
+
+- Model-free prediction. Evaluate a given policy. Estimate the value function based on experience.
+- Estimate the value function of an unknown MDP
+  - Learn from experience
+
+Next Lecture:
+
+- Model-free control
+- Optimize the value function of an unknown MDP
+
+## Monte Carlo Prediction
+
+You run out episodes, you look at the complete returns and you update the estimate of the mean value towards your sample return at each state that you visit.
+
+Monte-Carlo algorithm is forward looking. You have to finish the episode before you can update the value function of the states.
+
+### Monte Carlo Reinforcement Learning
+
+MC methods learn directly from episodes of experience.
+
+MC is model-free: no knowledge of MDP transitions/rewards.
+
+MC learns from complete episodes: no bootstrapping.
+
+MC uses the simplest possible idea: value = mean return.
+
+Caveat: MC can only be applied to episodic MDPs. All episodes must terminate.
+
+### Monte Carlo Policy Evaluation
+
+Goal: learn $$\mathrm{v}_\pi$$ from episodes of experience under policy $$\pi$$.
+
+```math
+S_1, A_1, R_2, ..., S_k \sim \pi
+```
+
+Recall that the return is the total discounted reward:
+
+```math
+G_t = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{T-t-1} R_T
+```
+
+Recall that the value function is the expected return:
+
+```math
+\mathrm{v}_\pi(s) = \mathbb{E}_\pi[G_t | S_t = s]
+```
+
+Monte-Carlo policy evaluation uses empirical mean return instead of expected return.
+
+### First-Visit Monte-Carlo Policy Evaluation
+
+We sample multiple episodes to evaluate state $$s$$.
+
+The **first** time-step $$t$$ that state $$s$$ is visited in an episode.
+
+- Increment counter $$N(s) \leftarrow N(s) + 1$$. This counter persists through multiple episodes.
+- Increment total return $$S(s) \leftarrow S(s) + G_t$$. The total return also persists through multiple episodes.
+- Value is estimated by mean return $$V(s) = S(s) / N(s)$$. We tune this in every episode.
+
+By law of large numbers, the mean will approach the expected return as we get more and more samples $$V(s) \rightarrow \mathrm{v}_\pi(s)$$ as $$N(s) \rightarrow \infty$$.
+
+### Every-Visit Monte-Carlo Policy Evaluation
+
+Same as before but we update counter and total **every** time we visit a state. We don't care if we visit the state multiple times in the same episode.
+
+### Blackjack example
+
+Evaluate policy with Monte-Carlo policy evaluation.
+
+- State: player sum (12-21), dealer showing (ace-10), usable ace (yes/no)
+- Actions: **twist**, **stick**
+- Reward after **twist** action: -1 for going above 21, 0 otherwise
+- Reward after **stick** action: +1 for winning, 0 at draw, -1 for losing
+
+Policy: Stick if sum of cards is 20 or 21, else twist.
+
+```js
+(state) => {
+  if (state.playerSum < 20) {
+    return "twist";
+  }
+  return "stick";
+};
+```
+
+Play out 100,000 episodes and evaluate the policy.
+
+As a result we have a value function for every state.
+
+<GridWithLabels
+  data={
+    transformBlackjackValueFunction(
+      monteCarloPolicyEvaluation((state) => {
+        if (state.playerSum < 20) {
+          return "twist";
+        }
+        return "stick";
+      }, 100000)
+    ).noAce
+  }
+  verticalLabel="Player sum"
+  verticalRange={[12, 21]}
+  horizontalLabel="Dealer showing"
+  horizontalRange={[1, 10]}
+  heatmapRange={[-1, 1]}
+/>
+
+### Incremental mean
+
+The mean $$\mu_1, \mu_2,...$$ of a sequence $$x_1, x_2, ...$$ of numbers can be computed incrementally.
+
+```math
+\begin{equation}
+\begin{split}
+\mu_n &= \frac{1}{n} \sum_{i=1}^n x_i \\
+&= \frac{1}{n} (x_n + \sum_{i=1}^{n-1} x_i) \\
+&= \frac{1}{n} (x_n + (n-1) \mu_{n-1}) \\
+&= \mu_{n-1}+ \frac{1}{n} (x_n - \mu_{n-1})
+\end{split}
+\end{equation}
+```
+
+Basically we have an error term ($$x_n - \mu_{n-1}$$), that is the difference between what we thought that's going to happen, the previous mean $$\mu_{n-1}$$ and what actually happened, the new value $$x_n$$. We update the new mean a little bit into the direction of this error.
+
+### Incremental Monte-Carlo updates
+
+Update $$V(s)$$ incrementally after each episode $$S_1, A_1, R_2, ..., S_T$$.
+
+For each state $$S_t$$ with return $$G_t$$:
+
+```math
+N(S_t) \leftarrow N(S_t) + 1
+```
+
+```math
+V(S_t) \leftarrow V(S_t) + \frac{1}{N(S_t)} (G_t - V(S_t))
+```
+
+In non-stationary problems, the value function can be updated with a constant step-size parameter $$\alpha$$. This will result in a running mean, that gives more weight to recent returns and gradually forgets old episodes. Maybe we under or overcorrect depending on the value of the step size.
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))
+```
+
+## Temporal-Difference Learning
+
+TD methods learn directly from episodes of experience.
+
+TD is model-free: no knowledge of MDP transitions/rewards.
+
+TD learns from incomplete episodes: no need for complete episodes (like with Monte Carlo).
+
+TD learns by **bootstrapping**: update is based on an existing estimate. Take a partial episode and use an estimate of the value function to update the value function instead of the actual return. We substitute the remaining return with our estimate.
+
+TD updates a guess towards a guess.
+
+### MC vs TD
+
+Goal: learn $$\mathrm{v}_\pi$$ online from episodes of experience under policy $$\pi$$.
+
+Incremental every-visit Monte-Carlo:
+
+- Update value $$V(S_t)$$ towards actual return $$G_t$$
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))
+```
+
+Simplest temporal-difference learning algorithm: TD(0)
+
+- Update value $$V(S_t)$$ towards estimated return $$R_{t+1} + \gamma V(S_{t+1})$$
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))
+```
+
+- $$R_{t+1} + \gamma V(S_{t+1})$$ is called the TD target.
+
+- $$\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$$ is called the TD error.
+
+### Advantages and Disadvantages of MC vs. TD
+
+TD can learn before knowing the final outcome.
+
+- TD can learn online after each step (online means that we can learn after each step, we don't have to wait for the end of the episode).
+- MC must wait until end of episode before return is known.
+
+TD can learn without the final outcome.
+
+- TD can learn from incomplete sequences.
+- MC can only learn from complete sequences.
+- TD works in continuing (non-terminating) environments.
+- MC only works for episodic (terminating) environments.
+
+### Bias/Variance Trade-Off
+
+Return $$G_t = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{T-t-1} R_T$$ is an unbiased estimate of $$\mathrm{v}_\pi(S_t)$$. This is what we use in Monte Carlo. We sample episodes and use the actual rewards to update the value function.
+
+True TD target $$R_{t+1} + \gamma \mathrm{v}_\pi(S_{t+1})$$ is an unbiased estimate of $$\mathrm{v}_\pi(S_t)$$. In TD if we'd know the true value of the next step, we'd have an unbiased estimate of the current value. But in TD we don't actually know the true value of the next step, we only have an estimate of it.
+
+TD target $$R_{t+1} + \gamma V(S_{t+1})$$ is a biased estimate of $$\mathrm{v}_\pi(S_t)$$. We use the best guess so far instead of the true value of the next step.
+
+TD target is much lower variance than the return:
+
+- Return depends on many random actions, transitions, rewards. There's noise in the return of every future step. There's no bias but there's a lot of noise.
+- TD target depends on one random action, transition, reward. Noise is only taken from the next step. There's bias but there's less noise.
+
+MC has high variance, zero bias.
+
+- Good convergence properties (even with function approximation).
+- Not very sensitive to initial value.
+- Very simple to undestand and implement.
+
+TD has low variance, some bias.
+
+- Usually more efficient than MC (faster learning).
+- TD(0) converges to $$\mathrm{v}_\pi$$ (but not always with function approximation).
+- More sensitive to initial value.
+
+### Batch MC and TD
+
+MC and TD converge: $$V(S_t) \rightarrow \mathrm{v}_\pi(S_t)$$ as $$\text{experience} \rightarrow \infty$$.
+
+But what about batch solution for finite experience?
+
+```math
+\begin{equation}
+\begin{split}
+s_1^1, a_1^1, r_2^1, ..., s_T^1 \\
+\vdots \\
+s_1^K, a_1^K, r_2^K, ..., s_{T_K}^K
+\end{split}
+\end{equation}
+```
+
+E.g. Repeatedly sample episode $$k \in [1, K]$$.
+
+Apply MC or TD to episode $$k$$.
+
+### Certainty Equivalence
+
+MC converges to solution with minimum mean-squared error. MC minimizes the mean squared error between the observed returns $$G_t^k$$ and the estimated value function $$V(S_t^k)$$.
+
+Best fit to the observed returns.
+
+```math
+\begin{equation}
+\begin{split}
+\text{minimize} & \sum_{k=1}^K \sum_{t=1}^{T_k} (G_t^k - V(S_t^k))^2 \\
+\text{over} & V
+\end{split}
+\end{equation}
+```
+
+TD(0) converges to solution with max like Markov model.
+
+Solution to the MDP $$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$ that best fits the data. First fits an MDP then it solves that MDP.
+
+```math
+\mathcal{P}_{ss'}^\mathrm{a} = \frac{1}{N(s, a)} \sum_{k=1}^K \sum_{t=1}^{T_k} \mathbb{1}(S_t^k = s, A_t^k = a, S_{t+1}^k = s')
+```
+
+Above we are counting transitions. The indicator function $$\mathbb{1}$$ is 1 if the condition is true and 0 otherwise. With the counts we can calculate the transition probabilities by counting the number of times we transitioned from state $$s$$ to state $$s'$$ with action $$a$$. Then we divide it by the number of times we took action $$a$$ in state $$s$$.
+
+```math
+\mathcal{R}_s^\mathrm{a} = \frac{1}{N(s, a)} \sum_{k=1}^K \sum_{t=1}^{T_k} \mathbb{1}(S_t^k = s, A_t^k = a) R_{t+1}^k
+```
+
+Above we are counting rewards. We count the number of times we took action $$a$$ in state $$s$$ and then we sum the rewards we got after taking that action in that state. Then we divide it by the number of times we took action $$a$$ in state $$s$$.
+
+TD expolits the Markov property. Usually more efficient in Markov environments.
+
+MC does not exploit the Markov property. Usually more efficient in non-Markov environments.
+
+### Monte-Carlo backup
+
+We start in some state and we sort of have a lookahead tree. We take some action and then the environment might take us to another state.
+
+The MC samples an episode all the way to the terminal state. Then use that sample to update the value function. We also update all the intermediate values (before the terminal state).
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))
+```
+
+### Temporal-Difference backup
+
+In TD we only take one step, then we back up the value we get from that one step to update the value of the current step.
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))
+```
+
+### Dynamic Programming backup
+
+In dynamic programming we also have a one step lookahead, but we didn't sample. We know the dynamics and we use that to compute the full expectation for all the states. It is full-width.
+
+```math
+V(S_t) \leftarrow \mathbb{E}[R_{t+1} + \gamma V(S_{t+1})]
+```
+
+### Bootstrapping and Sampling
+
+Bootstrapping: update involves an estimate (updates an estimated value)
+
+- MC does not bootstrap
+- DP bootstraps
+- TD bootstraps
+
+Sampling: update samples an expectation
+
+- MC samples
+- DP does not sample, it takes a full-width exhaustive search
+- TD samples
+
+## TD($$\lambda$$)
+
+Let TD target look n steps into the future instead of just one. If we go all the way we end up with Monte Carlo.
+
+### n-Step Return
+
+Consider the following n-step returns for $$n = 1, 2, \infty$$:
+
+```math
+\begin{matrix}
+n = 1 & G_t^{(1)} = R_{t+1} + \gamma G_{t+1}^{(0)} \\
+n = 2 & G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 G_{t+2}^{(0)} \\
+\vdots & \vdots \\
+n = \infty & G_t^{(\infty)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... + \gamma^{T-t-1} R_T
+\end{matrix}
+```
+
+Define the n-step return:
+
+```math
+G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{n-1} R_{t+n} + \gamma^n V(S_{t+n})
+```
+
+n-step temporal-difference learning:
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t^{(n)} - V(S_t))
+```
+
+### Averaging n-Step Returns
+
+We can average n-step returns over different $$n$$. E.g. average the 2-step and 4-step returns:
+
+```math
+\frac{1}{2}G_t^{(2)} + \frac{1}{2}G_t^{(4)}
+```
+
+Conbines information from two different time-steps.
+
+Can we efficiently combine information from all time-steps?
+
+### Lambda-Return
+
+The λ-return $$G_t^\lambda$$ combines all n-step returns $$G_t^{(n)}$$ using weight $$(1 - \lambda) \lambda^{n-1}$$:
+
+```math
+G_t^\lambda = (1 - \lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}
+```
+
+A geometrically weighted average of all n-step returns. Each n-step return is weighted by a factor of $$\lambda^{n-1}$$ less and less and less. The weight of the n-step return decreases exponentially with the number of steps.
+
+Forward-view TD($$\lambda$$) learning:
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t^\lambda - V(S_t))
+```
+
+### Forward-view TD($$\lambda$$)
+
+Update value function towards the λ-return.
+
+Forward-view looks into the future to compute $$G_t^\lambda$$.
+
+Like MC, can only be computed from complete episodes.
+
+### Backward-view TD($$\lambda$$)
+
+Forward view provides theory.
+
+Backward view provides mechanism.
+
+Update online, every step, from incomplete sequences.
+
+### Eligibility Traces
+
+**Frequency heuristic**: the more often a state is visited, the more important it is.
+
+**Recency heuristic**: the more recently a state is visited, the more important it is.
+
+Eligibility traces combine both heuristics.
+
+```math
+E_0(s) = 0
+```
+
+```math
+E_t(s) = \gamma \lambda E_{t-1}(s) + \mathbb{1}(S_t = s)
+```
+
+Elibibility exponentially decays with time and is incremented when the state is visited.
+
+When we see an error we update the value function in proportion to the eligility trace.
+
+### Backward view TD($$\lambda$$)
+
+Keep an eligiblity trace for every state $$s$$.
+
+Update value $$V(s)$$ for every state $$s$$.
+
+In proportion to TD-error $$\delta_t$$ and eligiblity trace $$E_t(s)$$.
+
+```math
+\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)
+```
+
+```math
+V(s) \leftarrow V(s) + \alpha \delta_t E_t(s)
+```
+
+### TD($$\lambda$$) and TD(0)
+
+When $$\lambda = 0$$, TD($$\lambda$$) is equivalent to TD(0).
+
+Lambda tells us how rapidly we decay this things. When lambda is 0 we decay it completely after we've seen this state.
+
+```math
+E_t(s) = \mathbb{1}(S_t = s)
+```
+
+We only update the value function if we actually visit this state:
+
+```math
+V(s) \leftarrow V(s) + \alpha \delta_t E_t(s)
+```
+
+This is expectly the same as TD(0).
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha \delta_t
+```
+
+### TD($$\lambda$$) and MC
+
+When $$\lambda = 1$$, TD($$\lambda$$) is equivalent to MC.
+
+When lambda is 1, credit is deferred until end of episode.
+
+Consider eposodic environments with offline updates.
+
+Over the course of an episode, total update for TD(1) is the same as total update for MC.
+
+<Definition title="Theorem">
+
+The sum of offline updates is identical for forward-view and backward-view TD($$\lambda$$).
+
+```math
+\sum_{t=1}^T \alpha \delta_t E_t(s) = \sum_{t=1}^T \alpha (G_t^\lambda - V(S_t)) \mathbb{1}(S_t = s)
+```
+
+</Definition>
+
+# Lecture 5: Model-Free Control
+
+## Introduction
+
+### Model-Free Reinforcement Learning
+
+Last lecture:
+
+- **Model-free prediction**
+- Evaluate a given policy
+- Estimate the value function of an unkonwn MDP
+
+This lecture:
+
+- **Model-free control**
+- Optimize the value function of an unknown MDP
+
+### On and Off-Policy Learning
+
+On-policy learning:
+
+- "Learn on the job"
+- Learn about policy $$\pi$$ from experience sampled from $$\pi$$
+
+Off-policy learning:
+
+- Learn from someone else's experience
+- Learn about policy $$\pi$$ from experience sampled from $$\mu$$
+
+### Generalised Policy Iteration (Refresher)
+
+Alternate between:
+
+- **Policy evaluation**: Estimate $$\mathrm{v}_\pi$$ E.g. Iterative policy evaluation
+- **Policy improvement**: Generate $$\pi' \geq \pi$$ E.g. Greedy policy improvement
+
+### Generalised Policy Iteration With Monte Carlo Evaluation
+
+- **Policy evaluation**: Monte-Carlo policy evaluation, $$V = \mathrm{v}_\pi$$?
+- **Policy improvement**: Greedy policy improvement?
+
+### Model-Free Policy Iteration Using Action-Value Functions
+
+Greedy policy improvement over $$V(s)$$ requires a model of the environment (model of MDP). We don't know those dynamics (like the transition probabilities), we are trying to be model-free.
+
+```math
+\pi'(s) = \argmax_{a \in \mathcal{A}} (\mathcal{R}_s^a + \mathcal{P}_{ss'}^a V(s'))
+```
+
+Greedy policy improvement over $$Q(s, a)$$ is model free:
+
+```math
+\pi'(s) = \argmax_{a \in \mathcal{A}} Q(s, a)
+```
+
+### Generalised Policy Iteration With Action-Value Functions
+
+Alternate between:
+
+- **Policy evaluation**: Monte-Carlo policy evaluation, $$Q = q_\pi$$
+- **Policy improvement**: Greedy policy improvement?
+
+We still have a problem. If we act greedily we might get stuck in a local optimum. We might not explore enough to find the optimal policy.
+
+### $$\epsilon$$-Greedy Exploration
+
+Simplest idea for ensuring continual exploration.
+
+All $$m$$ actions are tried with non-zero probability.
+
+With probability $$1 - \epsilon$$ select the greedy action.
+
+With probability $$\epsilon$$ select an action at random (that can also be the greedy action, hance the $$\epsilon/m$$ at the beginning of the first case as well).
+
+```math
+\pi(a|s) = \begin{cases}
+\epsilon / m + (1 - \epsilon) & \text{if } a^* = \argmax_{a \in \mathcal{A}} Q(s, a) \\
+\epsilon / m & \text{otherwise}
+\end{cases}
+```
+
+### $$\epsilon$$-Greedy Is a Policy Improvement
+
+<Definition title="Theorem: ϵ-Greedy Is a Policy Improvement">
+
+$$\epsilon$$-greedy is a policy improvement: For any $$\epsilon$$-greedy policy $$\pi$$, if we evaluate that policy, then the resulting $$\epsilon$$-greedy policy $$\pi'$$ with respect to $$q_\pi$$ is an improvement, $$v_{\pi'}(s) \geq v_\pi(s)$$.
+
+</Definition>
+
+```math
+\begin{equation}
+\begin{split}
+q_\pi(s, \pi'(s)) & = \sum_{a \in \mathcal{A}} \pi'(a|s) q_\pi(s, a) \\
+& = \epsilon/m \sum_{a \in \mathcal{A}} q_\pi(s, a) + (1 - \epsilon) \max_{a \in \mathcal{A}} q_\pi(s, a) \\
+& \geq \epsilon/m \sum_{a \in \mathcal{A}} q_\pi(s, a) + (1 - \epsilon) \sum_{a \in \mathcal{A}} \frac{\pi(a|s) - \epsilon / m}{1 - \epsilon} q_\pi(s, a) \\
+& = \sum_{a \in \mathcal{A}} \pi(a|s) q_\pi(s, a) \\
+& = \mathrm{v}_\pi(s)
+\end{split}
+\end{equation}
+```
+
+The above shows that if we take one step based on our new policy then that will be better than our original policy.
+
+- In one step there's some probability that we take each action and we multiply that by the value of that action. We sum that up and that's the value of the new policy.
+- We can split that into the probability of taking the greedy action and the probability of taking every action (when we explore).
+- Then the max of the greedy action has to be greater than any weighted sum of all of the actions.
+
+Therefore from policy improvement theorem, $$\mathrm{v}_{\pi'}(s) \geq \mathrm{v}_\pi(s)$$.
+
+### Monte-Carlo Policy Iteration
+
+- **Policy evaluation**: Monte-Carlo policy evaluation, $$Q = q_\pi$$
+- **Policy improvement**: $$\epsilon$$-greedy policy improvement
+
+### Monte-Carlo Control
+
+**Every Episode**:
+
+- **Policy evaluation**: Monte-Carlo policy evaluation, $$Q \approx q_\pi$$
+- **Policy improvement**: $$\epsilon$$-greedy policy improvement
+
+It's not necessary to fully evaluate the policy. You can just spend a few steps to evaluate the policy and then improve it.
+
+We can also do this after every episode. We can act greedily with the freshest information we have.
+
+### Greedy in the Limit with Infinite Exploration (GLIE)
+
+How can we guarantee that we will find the optimal policy? What we really want to find is $$\pi_*$$. We need to balance two things. We need to make sure that we continue exploring, to make sure we do not exclude things that are better than what we've seen so far. But we also need to make sure that we converge to the optimal policy.
+
+One idea of balancing those two factors is the following:
+
+<Definition title="Theorem: Greedy in the Limit with Infinite Exploration (GLIE)">
+
+You continue to explore everything: All state-action pairs are visited infinitely many time. For instance $$\epsilon$$-greedy satisfies this condition.
+
+```math
+\lim_{k \rightarrow \infty} N_k(s, a) = \infty
+```
+
+The policy converges on a greedy policy. We need this because we need to satisfy the Bellman optimality equation which ultimately requires a max in there.
+
+```math
+\lim_{k \rightarrow \infty} \pi_k(a|s) = \mathbb{1}(a = \argmax_{a \in \mathcal{A}} Q(s, a'))
+```
+
+</Definition>
+
+For example, $$\epsilon$$-greedy is GLIE if $$\epsilon$$ decays slowly towards 0 for instance with a hyperbolic schedule $$\epsilon_k = 1/k$$.
+
+### GLIE Monte-Carlo Control
+
+Sample kth episode using $$\pi: \{ S_1, A_1, R_2, ..., S_T \} \sim \pi$$.
+
+For each state $$S_t$$ and action $$A_t$$ in the episode:
+
+- Increment counter
+
+```math
+N(S_t, A_t) \leftarrow N(S_t, A_t) + 1
+```
+
+- Update action-value function by doing an incremental update to the mean. We update the previous mean a little bit into the direction of the new return that we just got.
+
+```math
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \frac{1}{N(S_t, A_t)} (G_t - Q(S_t, A_t))
+```
+
+The above is not a mean over a policy, as the policy is changing over time. We are taking returns from better and better policies.
+
+Improve policy based on new action-value function:
+
+- $$\epsilon \leftarrow 1/k$$
+- $$\pi \leftarrow \epsilon$$-greedy($$Q$$)
+
+Then we repeat this process. We sample the k+1th episode, we update the action-value function and then the policy.
+
+<Definition title="Theorem: GLIE Monte-Carlo Control Converges">
+
+The GLIE policy ensures that over time the GLIE Monte-Carlo control converges to the optimal action-value function, $$Q(s, a) \rightarrow q_*(s, a)$$, and the optimal policy, $$\pi \rightarrow \pi_*$$.
+
+</Definition>
+
+### Monte-Carlo Control in Blackjack
+
+<DemoBlackjack />
+
+### MC vs. TD Control
+
+Temporal-difference (TD) learning has several advantages over Monte Carlo (MC) methods:
+
+- Lower variance
+- Online
+- Incomplete sequences
+
+Natural idea: use TD instead of MC in our control loop
+
+- Apply TD to $$Q(s, a)$$
+- Use $$\epsilon$$-greedy policy improvement
+- Update every time-step
+
+### Updating Action-Value Functions with Sarsa
+
+Sarsa is a TD control algorithm. We start at a state-action pair $$S$$, $$A$$. We randomly sample the environment to see what reward $$R$$ we get, and in which state $$S'$$ we end up. Then take sample our own policy at that next step and take action $$A'$$. We update the action-value function based on this.
+
+```math
+Q(S, A) \leftarrow Q(S, A) + \alpha (R + \gamma Q(S', A') - Q(S, A))
+```
+
+We move our Q value a little bit into the direction of the TD target $$R + \gamma Q(S', A')$$ minus the $$Q$$ value we had before.
+
+### On-Policy Control with Sarsa
+
+**Every Time-Step**:
+
+- Policy evaluation: Sarsa, $$Q \approx q_\pi$$
+- Policy improvement: $$\epsilon$$-greedy policy improvement
+
+### Convergence of Sarsa
+
+<Definition title="Theorem: Convergence of Sarsa">
+
+Sarsa converges to the optimal action-value function, $$Q(s, a) \rightarrow q_*(s, a)$$, and the optimal policy, $$\pi \rightarrow \pi_*$$, under the following conditions:
+
+- GLIE sequence of policies $$\pi_t(a|s)$$
+- Robbins-Monro sequence of step-sizes $$\alpha_t$$
+
+```math
+\sum_{t=1}^\infty \alpha_t(s, a) = \infty
+```
+
+```math
+\sum_{t=1}^\infty \alpha_t^2(s, a) < \infty
+```
+
+The above tells that the step size is sufficiently large so that we can move the $$Q$$-value as far as we want (the difference might be large from the initial esimate to the real value).
+
+And the second tells us that the changes to the $$Q$$-value become smaller and smaller and smaller. The changes to the $$Q$$-value will have to vanish, they have to become zero eventually. Otherwise you will have noise and it will jump around the optimal policy.
+
+</Definition>
+
+### Windy Gridworld Example
+
+With Monte-Carlo
+
+<DemoWindyMonteCarloAndSarsaLambdaTD />
+
+### n-Step Sarsa
+
+The spectrum between Monte-Carlo and Temporal-Difference learning is n-step Sarsa.
+
+Consider the following n-step returns for $$n = 1, 2, \infty$$:
+
+```math
+\begin{matrix}
+n = 1 & \text{(Sarsa)} & q_t^{(1)} = R_{t+1} + \gamma Q(S_{t+1}) \\
+n = 2 & & q_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 Q(S_{t+2}) \\
+\vdots & & \vdots \\
+n = \infty & \text{(MC)} & q_t^{(\infty)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... + \gamma^{T-1} R_T
+\end{matrix}
+```
+
+Define the n-step return:
+
+```math
+q_t^{(n)} = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{n-1} R_{t+n} + \gamma^n Q(S_{t+n}, A_{t+n})
+```
+
+n-step Sarsa updates $$Q(s, a)$$ towards $$q_t^{(n)}$$:
+
+```math
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (q_t^{(n)} - Q(S_t, A_t))
+```
+
+### Forward View Sarsa($$\lambda$$)
+
+The $$q^\lambda$$ return combines all n-step Q-returns $$q_t^{(n)}$$ using weight $$(1 - \lambda) \lambda^{n-1}$$:
+
+```math
+q_t^\lambda = (1 - \lambda) \sum_{n=1}^\infty \lambda^{n-1} q_t^{(n)}
+```
+
+Forward-view Sarsa($$\lambda$$) learning:
+
+```math
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (q_t^\lambda - Q(S_t, A_t))
+```
+
+The problem with this, is that this is not an online algoritm. We don't just take one step and update the Q-value, but we need to go into the future.
+
+### Backward View Sarsa($$\lambda$$)
+
+Just like TD($$\lambda$$), we can use **eligibility traces** in an online algorithm. But Sarsa($$\lambda$$) has one eligibility trace for each state-action pair.
+
+The eligibility trace is is a new table that has a value for every state-action pair. We can think of it as how much credit or blame you can assign to every action you took from each state.
+
+We initialize the eligibility trace for every state-action pair to 0. Initially we can't blame any action for anything ... [Algorithm](https://youtu.be/0g4j2k_Ggc4?si=MbdoWTA4rcud1MEO&t=3986).
+
+```math
+\begin{equation}
+\begin{split}
+E_0(s, a) = 0 \\
+E_t(s, a) = \gamma \lambda E_{t-1}(s, a) + \mathbb{1}(S_t = s, A_t = a)
+\end{split}
+\end{equation}
+```
+
+We update the eligibility trace for every state-action pair at every step. We decay the eligibility trace with time and we increment it for only the ones we visit.
+
+$$Q(s, a)$$ is updated at every step for every state $$s$$ and action $$a$$ in proportion to the TD error $$\delta_t$$ and the eligibility trace $$E_t(s, a)$$:
+
+```math
+\begin{equation}
+\begin{split}
+\delta_t = R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) \\
+Q(s, a) \leftarrow Q(s, a) + \alpha \delta_t E_t(s, a)
+\end{split}
+\end{equation}
+```
+
+<DemoWindySarsaLambdaTD />
+
+### Off-Policy Learning
+
+Evaluate target policy $$\pi(a|s)$$ to compute $$\mathrm{v}_\pi(s)$$ or $$q_\pi(s, a)$$ whilte following behaviour policy $$\mu(a|s)$$.
+
+Why is this important?
+
+- Learn from observing humans or other Agents
+- Re-use experience generated from old policies
+- Learn about optimal policy while following exploratory policy
+- Learn about multiple policies while following one policy
+
+### Importance Sampling
+
+Estimate the expectation of a different distribution.
+
+```math
+\begin{equation}
+\begin{split}
+\mathbb{E}_{x \sim \mathbb{P}}[f(x)] & = \sum_x \mathbb{P}(x) f(x) \\
+& = \sum_x \mathbb{Q}(x) \frac{\mathbb{P}(x)}{\mathbb{Q}(x)} f(x) \\
+& = \mathbb{E}_{x \sim \mathbb{Q}}[\frac{\mathbb{P}(x)}{\mathbb{Q}(x)} f(x)]
+\end{split}
+\end{equation}
+```
+
+The expected future reward is the sum of the probabilities times the reward.
+
+Then in the next step we multiply and devide by some other distribution. And then the ratio we got is an expectation under the other distribution.
+
+### Importance Sampling for Off-Policy Monte-Carlo
+
+Use returns generated from $$\mu$$ to estimate $$\pi$$.
+
+Weight returns $$G_t$$ according to similarity between policies.
+
+Multiply importance sampling corrections along whole episode. This probabily results in a very low number, because there's a very low chance that the two policies are similar throughout the whole episode.
+
+```math
+G_t^{\pi/\mu} = \frac{\pi(A_t|S_t)}{\mu(A_t|S_t)} \frac{\pi(A_{t+1}|S_{t+1})}{\mu(A_{t+1}|S_{t+1})} ... \frac{\pi(A_T|S_T)}{\mu(A_T|S_T)} G_t
+```
+
+Update value towards corrected (weighted) return.
+
+```math
+V(S_t) \leftarrow V(S_t) + \alpha (G_t^{\pi/\mu} - V(S_t))
+```
+
+Cannot use if $$\mu$$ is zero when $$\pi$$ is non-zero.
+
+Importance sampling can dramatically increase variance. In practice it's useless for off-policy Monte-Carlo learning.
+
+### Importance Sampling for Off-Policy TD
+
+Use TD targets generated from $$\mu$$ to estimate $$\pi$$.
+
+Weight TD targets $$R + \gamma V(S')$$ by importance sampling according to similarity between policies.
+
+Only need a single importance sampling correction. We weight how much we trust the target we got by the ratio of how much it is matching the policy we are trying to learn.
+
+```math
+\begin{equation}
+\begin{split}
+\delta_t & = R_{t+1} + \gamma V(S_{t+1}) - V(S_t) \\
+V(S_t) & \leftarrow V(S_t) + \alpha \frac{\pi(A_t|S_t)}{\mu(A_t|S_t)} \delta_t
+\end{split}
+\end{equation}
+```
+
+Much lower variance than Monte-Carlo importance sampling.
+
+Policies only need to be similar over a single step.
+
+### Q-Learning
+
+We now consider off-policy learning of action-values $$Q(s, a)$$.
+
+**No** importance sampling is required.
+
+Next action is chosen using behaviour policy $$A_{t+1} \sim \mu(\cdot|S_t)$$.
+
+But we consider alternative successor action $$A' \sim \pi(\cdot|S_t)$$. This is not the actual step we take, but this is the action we would take if we were following our target policy.
+
+And update $$Q(S_t, A_t)$$ towards the target value of that alternative action $$R_{t+1} + \gamma Q(S_{t+1}, A')$$. Because that's the value we actually got under our target policy.
+
+```math
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1}, A') - Q(S_t, A_t))
+```
+
+### Off-Policy Control with Q-Learning
+
+We now allow both behaviour and target policies to **improve**.
+
+This is a special case when the the target policy $$\pi$$ is **greedy** with respect to $$Q(s,a)$$. We are trying to learn the greedy behaviour, while following some exploratory behavior.
+
+```math
+\pi(S_{t+1}) = \argmax_{a'} Q(S_{t+1}, a')
+```
+
+The behaviour policy $$\mu$$ is **$$\epsilon$$-greedy** with respect to $$Q(s,a)$$. So the behavior policy will roughly follow sensible things, but will have some exploration.
+
+The Q-learning target then simplifies:
+
+```math
+\begin{equation}
+\begin{split}
+R_{t+1} + \gamma Q(S_{t+1}, A') & = R_{t+1} + \gamma Q(S_{t+1}, \argmax_{a'} Q(S_{t+1}, a')) \\
+& = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a')
+\end{split}
+\end{equation}
+```
+
+So what Q-learning does is that it updated the $$Q$$-value into the direction of the maximum $$Q$$ value we could take.
+
+### Q-Learning Control Algorithm (SARSAMAX)
+
+```math
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \big( R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a') - Q(S_t, A_t) \big)
+```
+
+We are upading the $$Q$$-value into the direction of the best possible Q value we could get in the next state.
+
+<Definition title="Theorem: Convergence of Q-Learning">
+
+Q-learning control converges to the optimal action-value function, $$Q(s, a) \rightarrow q_*(s, a)$$
+
+</Definition>
+
+### Relationship between DP and TD
+
+[Link](https://youtu.be/0g4j2k_Ggc4?si=VqZdgMyTEGrMe2L3&t=5766)
+
+# Lecture 6: Value-Function Approximation
+
+## Introduction
+
+### Value-Function Approximation
+
+So far we have represented value function by a lookup table.
+
+- Every state has an entry $$V(s)$$ OR
+- Every state-action pair has an entry $$Q(s, a)$$.
+
+Problem with large MDPs:
+
+- There are too many states and or actions to store them in memorey.
+- It it too slow to learn the value of each state individually.
+
+Solution for large MDPs:
+
+- Estimate value function with function approximation.
+
+```math
+\begin{equation}
+\begin{split}
+\hat{\mathrm{v}}(s, \mathbf{w}) & \approx \mathrm{v}_\pi(s) \\
+\hat{q}(s, a, \mathbf{w}) & \approx q_\pi(s, a)
+\end{split}
+\end{equation}
+```
+
+- Generalise from seen states to unseen states
+- Update parameter $$\mathbf{w}$$ using MC or TD learning.
+
+### Which Function Approximation?
+
+There are many function approcimatiors:
+
+- Linear combinations of features
+- Neural networks
+- Decision trees
+- Nearest-neighbour methods
+- Fourier / wavelet bases
+- ...
+
+For reinfocement learning we consider **differentiable** function approximators.
+
+- Linear combinations of features
+- Neural networks
+
+Furthermore, we require a training method that is suitable for **non-stationary**, **non-iid** data.
+
+## Incremental methods
+
+### Gradient Descent
+
+Let $$J(\mathbf{w})$$ be a differentiable function of $$\mathbf{w}$$.
+
+Define the gradient of $$J(\mathbf{w})$$ to be
+
+```math
+\nabla_\mathbf{w} J(\mathbf{w}) = \\
+\begin{pmatrix}
+\frac{\partial J(\mathbf{w})}{\partial \mathbf{w}_1} \\
+\frac{\partial J(\mathbf{w})}{\partial \mathbf{w}_2} \\
+\vdots \\
+\frac{\partial J(\mathbf{w})}{\partial \mathbf{w}_n}
+\end{pmatrix}
+```
+
+To find a local minimum of $$J(\mathbf{w})$$, we update $$\mathbf{w}$$ in the opposite direction of the gradient:
+
+```math
+\Delta \mathbf{w} = - \frac{1}{2} \alpha \nabla_\mathbf{w} J(\mathbf{w})
+```
+
+Where $$\alpha$$ is the step-size.
+
+### Value Function Approximation by Stochastic Gradient Descent
+
+Goal: find parameter vector $$\mathbf{w}$$ that minimizes the mean-squared error between the approximate value function $$\hat{\mathrm{v}}(s, \mathbf{w})$$ and the true value function $$\mathrm{v}_\pi(s)$$.
+
+```math
+J(\mathbf{w}) = \mathbb{E}_\pi\Big[{\big(\mathrm{v}_\pi(S) - \hat{\mathrm{v}}(S, \mathbf{w})\big)}^2\Big]
+```
+
+Gradient descent finds a local minimum
+
+```math
+\begin{equation}
+\begin{split}
+\Delta \mathbf{w} & = - \frac{1}{2} \alpha \nabla_\mathbf{w} J(\mathbf{w}) \\
+& = \alpha \mathbb{E}_\pi\Big[{\big(\mathrm{v}_\pi(S) - \hat{\mathrm{v}}(S, \mathbf{w})\big)} \nabla_\mathbf{w} \hat{\mathrm{v}}(S, \mathbf{w})\Big]
+\end{split}
+\end{equation}
+```
+
+Stochastic gradient descent samples the gradient
+
+```math
+\Delta \mathbf{w} = \alpha \big(\mathrm{v}_\pi(S) - \hat{\mathrm{v}}(S, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S, \mathbf{w})
+```
+
+So we got an error $$\mathrm{v}_\pi(S) - \hat{\mathrm{v}}(S, \mathbf{w})$$ that we want to correct and a gradient $$\nabla_\mathbf{w} \hat{\mathrm{v}}(S, \mathbf{w})$$ telling how to correct it.
+
+Expected update is equal to full gradient update.
+
+So far we cheated, because we used the true value function that we don't know.
+
+### Feature Vectors
+
+Repesent state by a feature vector
+
+```math
+\mathbf{x}(S) = \begin{pmatrix}
+\mathbf{x}_1(S) \\
+\mathbf{x}_2(S) \\
+\vdots \\
+\mathbf{x}_n(S)
+\end{pmatrix}
+```
+
+For example:
+
+- Distance of robot from landmarks
+- Trends in the stock market
+- Piece and pawn configurations in chess
+
+### Linear Value Function Approximation
+
+Represent value function by a linear combination of features. For each of our features we take a particular weight and we some them together. Or equivalently we take the dot product of the feature vector and the weight vector.
+
+```math
+\hat{\mathrm{v}}(S, \mathbf{w}) = \mathbf{x}(S)^\top \mathbf{w} = \sum_{j=1}^n \mathbf{x}_j(S) \mathbf{w}_j
+```
+
+Objective function is quadratic in parameters $$\mathbf{w}$$
+
+```math
+J(\mathbf{w}) = \mathbb{E}_\pi\Big[{\big(\mathrm{v}_\pi(S) - \mathbf{x}(S)^\top \mathbf{w}\big)}^2\Big]
+```
+
+Stochastic gradient descent converges on global optimum
+
+Update rule is particularly simple
+
+```math
+\begin{equation}
+\begin{split}
+\nabla_\mathbf{w} \hat{\mathrm{v}}(S, \mathbf{w}) & = \mathbf{x}(S) \\
+\Delta \mathbf{w} & = \alpha \big(\mathrm{v}_\pi(S) - \hat{\mathrm{v}}(S, \mathbf{w})\big) \mathbf{x}(S)
+\end{split}
+\end{equation}
+```
+
+Update = step-size × prediction error × feature value
+
+### Table Lookup features
+
+Table lookup is a special case of linear value function approximation.
+
+We can create a table lookup with a feature vector, where each feature represents a state. E.g. feature $$\mathbf{x}_1$$ is 1 if we are in state $$s_1$$ and 0 otherwise.
+
+```math
+\mathbf{x}^\text{table}(S) = \begin{pmatrix}
+\mathbb{1}(S = s_1) \\
+\mathbb{1}(S = s_2) \\
+\vdots \\
+\mathbb{1}(S = s_n)
+\end{pmatrix}
+```
+
+Parameter vector $$\mathbf{w}$$ gives value of each individual state.
+
+```math
+\hat{\mathrm{v}}(S, \mathbf{w}) = \begin{pmatrix}
+\mathbb{1}(S = s_1) \\
+\mathbb{1}(S = s_2) \\
+\vdots \\
+\mathbb{1}(S = s_n)
+\end{pmatrix} \cdot \begin{pmatrix}
+\mathbf{w}_1 \\
+\mathbf{w}_2 \\
+\vdots \\
+\mathbf{w}_n
+\end{pmatrix}
+```
+
+### Incremental Prediction Algorithms
+
+So far we have assumed true value function $$\mathrm{v}_\pi(s)$$ is known, is given by the supervisor. But in RL there is no supervisor, we don't know the true value function, only rewards.
+
+In practice, we substitute a target for $$\mathrm{v}_\pi(s)$$.
+
+- For MC, the target is the return $$G_t$$
+
+```math
+\Delta \mathbf{w} = \alpha \big({\color{blue} G_t} - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w})
+```
+
+- For TD(0), the target is the TD target
+
+```math
+\Delta \mathbf{w} = \alpha \big({\color{blue} R_{t+1} + \gamma \hat{\mathrm{v}}(S_{t+1}, \mathbf{w})} - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w})
+```
+
+For TD($$\lambda$$), the target is the $$\lambda$$-return.
+
+```math
+\Delta \mathbf{w} = \alpha \big({\color{blue} G_t^\lambda} - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w})
+```
+
+### Monte-Carlo with Value Function Approximation
+
+Return $$G_t$$ is an unbiased, noisy sample of true value $$\mathrm{v}_\pi(S_t)$$.
+
+Can therefore apply supervised learning to "training data":
+
+```math
+\langle S_1, G_1 \rangle, \langle S_2, G_2 \rangle, ..., \langle S_T, G_T \rangle
+```
+
+For example, using **linear** Monte-Carlo policy evaluation:
+
+```math
+\begin{equation}
+\begin{split}
+\Delta \mathbf{w} & = \alpha \big(G_t - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w}) \\
+& = \alpha \big(G_t - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \mathbf{x}(S_t)
+\end{split}
+\end{equation}
+```
+
+Monte-Carlo evaluation converges to a local optimum, even when using non-linear value function approximation.
+
+### TD with Value Function Approximation
+
+The TD-target $$R_{t+1} + \gamma \hat{\mathrm{v}}(S_{t+1}, \mathbf{w})$$ is a biased sample of the true value $$\mathrm{v}_\pi(S_t)$$.
+
+Can still apply supervised learning to "training data":
+
+```math
+\langle S_1, R_2 + \gamma \hat{\mathrm{v}}(S_2, \mathbf{w}) \rangle, \langle S_2, R_3 + \gamma \hat{\mathrm{v}}(S_3, \mathbf{w}) \rangle, ..., \langle S_T, R_{T} \rangle
+```
+
+For example, using **linear** TD(0) policy evaluation:
+
+```math
+\begin{equation}
+\begin{split}
+\Delta \mathbf{w} & = \alpha \big(R_{t+1} + \gamma \hat{\mathrm{v}}(S_{t+1}, \mathbf{w}) - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w}) \\
+& = \alpha \delta \mathbf{x}(S_t)
+\end{split}
+\end{equation}
+```
+
+Linear TD(0) evaluation converges (close) to a global optimum.
+
+### TD($$\lambda$$) with Value Function Approximation
+
+The $$\lambda$$-return $$G_t^\lambda$$ is also a biased sample of the true value $$\mathrm{v}_\pi(S_t)$$.
+
+Can again apply supervised learning to "training data":
+
+```math
+\langle S_1, G_1^\lambda \rangle, \langle S_2, G_2^\lambda \rangle, ..., \langle S_T, G_T^\lambda \rangle
+```
+
+Forward view linear TD($$\lambda$$):
+
+```math
+\begin{equation}
+\begin{split}
+\Delta \mathbf{w} & = \alpha \big(G_t^\lambda - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \nabla_\mathbf{w} \hat{\mathrm{v}}(S_t, \mathbf{w}) \\
+& = \alpha \big(G_t^\lambda - \hat{\mathrm{v}}(S_t, \mathbf{w})\big) \mathbf{x}(S_t)
+\end{split}
+\end{equation}
+```
+
+Backward view linear TD($$\lambda$$):
+
+```math
+\begin{equation}
+\begin{split}
+\delta_t & = R_{t+1} + \gamma \hat{\mathrm{v}}(S_{t+1}, \mathbf{w}) - \hat{\mathrm{v}}(S_t, \mathbf{w}) \\
+E_t & = \gamma \lambda E_{t-1} + \mathrm{x}(S_t) \\
+\Delta \mathbf{w} & = \alpha \delta_t E_t
+\end{split}
+\end{equation}
+```
+
+Eligibility traces now are the size of the feature vector (not the state space). Each time you take a we are going to decay the eligibility a little bit and increase it for all the features that you've seen.
+
+Forward view and backward view linear TD($$\lambda$$) are equivalent.
+
+### Control with Value Function Approximation
+
+**Policy evalation**: Approximate policy evaluation. We are trying to estimate the action value function $$\hat{q}(\cdot, \cdot, \mathbf{w}) \approx q_\pi$$
+
+**Policy improvement**: $$\epsilon$$-greedy policy improvement.
+
+We start with a parameter vector, that will define some value function (maybe a neural network). We act greedily with some epsilon exploration, that gives us a new policy. Now we evaluate that new policy, we run some more data, we update the values of our neural network, and that gives us a new value function. And so forth. We do this for every single step.

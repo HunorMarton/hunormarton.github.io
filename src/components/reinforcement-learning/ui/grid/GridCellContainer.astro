@@ -1,0 +1,35 @@
+---
+interface Props {
+  x: number;
+  y: number;
+  cell: string | number | object;
+  terminalStates?: [number, number][];
+  colorMap?: { [key: string]: string };
+  heatmapRange?: [number, number];
+}
+
+const { x, y, cell, terminalStates, colorMap, heatmapRange } = Astro.props;
+
+function getFillColor() {
+  if (heatmapRange && typeof cell === "number") {
+    return `rgba(${cell < 0 ? "255" : "0"}, 
+                 ${cell > 0 ? "255" : "0"}, 
+                 0, 
+                 ${cell < 0 ? cell / heatmapRange[0] : cell / heatmapRange[1]})`;
+  }
+
+  const isTerminal = terminalStates?.some(([tx, ty]) => tx === x && ty === y);
+  const isWall = cell === "x";
+  if (isWall) return "black";
+  if (isTerminal) return "lightgray";
+  return (typeof cell === "string" && colorMap?.[cell]) || "white";
+}
+
+const fill = getFillColor();
+---
+
+<g transform={`translate(${x * 10}, ${y * 10})`}>
+  <rect width="10" height="10" fill={fill} stroke="black" stroke-width="0.5"
+  ></rect>
+  <slot />
+</g>

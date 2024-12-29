@@ -1,0 +1,120 @@
+---
+import type { Policy } from "../../types";
+import type {
+  WindyAgentState,
+  WindyAction,
+} from "../../environments/windyGridworldEnvironment.ts";
+import GridWithLabels from "../../ui/grid/GridWithLabels.astro";
+
+import { temporalDifferencePolicyControl as tdPerf } from "./SarsaTemporalDifferenceControl-Perf.ts";
+import { temporalDifferencePolicyControl as tdTS } from "./SarsaTemporalDifferenceControl-TS.ts";
+import { temporalDifferencePolicyControl as tdTS2 } from "./SarsaTemporalDifferenceControl-TS2.ts";
+
+import {
+  transformWindyGridworldPolicyControl,
+  transformWindyGridworldActionValueFunction,
+} from "./utils.ts";
+
+const initialPolicyEvaluation: () => WindyAction = () => {
+  const actions: WindyAction[] = ["up", "down", "left", "right"];
+  return actions[Math.floor(Math.random() * 4)];
+};
+
+const initialPolicy: Policy<WindyAgentState, WindyAction> = {
+  improve() {},
+  greedy: initialPolicyEvaluation,
+  evaluate: initialPolicyEvaluation,
+};
+const episodes = 1;
+const alpha = 0.4;
+const gamma = 0.9;
+const epsilon = 0.2;
+
+console.log("Running TD with plain JS");
+
+const tdPerfResult = tdPerf({
+  initialPolicy,
+  episodes,
+  alpha,
+  gamma,
+  epsilon,
+});
+
+const tdPerfValueFunction =
+  transformWindyGridworldActionValueFunction(tdPerfResult);
+const tdPerfPolicy = transformWindyGridworldPolicyControl(tdPerfResult);
+
+const tdTSResult = tdTS({
+  initialPolicy,
+  episodes,
+  alpha,
+  gamma,
+  epsilon,
+});
+
+const tdTSValueFunction =
+  transformWindyGridworldActionValueFunction(tdTSResult);
+const tdTSPolicy = transformWindyGridworldPolicyControl(tdTSResult);
+
+const tdTS2Result = await tdTS2({
+  initialPolicy,
+  episodes,
+  alpha,
+  gamma,
+  epsilon,
+});
+
+const tdTS2ValueFunction =
+  await transformWindyGridworldActionValueFunction(tdTS2Result);
+const tdTS2Policy = transformWindyGridworldPolicyControl(tdTS2Result);
+---
+
+<div>
+  <h4>With Temporal-Difference - plain JS</h4>
+  <GridWithLabels
+    data={tdPerfValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={tdPerfPolicy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+
+  <h4>With Temporal-Difference - TensorFlow.js tensors</h4>
+  <GridWithLabels
+    data={tdTSValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={tdTSPolicy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+
+  <h4>With Temporal-Difference - TensorFlow.js with model training</h4>
+  <GridWithLabels
+    data={tdTS2ValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={tdTS2Policy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+</div>

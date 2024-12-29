@@ -1,0 +1,84 @@
+---
+import type { Policy } from "../../types";
+import type {
+  WindyAgentState,
+  WindyAction,
+} from "../../environments/windyGridworldEnvironment.ts";
+import GridWithLabels from "../../ui/grid/GridWithLabels.astro";
+
+import { monteCarloPolicyControl } from "./MonteCarloControl.ts";
+import { temporalDifferencePolicyControl } from "./SarsaTemporalDifferenceControl.ts";
+
+import {
+  transformWindyGridworldPolicyControl,
+  transformWindyGridworldActionValueFunction,
+} from "./utils.ts";
+
+const initialPolicyEvaluation: () => WindyAction = () => {
+  const actions: WindyAction[] = ["up", "down", "left", "right"];
+  return actions[Math.floor(Math.random() * 4)];
+};
+
+const initialPolicy: Policy<WindyAgentState, WindyAction> = {
+  improve() {},
+  greedy: initialPolicyEvaluation,
+  evaluate: initialPolicyEvaluation,
+};
+const epsilon = 0.2;
+
+const mcResult = monteCarloPolicyControl({
+  initialPolicy,
+  episodes: 1,
+  epsilon,
+});
+
+const alpha = 0.4;
+const gamma = 0.9;
+
+const tdResult = temporalDifferencePolicyControl({
+  initialPolicy,
+  episodes: 10000,
+  alpha,
+  gamma,
+  epsilon,
+});
+
+const mcValueFunction = transformWindyGridworldActionValueFunction(mcResult);
+const mcPolicy = transformWindyGridworldPolicyControl(mcResult);
+
+const tdValueFunction = transformWindyGridworldActionValueFunction(tdResult);
+const tdPolicy = transformWindyGridworldPolicyControl(tdResult);
+---
+
+<div>
+  <h4>With Monte-Carlo</h4>
+  <GridWithLabels
+    data={mcValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={mcPolicy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <h4>With Temporal-Difference</h4>
+  <GridWithLabels
+    data={tdValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={tdPolicy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+</div>

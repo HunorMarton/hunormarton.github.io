@@ -1,0 +1,23 @@
+---
+interface Props {
+  direction: string | number;
+}
+
+const { direction } = Astro.props;
+const rotation = {
+  u: 0,
+  up: 0,
+  r: 90,
+  right: 90,
+  d: 180,
+  down: 180,
+  l: 270,
+  left: 270,
+}[direction];
+---
+
+<g transform-origin="5 5" transform={`rotate(${rotation})`}>
+  <path d="M5 1.5 L4 3 L6 3" fill="red"></path>
+  <path d="M5 3 L5 5" stroke="red" stroke-width="0.5" stroke-linecap="round"
+  ></path>
+</g>

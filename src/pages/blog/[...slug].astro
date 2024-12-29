@@ -18,3 +18,44 @@ const { entry } = Astro.props;
 <Main title={entry.data.title}>
   <BlogDetail entry={entry} />
 </Main>
+
+<style is:global>
+  mtd {
+    text-align: start;
+  }
+  math {
+    font-size: 125%;
+  }
+
+  .label {
+    cursor: default;
+
+    & + mtext {
+      display: none;
+
+      position: absolute;
+      top: anchor(bottom);
+      justify-self: anchor-center;
+      pointer-events: none;
+
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin: 8px;
+      border: 1px solid gray;
+      background-color: white;
+      z-index: 1;
+      font-family: "Maven Pro Variable", sans-serif;
+      font-size: 14px;
+
+      max-width: 200px;
+    }
+
+    &:hover {
+      color: red !important;
+    }
+
+    &:hover + mtext {
+      display: block;
+    }
+  }
+</style>

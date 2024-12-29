@@ -1,0 +1,66 @@
+---
+import type { Policy } from "../../types";
+import type {
+  WindyAgentState,
+  WindyAction,
+} from "../../environments/windyGridworldEnvironment.ts";
+import GridWithLabels from "../../ui/grid/GridWithLabels.astro";
+
+import { temporalDifferencePolicyControl } from "./SarsaLambdaTemporalDifferenceControl.ts";
+
+import {
+  transformWindyGridworldPolicyControl,
+  transformWindyGridworldActionValueFunction,
+} from "./utils.ts";
+
+const initialPolicyEvaluation: () => WindyAction = () => {
+  const actions: WindyAction[] = ["up", "down", "left", "right"];
+  return actions[Math.floor(Math.random() * 4)];
+};
+
+const initialPolicy: Policy<WindyAgentState, WindyAction> = {
+  improve() {},
+  greedy: initialPolicyEvaluation,
+  evaluate: initialPolicyEvaluation,
+};
+
+const alpha = 0.4;
+const gamma = 0.9;
+const epsilon = 0.2;
+const lambda = 0.5;
+
+const t0 = performance.now();
+
+const tdResult = temporalDifferencePolicyControl({
+  initialPolicy,
+  episodes: 10000,
+  alpha,
+  gamma,
+  epsilon,
+  lambda,
+});
+
+const t1 = performance.now();
+
+console.log(`TD took ${Number((t1 - t0) / 1000).toFixed(2)} seconds.`);
+
+const tdValueFunction = transformWindyGridworldActionValueFunction(tdResult);
+const tdPolicy = transformWindyGridworldPolicyControl(tdResult);
+---
+
+<div>
+  <GridWithLabels
+    data={tdValueFunction}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+  <GridWithLabels
+    data={tdPolicy}
+    size={80}
+    verticalRange={[0, 6]}
+    horizontalRange={[0, 9]}
+    terminalStates={[[7, 3]]}
+  />
+</div>

@@ -1,0 +1,107 @@
+---
+import Grid from "./Grid.astro";
+
+interface Props {
+  data: (string | number | object)[][];
+  verticalLabel?: string;
+  verticalRange: [number, number];
+  horizontalLabel?: string;
+  horizontalRange: [number, number];
+  colorMap?: { [key: string]: string };
+  heatmapRange?: [number, number];
+  size?: number;
+  terminalStates?: [number, number][];
+}
+
+const {
+  data,
+  size = 40,
+  terminalStates,
+  verticalLabel,
+  verticalRange,
+  colorMap,
+  heatmapRange,
+  horizontalLabel,
+  horizontalRange,
+} = Astro.props;
+---
+
+<div style="display: inline-block">
+  <div class="grid-container">
+    <div class="horizontal-axis">
+      <span>{horizontalLabel}</span>
+      <div class="horizontal-range">
+        {
+          Array.from(
+            { length: horizontalRange[1] - horizontalRange[0] + 1 },
+            (_, i) => <div>{horizontalRange[0] + i}</div>
+          )
+        }
+      </div>
+    </div>
+    <div class="vertical-axis">
+      <span>{verticalLabel}</span>
+      <div class="vertical-range">
+        {
+          Array.from(
+            { length: verticalRange[1] - verticalRange[0] + 1 },
+            (_, i) => <div>{verticalRange[0] + i}</div>
+          )
+        }
+      </div>
+    </div>
+    <Grid
+      data={data}
+      size={size}
+      terminalStates={terminalStates}
+      colorMap={colorMap}
+      heatmapRange={heatmapRange}
+      margin={0}
+    />
+  </div>
+</div>
+
+<style define:vars={{ size }}>
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+  }
+
+  .vertical-axis,
+  .horizontal-axis {
+    text-align: center;
+    font-size: 0.75em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .horizontal-range,
+  .vertical-range {
+    display: flex;
+  }
+
+  .horizontal-axis {
+    grid-column: 2/3;
+  }
+
+  .vertical-axis,
+  .horizontal-range {
+    flex-direction: row;
+  }
+
+  .horizontal-axis,
+  .vertical-range {
+    flex-direction: column;
+  }
+
+  .horizontal-range > div,
+  .vertical-range > div {
+    display: flex;
+    width: calc(var(--size) * 1px);
+    height: calc(var(--size) * 1px);
+    align-items: center;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import GridArrow from "./GridArrow.astro";
+
+interface Props {
+  cell: string | number | object;
+  zoom: number;
+}
+
+const { cell, zoom } = Astro.props;
+
+const isArrow =
+  typeof cell === "string" &&
+  ["u", "up", "r", "right", "d", "down", "l", "left"].includes(cell);
+const isMultipleArrows =
+  Array.isArray(cell) &&
+  cell.every((c) =>
+    ["u", "up", "r", "right", "d", "down", "l", "left"].includes(c)
+  );
+
+const isObject = typeof cell === "object" && !Array.isArray(cell);
+---
+
+<>
+  {isArrow && <GridArrow direction={cell} />}
+
+  {
+    isMultipleArrows && (
+      <g>
+        {cell.map((c) => (
+          <GridArrow direction={c} />
+        ))}
+      </g>
+    )
+  }
+
+  {
+    isObject && (
+      <g>
+        {Object.entries(cell).map(([key, value], i) => (
+          <g transform={`translate(0, ${i * 20 * zoom})`}>
+            <text class="tiny-label" x="1" y={2 * zoom}>
+              {key}
+            </text>
+            <text class="tiny-value" x="1" y={10 * zoom}>
+              {Number(value).toFixed(2)}
+            </text>
+          </g>
+        ))}
+      </g>
+    )
+  }
+
+  {
+    !isArrow && !isMultipleArrows && !isObject && (
+      <text x="5" y="5">
+        {typeof cell === "number" && !Number.isInteger(cell)
+          ? cell.toFixed(2)
+          : cell}
+      </text>
+    )
+  }
+</>
+
+<style define:vars={{ zoom }}>
+  text {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: calc(14px * var(--zoom));
+  }
+
+  text.tiny-label,
+  text.tiny-value {
+    text-anchor: start;
+    alignment-baseline: hanging;
+  }
+
+  text.tiny-label {
+    font-size: calc(8px * var(--zoom));
+  }
+
+  text.tiny-value {
+    font-size: calc(10px * var(--zoom));
+  }
+</style>

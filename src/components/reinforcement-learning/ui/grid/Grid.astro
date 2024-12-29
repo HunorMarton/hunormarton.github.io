@@ -1,0 +1,60 @@
+---
+import GridCellContainer from "./GridCellContainer.astro";
+import GridCell from "./GridCell.astro";
+
+interface Props {
+  data: (string | number | object)[][];
+  size?: number;
+  margin?: number;
+  terminalStates?: [number, number][];
+  colorMap?: { [key: string]: string };
+  heatmapRange?: [number, number];
+}
+
+const {
+  data,
+  size = 40,
+  margin,
+  terminalStates,
+  colorMap,
+  heatmapRange,
+} = Astro.props;
+
+const zoom = (data.length * 10) / (data.length * size);
+---
+
+<svg
+  width={data[0].length * size}
+  height={data.length * size}
+  viewBox={`0 0 ${data[0].length * 10} ${data.length * 10}`}
+>
+  <rect
+    width={data[0].length * 10}
+    height={data.length * 10}
+    fill="white"
+    stroke="black"
+    stroke-width="0.5"></rect>
+  {
+    data.map((row, y) =>
+      row.map((cell, x) => (
+        <GridCellContainer
+          x={x}
+          y={y}
+          cell={cell}
+          terminalStates={terminalStates}
+          colorMap={colorMap}
+          heatmapRange={heatmapRange}
+        >
+          <GridCell cell={cell} zoom={zoom} />
+        </GridCellContainer>
+      ))
+    )
+  }
+</svg>
+
+<style define:vars={{ margin }}>
+  svg {
+    margin: var(--margin, 1em);
+    overflow: visible;
+  }
+</style>

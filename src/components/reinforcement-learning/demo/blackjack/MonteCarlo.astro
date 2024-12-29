@@ -1,0 +1,79 @@
+---
+import type { Policy } from "../../types";
+import type {
+  BlackjackAgentState,
+  BlackjackAction,
+} from "../../environments/blackjackEnvironment.ts";
+import GridWithLabels from "../../ui/grid/GridWithLabels.astro";
+
+import { monteCarloPolicyControl } from "./MonteCarloControl.ts";
+
+import {
+  transformBlackjackActionValueFunction,
+  transformBlackjackPolicyControl,
+} from "./utils.ts";
+
+const initialPolicyEvaluation: () => BlackjackAction = () => {
+  if (Math.random() < 0.5) {
+    return "twist";
+  }
+  return "stick";
+};
+
+const initialPolicy: Policy<BlackjackAgentState, BlackjackAction> = {
+  improve() {},
+  greedy: initialPolicyEvaluation,
+  evaluate: initialPolicyEvaluation,
+};
+const episodes = 100000;
+const epsilon = 0.1;
+
+const { actionValueFunction, policy } = monteCarloPolicyControl({
+  initialPolicy,
+  episodes,
+  epsilon,
+});
+
+const transformedValueFunction = transformBlackjackActionValueFunction({
+  actionValueFunction,
+});
+const transformedPolicy = transformBlackjackPolicyControl({
+  policy,
+});
+---
+
+<div>
+  <h3>Has Usable Ace</h3>
+  <GridWithLabels
+    data={transformedValueFunction.hasAceMatrix}
+    verticalLabel="Player sum"
+    verticalRange={[12, 21]}
+    horizontalLabel="Dealer showing"
+    horizontalRange={[1, 10]}
+  />
+  <GridWithLabels
+    data={transformedPolicy.hasAceMatrix}
+    verticalLabel="Player sum"
+    verticalRange={[12, 21]}
+    horizontalLabel="Dealer showing"
+    horizontalRange={[1, 10]}
+    colorMap={{ twist: "#FF0000", stick: "#00FF00" }}
+  />
+
+  <h3>Has No Usable Ace</h3>
+  <GridWithLabels
+    data={transformedValueFunction.noAceMatrix}
+    verticalLabel="Player sum"
+    verticalRange={[12, 21]}
+    horizontalLabel="Dealer showing"
+    horizontalRange={[1, 10]}
+  />
+  <GridWithLabels
+    data={transformedPolicy.noAceMatrix}
+    verticalLabel="Player sum"
+    verticalRange={[12, 21]}
+    horizontalLabel="Dealer showing"
+    horizontalRange={[1, 10]}
+    colorMap={{ twist: "#FF0000", stick: "#00FF00" }}
+  />
+</div>
