@@ -3,6 +3,7 @@ import "@fontsource/cutive-mono";
 import "@fontsource-variable/maven-pro"; // Supports weights 400-900
 import "@fontsource/mitr";
 import { ClientRouter } from "astro:transitions";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title: string;
@@ -69,6 +70,7 @@ const isProd = import.meta.env.PROD;
         />
       )
     }
+    <Analytics />
 
     <ClientRouter />
   </head>

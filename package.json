@@ -19,6 +19,7 @@
     "@fontsource/cutive-mono": "^5.0.20",
     "@fontsource/mitr": "^5.0.13",
     "@tensorflow/tfjs-node": "^4.22.0",
+    "@vercel/analytics": "^1.4.1",
     "astro": "^5.0.9",
     "astro-expressive-code": "^0.38.3",
     "remark-inline-code-class": "^1.1.2",
