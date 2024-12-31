@@ -1,0 +1,32 @@
+---
+title: How to use the first paragraph of your Markdown as the description in Astro
+date: 2024-12-30
+tags: [astro, markdown, remark]
+---
+
+Having a description is useful when you want to show a preview of your blog post. In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the frontmatter in Astro.
+
+## Writing a Remark Plugin
+
+```js
+import { visit, EXIT } from "unist-util-visit";
+
+function getValue(node: any) {
+  return node.children
+    .map((child: any) => child.value ?? getValue(child))
+    .join("");
+}
+
+export default function remarkAddFirstParagraphToFrontmatter() {
+  return (tree: any, file: any) => {
+    visit(tree, "paragraph", (node: any) => {
+      file.data.astro.frontmatter.description = getValue(node);
+      return EXIT;
+    });
+  };
+}
+```
+
+## Configuring Astro
+
+## Creating a Table of Contents

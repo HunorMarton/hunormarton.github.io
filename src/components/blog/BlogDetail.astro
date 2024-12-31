@@ -1,23 +1,126 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
+import "@fontsource-variable/figtree"; // Supports weights 300-900
+import "@fontsource-variable/source-sans-3"; // Supports weights 200-900
+import TableOfContents from "./TableOfContents.astro";
+import Tags from "./Tags.astro";
 
 interface Props {
   entry: CollectionEntry<"blog">;
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, remarkPluginFrontmatter } = await render(entry);
 ---
 
 <section>
-  <main>
+  <header>
     <h1>{entry.data.title}</h1>
+    <Tags tags={entry.data.tags} />
+    <p>
+      Hunor Márton Borbély on {
+        new Date(entry.data.date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      }
+    </p>
+    <svg width="1" height="1" viewBox="0 0 1 1">
+      <g transform="translate(0, 1)">
+        <path
+          d="M-250,0 Q0,100 250,0 T750,0"
+          fill="none"
+          stroke="#E9DF00"
+          stroke-width="2"></path>
+      </g>
+    </svg>
+  </header>
+
+  <main>
     <Content />
   </main>
+  <TableOfContents chapters={remarkPluginFrontmatter.tableOfContents} />
 </section>
 
 <style>
+  body {
+    scroll-behavior: smooth;
+  }
+
+  section {
+    display: grid;
+    grid-template-columns: 550px 300px;
+    column-gap: 4em;
+    justify-content: center;
+    position: relative;
+    font-family: "Figtree Variable", sans-serif;
+  }
+
   main {
-    font-family: "Maven Pro Variable", sans-serif;
+    grid-column: 1;
+  }
+
+  header {
+    margin-bottom: 4em;
+  }
+
+  p {
+    font-size: 0.8em;
+    color: gray;
+    margin-bottom: 2em;
+  }
+
+  svg {
+    overflow: visible;
+    z-index: -1;
+  }
+</style>
+
+<style is:global>
+  p,
+  li,
+  table {
+    font-family: "Source Sans 3 Variable", sans-serif;
+    max-width: 550px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    margin-top: 2.5em;
+  }
+
+  h3 {
+    margin-top: 2em;
+  }
+
+  a {
+    text-underline-offset: 2px;
+  }
+
+  code {
+    padding: 2px 5px;
+    border-radius: 2px;
+    border: 1px solid rgb(211, 211, 211, 1);
+    background-color: rgb(211, 211, 211, 0.1);
+  }
+
+  pre code {
+    background-color: inherit;
+    padding: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      border: 1px solid rgb(211, 211, 211, 1);
+      padding: 8px;
+    }
   }
 </style>

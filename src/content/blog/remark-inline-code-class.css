@@ -1,0 +1,28 @@
+.example {
+  padding: 1em;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+
+  code.element,
+  code.property,
+  code.value {
+    color: black;
+    border: 1px solid lightgray;
+    background-color: white;
+  }
+
+  code.element {
+    border-color: rgb(133, 232, 157, 1);
+    background-color: rgb(133, 232, 157, 0.1);
+  }
+
+  code.property {
+    border-color: rgb(179, 146, 240, 1);
+    background-color: rgb(179, 146, 240, 0.1);
+  }
+
+  code.value {
+    border-color: rgb(158, 203, 255, 1);
+    background-color: rgb(158, 203, 255, 0.1);
+  }
+}

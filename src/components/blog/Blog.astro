@@ -2,14 +2,34 @@
 import { getCollection } from "astro:content";
 import BlogItem from "./BlogItem.astro";
 
-const entries = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+const entries = (await getCollection("blog"))
+  .filter((a) => a.data.hidden !== true)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <section>
-  <h1>Blog</h1>
-  <div>
-    {entries.map((item) => <BlogItem entry={item} />)}
-  </div>
+  <main>
+    <h1>Blog</h1>
+    <div>
+      {entries.map((item) => <BlogItem entry={item} />)}
+    </div>
+  </main>
 </section>
+
+<style>
+  section {
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    font-family: "Figtree Variable", sans-serif;
+    max-width: 550px;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 2em;
+  }
+</style>

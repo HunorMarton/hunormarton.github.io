@@ -1,14 +1,37 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
+import "@fontsource-variable/figtree"; // Supports weights 300-900
+import "@fontsource-variable/source-sans-3"; // Supports weights 200-900
+import Tags from "./Tags.astro";
 
 interface Props {
   entry: CollectionEntry<"blog">;
 }
 
 const { entry } = Astro.props;
+const { remarkPluginFrontmatter } = await render(entry);
 ---
 
-<a href={`/blog/${entry.slug}`}>
-  <h2>{entry.data.title}</h2>
-  <p>{entry.data.date}</p>
-</a>
+<div>
+  <a href={`/blog/${entry.slug}`}>
+    <h2>{entry.data.title}</h2>
+  </a>
+  <p>{remarkPluginFrontmatter.description}</p>
+
+  <Tags tags={entry.data.tags} />
+</div>
+
+<style>
+  h2 {
+    font-family: "Figtree Variable", sans-serif;
+  }
+
+  p {
+    font-family: "Source Sans 3 Variable", sans-serif;
+  }
+
+  a {
+    max-width: 550px;
+    text-underline-offset: 2px;
+  }
+</style>

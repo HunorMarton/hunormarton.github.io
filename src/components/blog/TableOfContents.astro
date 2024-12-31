@@ -1,0 +1,47 @@
+---
+interface Props {
+  chapters: {
+    depth: number;
+    title: string;
+    url: string;
+  }[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<aside>
+  <h2>Table of Contents</h2>
+  <ul>
+    {
+      chapters.map((chapter) => (
+        <li style={{ marginLeft: `${(chapter.depth - 2) * 1}em` }}>
+          <a href={`#${chapter.url}`}>{chapter.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>
+
+<style>
+  aside {
+    font-family: "Figtree Variable", sans-serif;
+    padding: 1em;
+    position: sticky;
+    height: max-content;
+    top: 0;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 0;
+  }
+</style>
