@@ -1,7 +1,5 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
-import "@fontsource-variable/figtree"; // Supports weights 300-900
-import "@fontsource-variable/source-sans-3"; // Supports weights 200-900
 import TableOfContents from "./TableOfContents.astro";
 import Tags from "./Tags.astro";
 
@@ -26,15 +24,6 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
         })
       }
     </p>
-    <svg width="1" height="1" viewBox="0 0 1 1">
-      <g transform="translate(0, 1)">
-        <path
-          d="M-250,0 Q0,100 250,0 T750,0"
-          fill="none"
-          stroke="#E9DF00"
-          stroke-width="2"></path>
-      </g>
-    </svg>
   </header>
 
   <main>
@@ -50,19 +39,19 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
 
   section {
     display: grid;
-    grid-template-columns: 550px 300px;
-    column-gap: 4em;
+    grid-template-columns: var(--main-width) var(--aside-width);
+    column-gap: var(--layout-gap);
     justify-content: center;
     position: relative;
     font-family: "Figtree Variable", sans-serif;
   }
 
-  main {
-    grid-column: 1;
+  header {
+    padding-bottom: 50px;
   }
 
-  header {
-    margin-bottom: 4em;
+  main {
+    grid-column: 1;
   }
 
   p {
@@ -82,7 +71,7 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
   li,
   table {
     font-family: "Source Sans 3 Variable", sans-serif;
-    max-width: 550px;
+    max-width: var(--main-width);
   }
 
   h1 {
@@ -122,5 +111,16 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
       border: 1px solid rgb(211, 211, 211, 1);
       padding: 8px;
     }
+  }
+</style>
+
+<style is:global>
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    scroll-margin-top: calc(var(--header-height) + 30px);
   }
 </style>

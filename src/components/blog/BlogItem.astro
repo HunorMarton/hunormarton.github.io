@@ -1,7 +1,5 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
-import "@fontsource-variable/figtree"; // Supports weights 300-900
-import "@fontsource-variable/source-sans-3"; // Supports weights 200-900
 import Tags from "./Tags.astro";
 
 interface Props {
@@ -22,6 +20,9 @@ const { remarkPluginFrontmatter } = await render(entry);
 </div>
 
 <style>
+  div {
+    width: var(--main-width);
+  }
   h2 {
     font-family: "Figtree Variable", sans-serif;
   }

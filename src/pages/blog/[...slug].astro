@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Main from "../../layouts/Main.astro";
+import BlogLayout from "../../layouts/Blog.astro";
 import BlogDetail from "../../components/blog/BlogDetail.astro";
 
 // 1. Generate a new path for every collection entry
@@ -15,9 +15,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<Main title={entry.data.title}>
+<BlogLayout title={entry.data.title}>
   <BlogDetail entry={entry} />
-</Main>
+</BlogLayout>
 
 <style is:global>
   mtd {

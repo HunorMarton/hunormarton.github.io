@@ -29,7 +29,7 @@ const { chapters } = Astro.props;
     padding: 1em;
     position: sticky;
     height: max-content;
-    top: 0;
+    top: calc(var(--header-height) + var(--table-of-contents-padding));
   }
 
   ul {

@@ -10,7 +10,7 @@ const entries = (await getCollection("blog"))
 <section>
   <main>
     <h1>Blog</h1>
-    <div>
+    <div class="blog-list">
       {entries.map((item) => <BlogItem entry={item} />)}
     </div>
   </main>
@@ -24,8 +24,11 @@ const entries = (await getCollection("blog"))
 
   main {
     font-family: "Figtree Variable", sans-serif;
-    max-width: 550px;
     overflow: hidden;
+
+    display: grid;
+    width: calc(var(--main-width) + var(--layout-gap) + var(--aside-width));
+    margin: 50px 0 50px 0;
   }
 
   h1 {

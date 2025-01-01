@@ -1,0 +1,68 @@
+<header>
+  <div class="container">
+    <a class="home" href="/blog">Hunor's Blog</a>
+    <nav>
+      <a href="/">website</a>
+      <a href="/work">work</a>
+      <a href="/hobbies">hobbies</a>
+      <a href="/contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .home {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    color: black;
+  }
+
+  .container {
+    width: calc(var(--main-width) + var(--layout-gap) + var(--aside-width));
+    display: flex;
+    align-items: center;
+  }
+
+  nav {
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+
+    transform-origin: bottom right;
+    z-index: 10;
+
+    a {
+      display: inline-block;
+      margin: 0 10px;
+      color: gray;
+      font-size: 1.1em;
+      text-decoration: none;
+
+      transition: color 0.5s ease;
+
+      &:hover {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  }
+</style>
