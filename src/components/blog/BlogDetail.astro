@@ -1,14 +1,20 @@
 ---
-import { type CollectionEntry, render } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import TableOfContents from "./TableOfContents.astro";
 import Tags from "./Tags.astro";
 
 interface Props {
   entry: CollectionEntry<"blog">;
+  frontmatter: Record<string, any>;
 }
 
-const { entry } = Astro.props;
-const { Content, remarkPluginFrontmatter } = await render(entry);
+const { entry, frontmatter } = Astro.props;
+const dateISO = entry.data.date.toISOString();
+const dateHuman = entry.data.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
 ---
 
 <section>
@@ -16,20 +22,14 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
     <h1>{entry.data.title}</h1>
     <Tags tags={entry.data.tags} />
     <p>
-      Hunor Márton Borbély on {
-        new Date(entry.data.date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })
-      }
+      Hunor Márton Borbély on <time datetime={dateISO}>{dateHuman}</time>
     </p>
   </header>
 
-  <main>
-    <Content />
+  <main id="introduction">
+    <slot />
   </main>
-  <TableOfContents chapters={remarkPluginFrontmatter.tableOfContents} />
+  <TableOfContents chapters={frontmatter.tableOfContents} />
 </section>
 
 <style>
@@ -58,11 +58,6 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
     font-size: 0.8em;
     color: gray;
     margin-bottom: 2em;
-  }
-
-  svg {
-    overflow: visible;
-    z-index: -1;
   }
 </style>
 
@@ -97,9 +92,12 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
     background-color: rgb(211, 211, 211, 0.1);
   }
 
+  .expressive-code {
+    padding: 15px 0;
+  }
+
   pre code {
     background-color: inherit;
-    padding: 0;
   }
 
   table {
@@ -112,15 +110,18 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
       padding: 8px;
     }
   }
-</style>
 
-<style is:global>
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    scroll-margin-top: calc(var(--header-height) + 30px);
+  main {
+    scroll-margin-top: calc(var(--header-height) + 60px);
+  }
+
+  main > h1,
+  main > h2,
+  main > h3,
+  main > h4,
+  main > h5,
+  main > h6 {
+    scroll-margin-top: calc(var(--header-height) + 60px);
+    margin-top: 60px;
   }
 </style>
