@@ -13,6 +13,9 @@ const { chapters } = Astro.props;
 <aside>
   <h2>Table of Contents</h2>
   <ul>
+    <li>
+      <a href="#introduction">Introduction</a>
+    </li>
     {
       chapters.map((chapter) => (
         <li style={{ marginLeft: `${(chapter.depth - 2) * 1}em` }}>
