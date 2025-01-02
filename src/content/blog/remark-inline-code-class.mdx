@@ -6,9 +6,9 @@ tags: [astro, markdown, remark]
 
 import "./remark-inline-code-class.css";
 
-Many blogs use inline code blocks to `highlight` keywords. In Markdown the styling of these inline code blocks is limited. They all look the same. In this article, I will show you how to write a plugin that lets you assign different class names to inline code elements in Markdown.
+Many blogs use inline code blocks to `highlight` keywords. In Markdown, the styling of these inline code blocks is limited. They all look the same. In this article, I will show you how to write a plugin that lets you assign different class names to inline code elements in Markdown.
 
-On [SVG-Tutorial.com](https://svg-tutorial.com/), the elements are highlighted in green, the properties are highlighted purple, and the values are highlighted in blue.
+On [SVG-Tutorial.com](https://svg-tutorial.com/), the elements are highlighted in green, the properties are highlighted in purple, and the values are highlighted in blue.
 
 <div class="example">
 
@@ -27,39 +27,163 @@ We define the main part of the Christmas ornament as a circle. We set its center
 
 </div>
 
-To achieve this, we need to have a custom Markdown processor. If you are using [Astro](https://docs.astro.build/en/guides/markdown-content/#adding-remark-and-rehype-plugins) you can customize the Markdown processor with [Remark](https://github.com/remarkjs/remark) plugins.
+To achieve this, we need to have a custom Markdown processor. If you are using [Astro](https://docs.astro.build/en/guides/markdown-content/#adding-remark-and-rehype-plugins), you can customize the Markdown processor with [Remark](https://github.com/remarkjs/remark) plugins.
 
 ## What is Remark?
 
 [Remark](https://github.com/remarkjs/remark) is a Markdown processor powered by plugins. With Remark, you can transform your Markdown content into HTML, React, or any other format you need.
 
-Let's say you want to have a custom Markdown annotation for inline code elements. You want to define an inline code element with a class name:
+The example above uses a custom Markdown annotation for inline code elements. It defines the inline code elements with a class name:
 
-```markdown
-The `element:circle` element has a radius `property:r` property.
+```markdown wrap
+### How to draw a Circle in SVG
+
+For today's example, we draw a simple Christmas ornament. Here, we only use simple shapes: two circles and a rectangle.
+
+To define a `element:circle` we need to set the following properties:
+
+- We set its center position with the `property:cx` and `property:cy` properties.
+- We set the radius with the `property:r`.
+
+We define the main part of the Christmas ornament as a circle. We set its center position on the x-axis to the middle at `value:100` and on the y-axis, slightly below the middle at `value:120`. We set a large radius and set its fill color. Hover over the element to see how it is positioned.
 ```
 
-By default this would render into HTML as follows:
+By default, the Markdown above would render into HTML as follows:
 
-```html
-The <code>element:circle</code> element has a radius
-<code>property:r</code> property.
+<div class="example">
+
+### How to draw a Circle in SVG
+
+For today's example, we draw a simple Christmas ornament. Here, we only use simple shapes: two circles and a rectangle.
+
+To define a `prefix:element:circle` we need to set the following properties:
+
+- We set its center position with the `prefix:property:cx` and `prefix:property:cy` properties.
+- We set the radius with the `prefix:property:r`.
+
+We define the main part of the Christmas ornament as a circle. We set its center position on the x-axis to the middle at `prefix:value:100` and on the y-axis, slightly below the middle at `prefix:value:120`. We set a large radius and set its fill color. Hover over the element to see how it is positioned.
+
+</div>
+
+We can write a Remark plugin that replaces the inline code elements in Markdown with HTML snippets that contain the class names. This way, we can style the different inline code elements separately by this class name:
+
+```markdown wrap
+### How to draw a Circle in SVG
+
+For today's example, we draw a simple Christmas ornament. Here, we only use simple shapes: two circles and a rectangle.
+
+To define a <code class="element">circle</code> we need to set the following properties:
+
+- We set its center position with the <code class="property">cx</code> and <code class="property">cy</code> properties.
+- We set the radius with the <code class="property">r</code>.
+
+We define the main part of the Christmas ornament as a circle. We set its center position on the x-axis to the middle at <code class="property">100</code> and on the y-axis, slightly below the middle at <code class="property">120</code>. We set a large radius and set its fill color. Hover over the element to see how it is positioned.
 ```
 
-We can write a Remark plugin to change this behavior and use the part before the separator as a class name. This way we can style the different inline code elements separately by this class name:
+## Writing a `Remark` Plugin
 
-```html
-The <code class="element">circle</code> element has a radius
-<code class="property">r</code> property.
+We write a Remark plugin that replaces the inline code elements in Markdown with HTML snippets that contain the class names.
+
+We use `unist-util-visit` package to visit every inline code element. Then, we use a regular expression to break down the content into a class name and a value. We replace the inline code element with an HTML element with the class name.
+
+First, install the `unist-util-visit` package. The following example uses TypeScript. If we want to use TypeScript, we also need to install the types for `unist`.
+
+```sh
+npm install unist-util-visit @types/unist
 ```
 
-## Assign Classes with an NPM package
+The plugin uses the `visit` function to visit every inline code element in Markdown. Then, it checks the content of the inline code elements against a regular expression.
 
-Below, I explain how to create such a plugin. But if you don't want to write the plugin yourself, I have created an NPM package that does exactly this.
+The regular expression breaks down the content into a capturing group for the class name and a capturing group for the value. The class name group will contain every character before the separator string, and the value group will contain every character after it.
 
-It is called [remark-inline-code-class](https://www.npmjs.com/package/remark-inline-code-class). You can use it with Astro or any other Markdown processor that supports Remark plugins.
+The separator string is customizable with the `separator` option. By default, it is set to `:`.
 
-### Installation
+If the content matches the regular expression, it replaces the inline code element with an HTML element. If the content doesn't match the regular expression, it leaves the inline code element as it is.
+
+```ts title="remark-inline-code-class.ts"
+import { visit } from "unist-util-visit";
+import { Node, Literal, Parent } from "unist";
+
+type Options = Partial<{
+  separator: string;
+}>;
+
+export default function remarkInlineCodeClass(options?: Options) {
+  const separator = options?.separator || ":";
+
+  return (tree: Node) => {
+    visit(
+      tree,
+      "inlineCode",
+      (node: Literal, index: number, parent: Parent) => {
+        if (typeof node.value !== "string") return;
+
+        // Break down the content into class name and value
+        const regex = new RegExp(`^([^${separator}]+)${separator}(.+)$`);
+        const match = regex.exec(node.value);
+        if (match) {
+          const [, className, codeValue] = match;
+
+          const codeNode = {
+            type: "html",
+            value: `<code class="${className}">${codeValue}</code>`,
+          };
+
+          // Replace node with HTML snippet
+          parent.children.splice(index, 1, codeNode);
+        }
+      }
+    );
+  };
+}
+```
+
+### Configuring Astro
+
+Now that we have our plugin, we can extend our [Astro config](https://docs.astro.build/en/reference/configuration-reference/) to make use of it. This will automatically process every markdown file and replace the inline code elements with the new HTML elements.
+
+```js {2,6-8}
+import { defineConfig } from "astro/config";
+import remarkInlineCodeClass from "./remark-inline-code-class.ts";
+
+// https://astro.build/config
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkInlineCodeClass],
+  },
+});
+```
+
+### Styling the Classes
+
+Now, you can style the different classes in your global CSS file. For example, you can highlight the `element` class in green, the `property` class in purple, and the `value` class in blue.
+
+```css
+code {
+  padding: 2px 5px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+
+code.element {
+  border-color: rgb(133, 232, 157, 1);
+  background-color: rgb(133, 232, 157, 0.1);
+}
+
+code.property {
+  border-color: rgb(179, 146, 240, 1);
+  background-color: rgb(179, 146, 240, 0.1);
+}
+
+code.value {
+  border-color: rgb(158, 203, 255, 1);
+  background-color: rgb(158, 203, 255, 0.1);
+}
+```
+
+## Use an NPM package
+
+If you don't want to write the plugin yourself, I created an NPM package that does exactly this. It is called [remark-inline-code-class](https://www.npmjs.com/package/remark-inline-code-class). You can use it with Astro or any other Markdown processor that supports Remark plugins.
 
 Install the package `remark-inline-code-class` to your project:
 
@@ -67,11 +191,9 @@ Install the package `remark-inline-code-class` to your project:
 npm install remark-inline-code-class
 ```
 
-### Usage with Astro
-
 Extend your [Astro config](https://docs.astro.build/en/reference/configuration-reference/) file:
 
-```js ins={2,6-8}
+```js {2,6-8}
 import { defineConfig } from "astro/config";
 import remarkInlineCodeClass from "remark-inline-code-class";
 
@@ -83,7 +205,7 @@ export default defineConfig({
 });
 ```
 
-Then you can use the new annotation in your Markdown files as follows:
+Then, you can use the new annotation in your Markdown files as follows:
 
 ```markdown
 The `element:circle` element has a radius `property:r` property.
@@ -91,77 +213,18 @@ The `element:circle` element has a radius `property:r` property.
 
 This plugin doesn't do any styling on its own. You have to define the styles for your class names in a global CSS file.
 
-### Usage with Unified
+### Custom Separator
 
-If you are using [Unified](https://github.com/unifiedjs/unified) with [Remark](https://github.com/remarkjs/remark), you can also use this plugin as follows:
+The plugin lets you override the `separator` string that separates the class name from the value. You can set it in the Astro config file:
 
-```js
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkStringify from "remark-stringify";
+```js "separator"
+import { defineConfig } from "astro/config";
 import remarkInlineCodeClass from "remark-inline-code-class";
 
-const file = await unified()
-  .use(remarkParse)
-  .use(remarkInlineCodeClass)
-  .use(remarkStringify)
-  .process('This is an inline `red:element` with the class "red"');
-
-console.log(String(file));
-```
-
-### Customization Options
-
-The plugin has a few customization options. You can override the separator string that separates the class name from the value and a list of class names.
-
-| Option         | Description                                                                                                                                                         |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **separator**  | Custom separator string, if you don't want to use the default `:`                                                                                                   |
-| **classNames** | If you want to restrict the potential class names you can set an array with accepted class names. By default, any string before the separator becomes a class name. |
-
-## The Code Behind the Plugin
-
-The plugin is quite simple. It uses `unist` utilities to traverse the Markdown AST and replace the inline code elements with an HTML snippet.
-
-It checks the content of the inline code element against a regular expression. The regular expression matches the class name and the code value. If the content matches the regular expression, it replaces the inline code element with an HTML element.
-
-The plugin is also customizable. You can define a separator string that separates the class from the value and a list of class names. The regular expression is built based on these options.
-
-```ts
-import { visit } from "unist-util-visit";
-import { Node, Literal, Parent } from "unist";
-
-type Options = Partial<{
-  separator: string;
-  classNames: string[];
-}>;
-
-export default function remarkInlineCodeClass(options?: Options) {
-  return (tree: Node) => {
-    visit(
-      tree,
-      "inlineCode",
-      (node: Literal, index: number, parent: Parent) => {
-        if (typeof node.value !== "string") return;
-
-        const separator = options?.separator || ":";
-        const classNames = options?.classNames || [];
-        const classNamesPattern =
-          classNames.length > 0 ? `(${classNames.join("|")})` : `([^:]+)`;
-        const regex = new RegExp(`^${classNamesPattern}${separator}(.+)$`);
-        const match = regex.exec(node.value);
-        if (match) {
-          const [, className, codeValue] = match;
-
-          const codeNode = {
-            type: "html",
-            value: `<code class="${className}">${codeValue}</code>`,
-          };
-
-          parent.children.splice(index, 1, codeNode);
-        }
-      }
-    );
-  };
-}
+// https://astro.build/config
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [[remarkInlineCodeClass, { separator: "|" }]],
+  },
+});
 ```

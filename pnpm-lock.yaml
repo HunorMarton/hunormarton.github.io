@@ -45,8 +45,8 @@ importers:
         specifier: ^0.38.3
         version: 0.38.3(astro@5.0.9(@types/node@22.10.2)(rollup@4.28.1)(sass@1.75.0)(typescript@5.4.5)(yaml@2.6.1))
       remark-inline-code-class:
-        specifier: ^1.1.2
-        version: 1.1.2
+        specifier: ^1.1.3
+        version: 1.1.3
       remark-math:
         specifier: ^6.0.0
         version: 6.0.0
@@ -2011,8 +2011,8 @@ packages:
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
 
-  remark-inline-code-class@1.1.2:
-    resolution: {integrity: sha512-iSnWl7L2PpfySMipt6pPPKcljH01UuWSBUpLWOeTAXP+5qirIxPMZc4tmxDKCS6HkJm4I/W4yqeCkQDvgwMvow==}
+  remark-inline-code-class@1.1.3:
+    resolution: {integrity: sha512-KGCohV8VCEb/SnTXuxNwJJLPSKjkTqFa9SfI8JVEp3IdS/7Priz0UlC4bgHq61xqG7PNanzwYAI9whzb+qgZ1w==}
 
   remark-math@6.0.0:
     resolution: {integrity: sha512-MMqgnP74Igy+S3WwnhQ7kqGlEerTETXMvJhrUzDikVZ2/uogJCb+WHUg97hK9/jcfc0dkD73s3LN8zU49cTEtA==}
@@ -4942,7 +4942,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-inline-code-class@1.1.2:
+  remark-inline-code-class@1.1.3:
     dependencies:
       unist-util-visit: 5.0.0
 
