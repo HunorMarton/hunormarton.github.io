@@ -4,61 +4,169 @@ published_time: 2025-01-02
 tags: [astro, markdown, remark]
 ---
 
-There are [plugins](https://github.com/remarkjs/remark-toc) that generate a table of contents in place. What if you want to show the table of contents somewhere else on the page? In this article, I will show you how to write a plugin that generates a table of contents in Astro from Markdown headings.
+import Remark from "../../components/blog/Remark.astro";
 
-## Writing a Remark Plugin
+[Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you write a long blog post, you might want to add a table of contents to help your readers navigate the content.
 
-```js
+There is already a [plugin](https://github.com/remarkjs/remark-toc) that generates a table of contents within the Markdown file. But what if you want to show the table of contents somewhere else on the page, like in the sidebar on this page?
+
+In this article, we cover how to write a plugin that extracts headings from a Markdown file and adds a table of content array to the `frontmatter` of Astro. Later, we use it to generate the table of contents.
+
+```markdown wrap title="article.md"
+---
+title: How to generate a table of contents in Astro from Markdown headings
+published_time: 2025-01-02
+---
+
+[Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you share your blog post on social media or you list your posts on your website, you want to have a description of your post.
+
+## Writing a `Remark` Plugin
+
+We write a [Remark](https://github.com/remarkjs/remark) plugin that extracts the headings of the Markdown file and adds them to the `frontmatter` of Astro. We use the `unist-util-visit` package to traverse the AST of the Markdown file.
+
+## Table of Contents component
+
+Now, that we have the table of contents in the `frontmatter`, we can use it to render the table of contents in our Astro components.
+```
+
+Let's say we write a blog article in a Markdown file as above. We have the title and date of publication in the `frontmatter` and the content in the body of the Markdown file.
+
+We want to display the table of contents somewhere on the page that that contains the text value of the headnigs:
+
+- Writing a Remark Plugin
+- Creating a Table of Contents
+
+## Writing a `Remark` Plugin
+
+We write a [Remark](https://github.com/remarkjs/remark) plugin that extracts the headings of the Markdown file and adds them to the `frontmatter` of Astro. We use the `unist-util-visit` package to traverse the AST of the Markdown file.
+
+<Remark />
+
+First, install the `unist-util-visit` package:
+
+```sh
+npm install unist-util-visit
+```
+
+Then, create a file `table-of-content-plugin.js` with the following content.
+
+This plugin uses the `visit` function to find all the `heading` nodes in the AST. We only consider top-level headings that are direct children of the `root` node. Then, we collect the heading's `title`, `depth`, and `href` into an array.
+
+We use the `getNodeValue` utility function that recursively traverses the children of the heading and concatenates their text content. This is important if a heading contains inline elements like an inline code block.
+
+The `href` is generated from the title by converting it to lowercase, removing special characters, and replacing spaces with dashes. This is the same method as Astro generates the `id` attribute for headings.
+
+```js title="table-of-content-plugin.js"
 import { visit } from "unist-util-visit";
 
-interface HeadingNode {
-  type: "heading";
-  depth: number;
-  children: any[];
+function getNodeValue(node) {
+  return node.children
+    .map((child) => child.value ?? getNodeValue(child))
+    .join("");
 }
 
-interface ParentNode {
-  type: string;
-}
+export default function remarkTableOfContents() {
+  return (tree, file) => {
+    const toc = [];
 
-interface TOCItem {
-  depth: number;
-  title: string;
-  url: string;
-}
+    visit(tree, "heading", (node, index, parent) => {
+      // Only consider top level headings
+      if (parent.type !== "root") return;
 
-export default function remarkTOC() {
-  return (tree: any, file: any) => {
-    const toc: TOCItem[] = [];
+      const depth = node.depth;
+      const title = getNodeValue(node);
 
-    visit(
-      tree,
-      "heading",
-      (node: HeadingNode, index: any, parent: ParentNode) => {
-        if (parent.type !== "root") return;
-        const depth = node.depth;
-        const title = node.children
-          .filter((child: any) => child.type === "text")
-          .map((child: any) => child.value)
-          .join("");
+      const href = title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
 
-        const url = title
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, "")
-          .trim()
-          .replace(/\s+/g, "-");
+      toc.push({ depth, title, href: `#${href}` });
+    });
 
-        toc.push({ depth, title, url });
-      }
-    );
-
-    if (toc.length !== 0) {
-      file.data.astro.frontmatter.tableOfContents = toc;
-    }
+    file.data.astro.frontmatter.tableOfContents = toc;
   };
 }
 ```
 
-## Configuring Astro
+Finally, once we traversed every heading, we assign the result to the `tableOfContents` field of the Astro's `frontmatter`. When we define it in Markdown, the `frontmatter` section has to be in the YAML format. However, when we set it in the plugin, we can simply assign a JavaScript value.
 
-## Creating a Table of Contents
+### Configuring Astro
+
+Now that we have our plugin, we can extend our [Astro config](https://docs.astro.build/en/reference/configuration-reference/) to make use of it. This will automatically process every markdown file and add the `tableOfContents` field to the `frontmatter`.
+
+```js {2,6-8} title="astro.config.mjs"
+import { defineConfig } from "astro/config";
+import remarkTableOfContents from "./table-of-content-plugin.js";
+
+// https://astro.build/config
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkTableOfContents],
+  },
+});
+```
+
+## Table of Contents component
+
+Now, that we have the table of contents in the `frontmatter`, we can use it to render the table of contents in our Astro components.
+
+Let's say we have a `src/components/blog/BlogContent.astro` component that renders the content of a blog post. We can access the `tableOfContents` field from the `frontmatter` and pass it on to the `TableOfContents` component.
+
+Accessing fields added by plugins is different. Unlike accessing the original `frontmatter` data, like the `title` field, we need to `render` the entry first to get the processed content.
+
+The render function returns the `remarkPluginFrontmatter` object that contains the fields added by our remark plugin.
+
+```astro title="src/components/blog/BlogContent.astro"
+---
+import { type CollectionEntry, render } from "astro:content";
+import TableOfContents from "./TableOfContents.astro";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(entry);
+---
+
+<article>
+  <h1>{entry.data.title}</h1>
+  <main>
+    <Content />
+  </main>
+  <TableOfContents chapters={remarkPluginFrontmatter.tableOfContents} />
+</article>
+```
+
+In the `TableOfContents.astro` component, we can render the list of headings as an ordered list. We use the `depth` field to determine the nesting level of the list items.
+
+```astro title="src/components/blog/TableOfContents.astro"
+---
+interface Props {
+  chapters: {
+    depth: number;
+    title: string;
+    href: string;
+  }[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<aside>
+  <h2>Table of Contents</h2>
+  <ul>
+    {
+      chapters.map((chapter) => (
+        <li style={{ marginLeft: `${(chapter.depth - 2) * 1}em` }}>
+          <a href={chapter.href}>{chapter.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>
+```
+
+The table of contents on this page was created in a similar way. There's one difference. It also includes an Introduction link that jumps to the beginning of the article. We can easily add this by setting an `id` to the `main` element above and adding a static list element to the `TableOfContents` component.

@@ -3,7 +3,7 @@ interface Props {
   chapters: {
     depth: number;
     title: string;
-    url: string;
+    href: string;
   }[];
 }
 
@@ -19,7 +19,7 @@ const { chapters } = Astro.props;
     {
       chapters.map((chapter) => (
         <li style={{ marginLeft: `${(chapter.depth - 2) * 1}em` }}>
-          <a href={`#${chapter.url}`}>{chapter.title}</a>
+          <a href={chapter.href}>{chapter.title}</a>
         </li>
       ))
     }

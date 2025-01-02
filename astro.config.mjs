@@ -7,7 +7,7 @@ import rehypeMathML from "@daiji256/rehype-mathml";
 import astroExpressiveCode from "astro-expressive-code";
 import remarkInlineCodeClass from "remark-inline-code-class";
 import mathExplainerPlugin from "./src/plugins/math-explainer/index.ts";
-import tableOfContent from "./src/plugins/table-of-content/index.ts";
+import remarkTableOfContents from "./src/plugins/table-of-content/index.js";
 import description from "./src/plugins/description/index.ts";
 
 // https://astro.build/config
@@ -26,7 +26,7 @@ export default defineConfig({
     remarkPlugins: [
       remarkMath,
       remarkInlineCodeClass,
-      tableOfContent,
+      remarkTableOfContents,
       description,
     ],
     rehypePlugins: [rehypeMathML, mathExplainerPlugin],

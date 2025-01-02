@@ -8,7 +8,7 @@ import Remark from "../../components/blog/Remark.astro";
 
 [Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you share your blog post on social media or list your posts on your website, you want to have a description of your post.
 
-In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` in Astro. Later, we can use it in the page metadata and when listing the posts.
+In this article, we cover how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` of Astro. Later, we can use it in the page metadata and when listing the posts.
 
 Let's say you define your content in a Markdown file as follows. We have the title and date of publication in the `frontmatter` and the content in the body of the Markdown file. We do not have a description in the `frontmatter`. We will use the first paragraph for that.
 
@@ -20,12 +20,12 @@ published_time: 2025-01-01
 
 [Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you share your blog post on social media or you list your posts on your website, you want to have a description of your post.
 
-In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` in Astro. Later we can use it in the page metadata and when listing the posts.
+In this article, we cover how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` of Astro. Later we can use it in the page metadata and when listing the posts.
 ```
 
 ## Extracting the first paragraph
 
-We write a [Remark](https://github.com/remarkjs/remark) plugin that extracts the first paragraph of the Markdown file and adds it to the `frontmatter` in Astro. We use the `unist-util-visit` package to traverse the AST of the Markdown file.
+We write a [Remark](https://github.com/remarkjs/remark) plugin that extracts the first paragraph of the Markdown file and adds it to the `frontmatter` of Astro. We use the `unist-util-visit` package to traverse the AST of the Markdown file.
 
 <Remark />
 
