@@ -9,8 +9,8 @@ interface Props {
 }
 
 const { entry, frontmatter } = Astro.props;
-const dateISO = entry.data.date.toISOString();
-const dateHuman = entry.data.date.toLocaleDateString("en-US", {
+const dateISO = entry.data.published_time.toISOString();
+const dateHuman = entry.data.published_time.toLocaleDateString("en-US", {
   year: "numeric",
   month: "short",
   day: "numeric",

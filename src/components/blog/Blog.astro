@@ -1,17 +1,19 @@
 ---
 import { getCollection } from "astro:content";
-import BlogItem from "./BlogItem.astro";
+import BlogPreview from "./BlogPreview.astro";
 
 const entries = (await getCollection("blog"))
   .filter((a) => a.data.hidden !== true)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort(
+    (a, b) => b.data.published_time.getTime() - a.data.published_time.getTime()
+  );
 ---
 
 <section>
   <main>
     <h1>Blog</h1>
     <div class="blog-list">
-      {entries.map((item) => <BlogItem entry={item} />)}
+      {entries.map((item) => <BlogPreview entry={item} />)}
     </div>
   </main>
 </section>

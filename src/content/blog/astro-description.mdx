@@ -1,32 +1,192 @@
 ---
 title: How to use the first paragraph of your Markdown as the description in Astro
-date: 2024-12-30
+published_time: 2025-01-01
 tags: [astro, markdown, remark]
 ---
 
-Having a description is useful when you want to show a preview of your blog post. In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the frontmatter in Astro.
+import Remark from "../../components/blog/Remark.astro";
 
-## Writing a Remark Plugin
+[Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you share your blog post on social media or list your posts on your website, you want to have a description of your post.
 
-```js
+In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` in Astro. Later, we can use it in the page metadata and when listing the posts.
+
+Let's say you define your content in a Markdown file as follows. We have the title and date of publication in the `frontmatter` and the content in the body of the Markdown file. We do not have a description in the `frontmatter`. We will use the first paragraph for that.
+
+```markdown wrap title="article.md"
+---
+title: How to use the first paragraph of your Markdown as the description in Astro
+published_time: 2025-01-01
+---
+
+[Astro](https://astro.build/) is a static site generator that allows you to write your content in Markdown. When you share your blog post on social media or you list your posts on your website, you want to have a description of your post.
+
+In this article, I will show you how to write a plugin that extracts the first paragraph of your Markdown file and adds it to the `frontmatter` in Astro. Later we can use it in the page metadata and when listing the posts.
+```
+
+## Extracting the first paragraph
+
+We write a [Remark](https://github.com/remarkjs/remark) plugin that extracts the first paragraph of the Markdown file and adds it to the `frontmatter` in Astro. We use the `unist-util-visit` package to traverse the AST of the Markdown file.
+
+<Remark />
+
+First, install the `unist-util-visit` package:
+
+```sh
+npm install unist-util-visit
+```
+
+Then, create a file `description-plugin.js` with the following content.
+
+This plugin uses the `visit` function to find the first paragraph node in the AST. We extract the paragraph's text content and assign it to the `description` field of the `frontmatter`.
+
+We use the `getNodeValue` utility function that recursively traverses the children of the paragraph and concatenates their text content. This is important if the first paragraph contains inline elements like links or code blocks.
+
+Once we extracted the description, we return `EXIT` to stop the traversal of the AST. Otherwise, the `visit` function would continue to the next paragraph.
+
+```js title="description-plugin.js"
 import { visit, EXIT } from "unist-util-visit";
 
-function getValue(node: any) {
+function getNodeValue(node) {
   return node.children
-    .map((child: any) => child.value ?? getValue(child))
+    .map((child) => child.value ?? getNodeValue(child))
     .join("");
 }
 
-export default function remarkAddFirstParagraphToFrontmatter() {
-  return (tree: any, file: any) => {
-    visit(tree, "paragraph", (node: any) => {
-      file.data.astro.frontmatter.description = getValue(node);
+export default function remarkDescription() {
+  return (tree, file) => {
+    visit(tree, "paragraph", (node) => {
+      file.data.astro.frontmatter.description = getNodeValue(node);
       return EXIT;
     });
   };
 }
 ```
 
-## Configuring Astro
+### Configuring Astro
 
-## Creating a Table of Contents
+Now that we have our plugin, we can extend our [Astro config](https://docs.astro.build/en/reference/configuration-reference/) to make use of it. This will automatically process every markdown file and add a new description field to the `frontmatter`.
+
+```js {2,6-8} title="astro.config.mjs"
+import { defineConfig } from "astro/config";
+import remarkDescription from "./description-plugin.js";
+
+// https://astro.build/config
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkDescription],
+  },
+});
+```
+
+## Listing blog posts with descriptions
+
+Now that we have the description in the `frontmatter`, we can use it in the page metadata and when listing the posts. Go to my [blog page](/blog) to see the descriptions in action.
+
+Let's say we have a collection of blog posts in the `src/content/blog` directory. We query the collection in the `BlogList.astro` component and pass the entries to the `BlogPreview.astro` component.
+
+```astro title="src/components/blog/BlogList.astro"
+---
+import { getCollection } from "astro:content";
+import BlogPreview from "./BlogPreview.astro";
+
+const entries = await getCollection("blog");
+---
+
+<main>
+  <h1>Blog</h1>
+  {entries.map((item) => <BlogPreview entry={item} />)}
+</main>
+```
+
+Then, in the `BlogPreview.astro` component, we can access the `description` field.
+
+Accessing fields added by plugins is different. Unlike accessing the original `frontmatter` data, like the `title` field, we need to `render` the entry first to get the processed content.
+
+The render function returns the `remarkPluginFrontmatter` object that contains the fields added by our remark plugin.
+
+```astro title="src/components/blog/BlogPreview.astro"
+---
+import { type CollectionEntry, render } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { remarkPluginFrontmatter } = await render(entry);
+---
+
+<div>
+  <a href={`/blog/${entry.slug}`}>
+    <h2>{entry.data.title}</h2>
+  </a>
+  <p>{remarkPluginFrontmatter.description}</p>
+</div>
+```
+
+## Description in the page metadata
+
+We can also use the description we added with the plugin in the page metadata. This way, when we share the blog post on social media, the description will be displayed.
+
+Let’s say we have a collection of blog posts in the `src/content/blog` directory. We generate static pages by `slug` the following way. Again, we use the `render` function to get the `remarkPluginFrontmatter` object and pass it on to our layout component.
+
+```astro title="src/pages/blog/[slug].astro" "remarkPluginFrontmatter"
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Blog.astro";
+import ContentContainer from "../../components/blog/ContentContainer.astro";
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+// 2. For your template, you can get the entry directly from the prop
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(entry);
+---
+
+<Layout
+  title={entry.data.title}
+  description={remarkPluginFrontmatter.description}
+>
+  <ContentContainer entry={entry} frontmatter={remarkPluginFrontmatter}>
+    <Content />
+  </ContentContainer>
+</Layout>
+```
+
+In the `src/layouts/Blog.astro` component, we can access the `description` field and use it in the page metadata. The following is a simplified version of the layout component. If you inspect the source code of this page, you will see the description in the metadata.
+
+```astro title="src/layouts/Blog.astro" "description"
+---
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{title}</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+```

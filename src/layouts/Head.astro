@@ -4,26 +4,51 @@ import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title: string;
+  description?: string;
+  article?: {
+    published_time: Date;
+  };
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Hunor Márton Borbély, Software Engineer, Freelancer in Berlin.",
+  article,
+} = Astro.props;
 
-const description =
-  "Hunor Márton Borbély, Software Engineer, Freelancer in Berlin.";
-
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const isProd = import.meta.env.PROD;
 ---
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content={description} />
   <meta name="viewport" content="width=device-width" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Hunor Márton Borbély",
+      "url": "https://hunormarton.com/"
+    }
+  </script>
+
+  {
+    article ? (
+      <meta property="og:type" content="article" />
+      <meta property="article:author" content="Hunor Márton Borbély" />
+      <meta
+        property="article:published_time"
+        content={article.published_time.toISOString()}
+      />
+    ) : (
+      <meta property="og:type" content="website" />
+    )
+  }
 
   <meta property="og:locale" content="en_US" />
-  <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:title" content={title} />
   <meta name="twitter:title" content={title} />
@@ -31,18 +56,19 @@ const isProd = import.meta.env.PROD;
   <meta property="og:description" content={description} />
   <meta name="twitter:description" content={description} />
   <meta property="og:site_name" content="SVG Tutorial" />
+  <link rel="canonical" href={canonicalURL} />
   <meta name="twitter:site" content="@HunorBorbely" />
   <meta name="twitter:creator" content="@HunorBorbely" />
 
   <meta
     property="og:image"
-    content="https://hunormarton.github.io/image1200x630.png"
+    content="https://hunormarton.com/image1200x630.png"
   />
   <meta
     name="twitter:image"
-    content="https://hunormarton.github.io/image1600x900.png"
+    content="https://hunormarton.com/image1600x900.png"
   />
-  <meta property="og:url" content="https://hunormarton.github.io/" />
+  <meta property="og:url" content="https://hunormarton.com/" />
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171674382-1"
   ></script>
