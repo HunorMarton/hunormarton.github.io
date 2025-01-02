@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import Button from "../Button.astro";
+import BlogPreview from "./BlogPreview.astro";
+
+const entries = (
+  await getCollection("blog", ({ data }) => {
+    return data.hidden !== true;
+  })
+).sort(
+  (a, b) => b.data.published_time.getTime() - a.data.published_time.getTime()
+);
+---
+
+<section>
+  <h1>Latest Blog Posts</h1>
+  <div class="blog-posts">
+    {
+      entries.map((entry) => (
+        <div class="blog-post">
+          <BlogPreview entry={entry} />
+        </div>
+      ))
+    }
+  </div>
+  <Button href="/blog">Show more</Button>
+</section>
+
+<style is:global>
+  .blog-posts {
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+    margin: 40px 0 50px 0;
+  }
+
+  .blog-post {
+    display: inline-block;
+    width: 400px;
+  }
+</style>

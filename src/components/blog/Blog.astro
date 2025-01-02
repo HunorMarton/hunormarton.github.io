@@ -2,11 +2,13 @@
 import { getCollection } from "astro:content";
 import BlogPreview from "./BlogPreview.astro";
 
-const entries = (await getCollection("blog"))
-  .filter((a) => a.data.hidden !== true)
-  .sort(
-    (a, b) => b.data.published_time.getTime() - a.data.published_time.getTime()
-  );
+const entries = (
+  await getCollection("blog", ({ data }) => {
+    return data.hidden !== true;
+  })
+).sort(
+  (a, b) => b.data.published_time.getTime() - a.data.published_time.getTime()
+);
 ---
 
 <section>
