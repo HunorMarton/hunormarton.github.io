@@ -21,7 +21,7 @@ const dateHuman = entry.data.published_time.toLocaleDateString("en-US", {
   <header>
     <h1>{entry.data.title}</h1>
     <Tags tags={entry.data.tags} />
-    <p>
+    <p class="info">
       Hunor Márton Borbély on <time datetime={dateISO}>{dateHuman}</time>
     </p>
   </header>
@@ -29,7 +29,10 @@ const dateHuman = entry.data.published_time.toLocaleDateString("en-US", {
   <main id="introduction">
     <slot />
   </main>
-  <TableOfContents chapters={frontmatter.tableOfContents} />
+
+  <div class="table-of-contents">
+    <TableOfContents chapters={frontmatter.tableOfContents} />
+  </div>
 </section>
 
 <style>
@@ -38,9 +41,13 @@ const dateHuman = entry.data.published_time.toLocaleDateString("en-US", {
   }
 
   section {
-    display: grid;
-    grid-template-columns: var(--main-width) var(--aside-width);
-    column-gap: var(--layout-gap);
+    max-width: 100vw;
+    padding: 0 40px;
+    @media (min-width: 1010px) {
+      display: grid;
+      grid-template-columns: var(--main-width) var(--aside-width);
+      column-gap: var(--layout-gap);
+    }
     justify-content: center;
     position: relative;
     font-family: "Figtree Variable", sans-serif;
@@ -52,12 +59,20 @@ const dateHuman = entry.data.published_time.toLocaleDateString("en-US", {
 
   main {
     grid-column: 1;
+    max-width: 100%;
   }
 
-  p {
+  .info {
     font-size: 0.8em;
     color: gray;
     margin-bottom: 2em;
+  }
+
+  .table-of-contents {
+    display: none;
+    @media (min-width: 1010px) {
+      display: block;
+    }
   }
 </style>
 

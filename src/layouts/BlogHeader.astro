@@ -1,13 +1,11 @@
 <header>
-  <div class="container">
+  <nav>
     <a class="home" href="/blog">Hunor's Blog</a>
-    <nav>
-      <a href="/">portfolio</a>
-      <a href="/work">work</a>
-      <a href="/hobbies">projects</a>
-      <a href="/contact">contact</a>
-    </nav>
-  </div>
+    <a href="/">portfolio</a>
+    <a href="/work">work</a>
+    <a href="/hobbies">projects</a>
+    <a href="/contact">contact</a>
+  </nav>
 </header>
 
 <style>
@@ -40,31 +38,22 @@
     }
   }
 
-  .home {
-    font-size: 1em;
-    font-weight: 700;
-    margin: 0;
-    color: black;
-  }
-
-  .container {
-    width: calc(var(--main-width) + var(--layout-gap) + var(--aside-width));
-    display: flex;
-    align-items: center;
-  }
-
   nav {
-    height: var(--nav-height);
+    width: var(--content-width);
+    height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    gap: 20px;
 
-    transform-origin: bottom right;
-    z-index: 10;
+    .home {
+      font-size: 1em;
+      font-weight: 700;
+      margin: 0;
+      color: black;
+    }
 
     a {
       display: inline-block;
-      margin: 0 10px;
       color: gray;
       font-size: 1.1em;
       text-decoration: none;
@@ -74,6 +63,12 @@
       &:hover {
         color: black;
         text-decoration: none;
+      }
+    }
+
+    @media (max-width: 500px) {
+      a:nth-child(5) {
+        display: none;
       }
     }
   }

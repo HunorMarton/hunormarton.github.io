@@ -11,28 +11,22 @@ const entries = (
 );
 ---
 
-<section>
-  <main>
-    <h1>Blog</h1>
-    <div class="blog-list">
-      {entries.map((item) => <BlogPreview entry={item} />)}
-    </div>
-  </main>
-</section>
+<main>
+  <h1>Blog</h1>
+  {entries.map((item) => <BlogPreview entry={item} />)}
+</main>
 
 <style>
-  section {
-    display: flex;
-    justify-content: center;
-  }
+  @media (min-width: 1010px) {
+    main {
+      display: grid;
+      grid-template-columns: var(--main-width) var(--aside-width);
+      column-gap: var(--layout-gap);
 
-  main {
-    font-family: "Figtree Variable", sans-serif;
-    overflow: hidden;
-
-    display: grid;
-    width: calc(var(--main-width) + var(--layout-gap) + var(--aside-width));
-    margin: 50px 0 50px 0;
+      > * {
+        grid-column: 1;
+      }
+    }
   }
 
   h1 {
