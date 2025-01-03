@@ -29,9 +29,6 @@ importers:
       '@fontsource/cutive-mono':
         specifier: ^5.0.20
         version: 5.0.20
-      '@fontsource/mitr':
-        specifier: ^5.0.13
-        version: 5.0.13
       '@tensorflow/tfjs-node':
         specifier: ^4.22.0
         version: 4.22.0(seedrandom@3.0.5)
@@ -468,9 +465,6 @@ packages:
 
   '@fontsource/cutive-mono@5.0.20':
     resolution: {integrity: sha512-U7PQRH39j+eEsjXz0rQC+2zxoPmPKyfyvuuO8bLBjvhoH1CgQFTEE95pYvAmKgrhg+dF4rn1uRJpJZInykOAFw==}
-
-  '@fontsource/mitr@5.0.13':
-    resolution: {integrity: sha512-ifJ4t2YFtjOVH2AKQtwVJwx+WJs9JozDMfJn/B65HLccxVjElTRIdca93u/iEyZX9Lt7kPiiy2/LE3Y51Zg1Jw==}
 
   '@img/sharp-darwin-arm64@0.33.3':
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
@@ -2885,8 +2879,6 @@ snapshots:
   '@fontsource-variable/source-sans-3@5.1.1': {}
 
   '@fontsource/cutive-mono@5.0.20': {}
-
-  '@fontsource/mitr@5.0.13': {}
 
   '@img/sharp-darwin-arm64@0.33.3':
     optionalDependencies:
