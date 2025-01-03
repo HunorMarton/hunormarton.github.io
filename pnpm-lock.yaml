@@ -26,9 +26,6 @@ importers:
       '@fontsource-variable/source-sans-3':
         specifier: ^5.1.1
         version: 5.1.1
-      '@fontsource/cutive-mono':
-        specifier: ^5.0.20
-        version: 5.0.20
       '@tensorflow/tfjs-node':
         specifier: ^4.22.0
         version: 4.22.0(seedrandom@3.0.5)
@@ -462,9 +459,6 @@ packages:
 
   '@fontsource-variable/source-sans-3@5.1.1':
     resolution: {integrity: sha512-R3Ydrt+cV+u2IYczW4DUWTXE7nflIK3Qgu6Mb1cCSXBl52qDs88eZCrIEcAIRSc1v7ZLcEXeCmNLX5Oq4dcqjQ==}
-
-  '@fontsource/cutive-mono@5.0.20':
-    resolution: {integrity: sha512-U7PQRH39j+eEsjXz0rQC+2zxoPmPKyfyvuuO8bLBjvhoH1CgQFTEE95pYvAmKgrhg+dF4rn1uRJpJZInykOAFw==}
 
   '@img/sharp-darwin-arm64@0.33.3':
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
@@ -2877,8 +2871,6 @@ snapshots:
   '@fontsource-variable/maven-pro@5.0.19': {}
 
   '@fontsource-variable/source-sans-3@5.1.1': {}
-
-  '@fontsource/cutive-mono@5.0.20': {}
 
   '@img/sharp-darwin-arm64@0.33.3':
     optionalDependencies:
