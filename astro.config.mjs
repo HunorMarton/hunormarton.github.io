@@ -12,7 +12,7 @@ import description from "./src/plugins/description/index.ts";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hunormarton.github.io",
+  site: "https://hunormarton.com",
   integrations: [
     astroExpressiveCode({
       useDarkModeMediaQuery: false,
