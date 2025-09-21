@@ -25,7 +25,7 @@ const resumeItemCollection = defineCollection({
       link: z.string().optional(),
       location: z.string().optional(),
       start: z.date(),
-      end: z.date(),
+      end: z.date().optional(),
     }),
 });
 
