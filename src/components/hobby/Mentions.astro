@@ -1,0 +1,159 @@
+---
+const mentions = [
+  {
+    medium: "CodePen Spark Newsletter",
+    mentions: [
+      {
+        title: "Issue #31: Solitaire game",
+        link: "https://codepen.io/spark/31",
+      },
+      {
+        title: "Issue #204: CSS only interactive 3D die",
+        link: "https://codepen.io/spark/204",
+      },
+      {
+        title: `Issue #209: MC Escher's Cube 23150 with CSS only`,
+        link: "https://codepen.io/spark/209",
+      },
+      {
+        title: "Issue #212: Tilting Maze game",
+        link: "https://codepen.io/spark/212",
+      },
+      {
+        title: "Issue #213: Christmas bauble set game",
+        link: "https://codepen.io/spark/213",
+      },
+      {
+        title: "Issue #226: Traffic Run Game with Three.js",
+        link: "https://codepen.io/spark/226",
+      },
+      {
+        title: "Issue #266: SVG Watch (SVG + JavaScript)",
+        link: "https://codepen.io/spark/266",
+      },
+      {
+        title: "Issue #307: Mentioned as inspiration",
+        link: "https://codepen.io/spark/307",
+      },
+      {
+        title: "Issue #376: Gorillas - Plain JavaScript Game with HTML Canvas",
+        link: "https://codepen.io/spark/376",
+      },
+    ],
+  },
+  {
+    medium: "CodePen Challenge Mentions",
+    mentions: [
+      {
+        title: "January 2021 Challenge",
+        link: "https://codepen.io/challenges/2021/january",
+      },
+    ],
+  },
+  {
+    medium: "Bytes Newsletter",
+    mentions: [
+      {
+        title: "Issue #245: SVG Tutorial",
+        link: "https://bytes.dev/archives/245",
+      },
+    ],
+  },
+  {
+    medium: "JavaScript Weekly Newsletter",
+    mentions: [
+      {
+        title: "Issue #674: Gorillas Game",
+        link: "https://javascriptweekly.com/issues/674",
+      },
+      {
+        title: "Issue #726: Crossy Road Game",
+        link: "https://javascriptweekly.com/issues/726",
+      },
+    ],
+  },
+  {
+    medium: "Unicorn Club Newsletter",
+    mentions: [
+      {
+        title: "December 11, 2024: SVG Tutorial",
+        link: "https://unicornclub.dev/newsletters/2024-12-11-css-wrapped-2024-intent-driven-ux-a11y-design-tips/",
+      },
+    ],
+  },
+  {
+    medium: "Daily.dev Community Picks",
+    mentions: [
+      {
+        title: "Community Pick: JavaScript Game Tutorials",
+        link: "https://app.daily.dev/posts/rEOBDZo6C",
+      },
+      {
+        title: "Community Pick: SVG Tutorial",
+        link: "https://app.daily.dev/posts/6ZkOcWJMr",
+      },
+    ],
+  },
+  {
+    medium: "GameDev.js Weekly",
+    mentions: [
+      {
+        title: "Issue #585: Crossy Road with React Three Fiber",
+        link: "https://gamedevjsweekly.com/585",
+      },
+      {
+        title: "Issue #586: Crossy Road with React Three Fiber",
+        link: "https://gamedevjsweekly.com/586",
+      },
+    ],
+  },
+  {
+    medium: "LinkedIn",
+    mentions: [
+      {
+        title: "Midudev Post",
+        link: "https://www.linkedin.com/posts/midudev_aprende-a-crear-un-videojuego-desde-cero-activity-7305239837022863361-Dal8/?originalSubdomain=es",
+      },
+    ],
+  },
+];
+---
+
+<section>
+  <h1>Mentions</h1>
+  <div class="mentions-list">
+    {
+      mentions.map((mention) => (
+        <div class="mention">
+          <h3>{mention.medium}</h3>
+          <ul>
+            {mention.mentions.map((mention) => (
+              <li>
+                <a href={mention.link} target="_blank" rel="noopener">
+                  {mention.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1024px) {
+    .mentions-list {
+      columns: 2;
+    }
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  a {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+</style>

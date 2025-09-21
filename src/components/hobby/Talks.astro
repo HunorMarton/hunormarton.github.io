@@ -1,0 +1,155 @@
+---
+const events = [
+  {
+    event: "React Berlin Meetup",
+    talks: [
+      {
+        title: "Astro (... Markdown, Remark)",
+        links: [
+          {
+            site: "Guild",
+            link: "https://guild.host/events/react-berlin-january-e87n5a",
+          },
+          {
+            site: "LinkedIn",
+            link: "https://lnkd.in/p/eSndS5wa",
+          },
+          {
+            site: "Recording",
+            link: "https://www.youtube.com/watch?v=Z3RY-sLlkLY",
+          },
+        ],
+        date: "January 2025",
+      },
+      {
+        title: "SVG Tutorial",
+        links: [
+          {
+            site: "Guild",
+            link: "https://guild.host/events/react-berlin-may-meetup-bk14e2",
+          },
+          {
+            site: "Meetup",
+            link: "https://www.meetup.com/react-berlin-meetup/events/300608079/",
+          },
+        ],
+        date: "May 2024",
+      },
+    ],
+  },
+  {
+    event: "React Day Berlin Conference",
+    talks: [
+      {
+        title: "How to Code Images in React with SVG",
+        links: [
+          {
+            site: "React Day Berlin",
+            link: "https://reactday.berlin/#person-hunor-marton-borbely",
+          },
+          {
+            site: "Recording",
+            link: "https://gitnation.com/contents/svg-tutorialcom",
+          },
+        ],
+        date: "2024",
+      },
+    ],
+  },
+  {
+    event: "Vue.js Berlin",
+    talks: [
+      {
+        title: "SVG Tutorial",
+        links: [
+          {
+            site: "Meetup",
+            link: "https://www.meetup.com/vue-js-berlin/events/298378077/",
+          },
+        ],
+        date: "April 2024",
+      },
+    ],
+  },
+  {
+    event: "CopenhagenJS Meetup",
+    talks: [
+      {
+        title: "Making SVGs and examples",
+        links: [
+          {
+            site: "CopenhagenJS",
+            link: "https://copenhagenjs.dk/archive/2018-03-22-marts-meetup/",
+          },
+        ],
+        date: "March 2018",
+      },
+      {
+        title: "Patterns with RxJS",
+        links: [
+          {
+            site: "CopenhagenJS",
+            link: "https://copenhagenjs.dk/archive/2017-11-23-november-meetup/",
+          },
+        ],
+        date: "November 2017",
+      },
+    ],
+  },
+];
+---
+
+<section>
+  <h1>Talks</h1>
+  <div class="talks-list">
+    {
+      events.map((event) => (
+        <div class="mention">
+          <h3>{event.event}</h3>
+          <ul>
+            {event.talks.map((talk) => (
+              <li>
+                <div>
+                  {talk.date} - {talk.title}
+                </div>
+                <div>
+                  {talk.links?.map((link) => (
+                    <a href={link.link} target="_blank" rel="noopener">
+                      {link.site}
+                    </a>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1024px) {
+    .talks-list {
+      columns: 2;
+    }
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  li {
+    margin-bottom: 20px;
+  }
+
+  li > div {
+    line-height: 1.5;
+  }
+
+  a {
+    display: inline-block;
+
+    padding-right: 10px;
+  }
+</style>

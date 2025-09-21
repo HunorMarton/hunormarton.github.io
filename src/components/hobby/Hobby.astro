@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import Skills from "./Skills.astro";
 import HobbyItem from "./HobbyItem.astro";
+import Talks from "./Talks.astro";
+import Mentions from "./Mentions.astro";
 
 const entries = (await getCollection("hobbies")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
@@ -15,6 +17,9 @@ const entries = (await getCollection("hobbies")).sort(
     {entries.map((item) => <HobbyItem full={true} entry={item} />)}
   </div>
 </section>
+
+<Talks />
+<Mentions />
 
 <style>
   .hobby-items {
